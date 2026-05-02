@@ -1,0 +1,145 @@
+/* Reset and base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background: #fafafa;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 24px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 80px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+nav a {
+    margin-left: 24px;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.intro {
+    margin-bottom: 80px;
+    font-size: 24px;
+    max-width: 600px;
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.project-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-card img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 16px;
+    background: #e5e5e5;
+}
+
+.project-card h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.project-card p {
+    font-size: 16px;
+    color: #666;
+}
+
+footer {
+    margin-top: 120px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 14px;
+    color: #666;
+}
+
+@media (max-width: 640px) {
+    .projects {
+        grid-template-columns: 1fr;
+    }
+}
+
+.project-body {
+    max-width: 680px;
+    margin: 0 auto;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.project-body h2 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 48px;
+    margin-bottom: 12px;
+}
+
+.project-body p {
+    margin-bottom: 16px;
+}
+
+.project-body ul {
+    margin-left: 24px;
+    margin-bottom: 16px;
+}
+
+.project-body li {
+    margin-bottom: 4px;
+}
+
+.about {
+    max-width: 600px;
+}
+
+.about h1 {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 32px;
+}
+
+.about h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 48px;
+    margin-bottom: 16px;
+}
+
+.about p {
+    margin-bottom: 16px;
+}
+
+.about ul {
+    list-style: none;
+}
+
+.about li {
+    margin-bottom: 8px;
+}

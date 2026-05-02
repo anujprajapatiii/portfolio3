@@ -1,0 +1,18 @@
+---
+import Layout from './Layout.astro';
+import { Image } from 'astro:assets';
+
+const { project } = Astro.props;
+const { title, description, cover } = project.data;
+---
+
+<Layout title={`${title} — Your Name`}>
+    <article>
+        <Image src={cover} alt={`${title} cover`} widths={[600, 1200, 1800]} sizes="(max-width: 880px) 100vw, 832px" style="width: 100%; height: auto; margin-bottom: 32px;" />
+        <h1 style="font-size: 32px; font-weight: 500; margin-bottom: 8px;">{title}</h1>
+        <p style="font-size: 18px; color: #666; margin-bottom: 48px;">{description}</p>
+        <div class="project-body">
+            <slot />
+        </div>
+    </article>
+</Layout>
