@@ -129,6 +129,11 @@ body {
     max-width: var(--width-page);
     margin: 0 auto;
     padding: var(--space-7) var(--space-4);
+    /* Force consistent grayscale antialiasing instead of subpixel.
+       Without this, text re-rasterizes during theme toggle on macOS,
+       causing visible flicker as the browser switches AA strategies. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Smooth theme swap across every element with theme-tied properties.
