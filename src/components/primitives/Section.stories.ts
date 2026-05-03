@@ -1,9 +1,9 @@
-import Section from './Section.astro';
+import SectionDemo from './Section.demo.astro';
 
 export default {
-    component: Section,
+    component: SectionDemo,
 };
 
-export const Default = {
+export const TwoSections = {
     args: {},
 };

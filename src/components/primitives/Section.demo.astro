@@ -1,0 +1,16 @@
+---
+// Demo wrapper for Section — provides example children so the story
+// renders something visible. Used only by Section.stories.ts.
+
+import Section from './Section.astro';
+---
+
+<Section>
+    <h2 style="font-size: 24px; font-weight: 500; margin-bottom: 16px;">First section</h2>
+    <p>A section is a vertical chunk of a page. The space between two sections in a row comes for free — controlled by `.section + .section` in global.css.</p>
+</Section>
+
+<Section>
+    <h2 style="font-size: 24px; font-weight: 500; margin-bottom: 16px;">Second section</h2>
+    <p>This section sits below the first one with consistent breathing room. Reorder, delete, or insert sections to compose any page.</p>
+</Section>

@@ -7,15 +7,18 @@ import astrobook from 'astrobook';
 export default defineConfig({
     site: 'https://portfolio3-mocha-ten.vercel.app',
     integrations: [
-        // Exclude Astrobook's internal routes from the sitemap so search
-        // engines don't index the component playground.
+        // Exclude Astrobook's component playground from the sitemap so
+        // search engines don't index it.
         sitemap({
-            filter: (page) =>
-                !page.includes('/dashboard/') &&
-                !page.includes('/stories/'),
+            filter: (page) => !page.includes('/dashboard'),
         }),
-        // Astrobook mounts a component playground at /dashboard.
-        // Stories live next to components as `*.stories.{ts,js}`.
-        astrobook(),
+        // Astrobook mounts its component playground under /dashboard:
+        //   /dashboard           — home page (entry point)
+        //   /dashboard/<story>   — individual story with sidebar
+        //   /dashboard/stories/  — isolated story previews (loaded in iframes)
+        astrobook({
+            subpath: '/dashboard',
+            dashboardSubpath: '/',
+        }),
     ],
 });

@@ -1,7 +1,7 @@
-import Stack from './Stack.astro';
+import StackDemo from './Stack.demo.astro';
 
 export default {
-    component: Stack,
+    component: StackDemo,
 };
 
 export const SmallGap = {
