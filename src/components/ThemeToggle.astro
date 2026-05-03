@@ -50,7 +50,19 @@
     button?.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme');
         const next = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
+
+        const apply = () => {
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        };
+
+        // View Transitions API gives a clean bitmap crossfade with no
+        // per-frame text re-rasterization. Falls back to instant swap
+        // on browsers that don't support it (Firefox, older Safari).
+        if (document.startViewTransition) {
+            document.startViewTransition(apply);
+        } else {
+            apply();
+        }
     });
 </script>

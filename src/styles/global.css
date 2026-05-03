@@ -136,15 +136,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Smooth theme swap across every element with theme-tied properties.
-   Borders, surfaces, code backgrounds all fade together with the body.
-   Reduced-motion users opt out via the @media block at the bottom. */
-*,
-*::before,
-*::after {
-    transition: background-color var(--transition),
-                color var(--transition),
-                border-color var(--transition);
+/* Theme swap is handled by the View Transitions API (see ThemeToggle.astro).
+   The browser snapshots old + new states as bitmaps and crossfades them,
+   so text isn't re-rasterized mid-animation (which caused font flicker
+   when this was a CSS transition on `color`). */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: var(--transition);
 }
 
 /* ==========================================================================
