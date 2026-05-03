@@ -24,7 +24,77 @@
 :root {
     color-scheme: light;
 
-    /* Type family */
+    /* ----------------------------------------------------------------------
+       PRIMITIVES — the raw palette. Theme-agnostic.
+       Use these directly only when no semantic token fits.
+       Prefer building new semantic tokens below that reference these.
+       ---------------------------------------------------------------------- */
+
+    /* Neutral */
+    --neutral-black: #000000;
+    --neutral-900:   #0e0f12;
+    --neutral-800:   #141619;
+    --neutral-700:   #1c1f24;
+    --neutral-600:   #21252b;
+    --neutral-500:   #2c323a;
+    --neutral-400:   #434b56;
+    --neutral-300:   #99a1ac;
+    --neutral-200:   #d3d7dd;
+    --neutral-100:   #f6f7f8;
+    --neutral-white: #ffffff;
+
+    /* Blue (100 = lightest, 600 = darkest) */
+    --blue-100: #f0f3ff;
+    --blue-200: #dae5ff;
+    --blue-300: #99b6ff;
+    --blue-400: #1e50d3;
+    --blue-500: #1841ac;
+    --blue-600: #002c83;
+
+    /* Yellow (100 = lightest, 600 = darkest) */
+    --yellow-100: #fff5f5;
+    --yellow-200: #ffe9d0;
+    --yellow-300: #ffd293;
+    --yellow-400: #ffb700;
+    --yellow-500: #d17600;
+    --yellow-600: #853e0f;
+
+    /* Red (100 = lightest, 400 = darkest) */
+    --red-100: #f7a1a2;
+    --red-200: #f2696a;
+    --red-300: #ec2426;
+    --red-400: #67090a;
+
+    /* Green (100 = lightest, 400 = darkest) */
+    --green-100: #b4e4be;
+    --green-200: #53c069;
+    --green-300: #37954a;
+    --green-400: #1a4723;
+
+    /* Amber (100 = lightest, 400 = darkest) */
+    --amber-100: #f5c2a3;
+    --amber-200: #ee9a68;
+    --amber-300: #e66c24;
+    --amber-400: #7c370e;
+
+    /* Standard / brand */
+    --terra: #847b73;
+
+    /* ----------------------------------------------------------------------
+       SEMANTIC TOKENS — meaningful names that map to primitives.
+       Light theme defaults. Dark overrides live in [data-theme="dark"] below.
+       ---------------------------------------------------------------------- */
+
+    --color-text:    var(--neutral-600);
+    --color-muted:   var(--neutral-400);
+    --color-bg:      var(--neutral-100);
+    --color-border:  var(--neutral-300);
+    --color-surface: var(--neutral-200);
+    --color-code-bg: var(--neutral-200);
+
+    /* ----------------------------------------------------------------------
+       Type family
+       ---------------------------------------------------------------------- */
     --font-family: 'TASA Orbiter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 
     /* Type scale — modular ratio ~1.333, base 18px.
@@ -58,14 +128,6 @@
     --space-7: 80px;
     --space-8: 120px;
 
-    /* Color — light theme defaults. Dark overrides live in [data-theme="dark"] below. */
-    --color-text:    #21252b;
-    --color-muted:   #434b56;
-    --color-bg:      #f6f7f8;
-    --color-border:  #99a1ac;
-    --color-surface: #d3d7dd;   /* image placeholder background */
-    --color-code-bg: #f0f0f0;   /* inline code, code blocks */
-
     /* Layout widths */
     --width-page:    880px;     /* outer page container */
     --width-reading: 680px;     /* long-form text */
@@ -79,17 +141,16 @@
     --transition:  0.15s;
 }
 
-/* Dark theme — only the tokens that need to differ.
-   Everything else (type, spacing, widths) carries over unchanged. */
+/* Dark theme — only re-maps the semantic tokens. Primitives don't change. */
 [data-theme="dark"] {
     color-scheme: dark;
 
-    --color-text:    #d3d7dd;
-    --color-muted:   #99a1ac;
-    --color-bg:      #141619;
-    --color-border:  #2c323a;
-    --color-surface: #434b56;
-    --color-code-bg: #1f1f1f;
+    --color-text:    var(--neutral-200);
+    --color-muted:   var(--neutral-300);
+    --color-bg:      var(--neutral-800);
+    --color-border:  var(--neutral-500);
+    --color-surface: var(--neutral-400);
+    --color-code-bg: var(--neutral-700);
 }
 
 /* ==========================================================================
@@ -503,6 +564,24 @@ nav a[aria-current="page"] {
 .ds-swatch-pair .ds-swatch:last-child {
     border-top-right-radius: var(--radius-sm);
     border-bottom-right-radius: var(--radius-sm);
+}
+
+/* Primitive palette grid — one row per color family, swatches inline. */
+.ds-palette {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: var(--space-3);
+}
+
+.ds-palette-cell {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.ds-palette-cell .ds-swatch {
+    width: 100%;
+    height: 56px;
 }
 
 .ds-meta {
