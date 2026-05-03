@@ -281,7 +281,7 @@ body {
    Header
    ========================================================================== */
 
-header {
+.site-header {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -296,7 +296,7 @@ header {
 
 /* Auto-hide on scroll-down. The .header--hidden class is toggled
    by the inline script in Layout.astro. */
-header.header--hidden {
+.site-header.header--hidden {
     transform: translateY(-100%);
 }
 

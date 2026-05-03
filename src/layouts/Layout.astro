@@ -77,7 +77,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <header>
+    <header class="site-header">
         <a href="/" class="brand">Anuj Prajapati</a>
         <nav aria-label="Primary">
             {navLinks.map((link) => (
@@ -102,7 +102,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
          Always shown when within TOP_ZONE pixels of the page top. -->
     <script is:inline>
         (function () {
-            const header = document.querySelector('header');
+            const header = document.querySelector('.site-header');
             if (!header) return;
 
             let lastY = window.scrollY;
