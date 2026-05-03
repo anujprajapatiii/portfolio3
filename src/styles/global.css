@@ -402,19 +402,24 @@ nav a[aria-current="page"] {
    Project detail page
    ========================================================================== */
 
+.project-detail {
+    max-width: var(--width-reading);
+    margin: 0 auto;
+}
+
 .project-cover {
+    display: block;
     width: 100%;
     height: auto;
     margin-bottom: var(--space-5);
 }
 
 .project-header {
+    max-width: 100%;
     margin-bottom: var(--space-6);
 }
 
 .project-body {
-    max-width: var(--width-reading);
-    margin: 0 auto;
     font-size: var(--font-base);
     line-height: var(--leading-loose);
 }

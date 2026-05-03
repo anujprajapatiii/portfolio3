@@ -21,12 +21,12 @@ const og = await getImage({
     ogImage={og.src}
     ogType="article"
 >
-    <article>
+    <article class="project-detail">
         <Image
             src={cover}
             alt={`${title} cover`}
-            widths={[600, 1200, 1800]}
-            sizes="(max-width: 880px) 100vw, 832px"
+            widths={[600, 900, 1200]}
+            sizes="(max-width: 728px) calc(100vw - 48px), 680px"
             loading="eager"
             class="project-cover"
         />
