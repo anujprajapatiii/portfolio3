@@ -38,11 +38,12 @@ const spaceTokens = [
 ];
 
 const colorTokens = [
-    { name: '--color-text',    value: '#1a1a1a', use: 'primary text' },
-    { name: '--color-muted',   value: '#666',    use: 'secondary text' },
-    { name: '--color-bg',      value: '#fafafa', use: 'page background' },
-    { name: '--color-border',  value: '#e5e5e5', use: 'horizontal rules, dividers' },
-    { name: '--color-surface', value: '#e5e5e5', use: 'image placeholder' },
+    { name: '--color-text',    light: '#1a1a1a', dark: '#f2f2f2', use: 'primary text' },
+    { name: '--color-muted',   light: '#666',    dark: '#999',    use: 'secondary text' },
+    { name: '--color-bg',      light: '#fafafa', dark: '#0f0f0f', use: 'page background' },
+    { name: '--color-border',  light: '#e5e5e5', dark: '#262626', use: 'dividers, borders' },
+    { name: '--color-surface', light: '#e5e5e5', dark: '#1a1a1a', use: 'image placeholder' },
+    { name: '--color-code-bg', light: '#f0f0f0', dark: '#1f1f1f', use: 'inline code, code blocks' },
 ];
 
 const widthTokens = [
@@ -158,13 +159,17 @@ const weights = [
         <Section>
             <Stack gap="lg">
                 <h2>Color</h2>
+                <p class="ds-meta-secondary">Each token has a light and dark value. Both swatches are shown side-by-side regardless of the active theme so you can compare.</p>
                 <Stack gap="md">
                     {colorTokens.map((t) => (
                         <div class="ds-row">
-                            <span class="ds-swatch" style={`background: var(${t.name})`}></span>
+                            <div class="ds-swatch-pair">
+                                <span class="ds-swatch" style={`background: ${t.light}`} title={`Light: ${t.light}`}></span>
+                                <span class="ds-swatch" style={`background: ${t.dark}`} title={`Dark: ${t.dark}`}></span>
+                            </div>
                             <Stack gap="sm">
-                                <span class="ds-meta">{t.name} · {t.value}</span>
-                                <span class="ds-meta-secondary">{t.use}</span>
+                                <span class="ds-meta">{t.name}</span>
+                                <span class="ds-meta-secondary">L {t.light} · D {t.dark} · {t.use}</span>
                             </Stack>
                         </div>
                     ))}

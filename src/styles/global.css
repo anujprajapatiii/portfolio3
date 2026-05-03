@@ -472,6 +472,27 @@ nav a[aria-current="page"] {
     border-radius: var(--radius-sm);
 }
 
+.ds-swatch-pair {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.ds-swatch-pair .ds-swatch {
+    width: 48px;
+    border-radius: 0;
+}
+
+.ds-swatch-pair .ds-swatch:first-child {
+    border-top-left-radius: var(--radius-sm);
+    border-bottom-left-radius: var(--radius-sm);
+    border-right: none;
+}
+
+.ds-swatch-pair .ds-swatch:last-child {
+    border-top-right-radius: var(--radius-sm);
+    border-bottom-right-radius: var(--radius-sm);
+}
+
 .ds-meta {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: var(--font-sm);
