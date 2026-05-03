@@ -6,12 +6,14 @@ interface Props {
     title?: string;
     description?: string;
     ogImage?: string;
+    ogType?: 'website' | 'article';
 }
 
 const {
     title = 'Your Name — Designer',
     description = 'Designer working across visual identity and digital products. Based in Mumbai.',
     ogImage,
+    ogType = 'website',
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
@@ -62,7 +64,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
 

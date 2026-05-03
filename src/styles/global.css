@@ -64,6 +64,7 @@
     --color-bg:      #fafafa;
     --color-border:  #e5e5e5;
     --color-surface: #e5e5e5;   /* image placeholder background */
+    --color-code-bg: #f0f0f0;   /* inline code, code blocks */
 
     /* Layout widths */
     --width-page:    880px;     /* outer page container */
@@ -88,6 +89,7 @@
     --color-bg:      #0f0f0f;
     --color-border:  #262626;
     --color-surface: #1a1a1a;
+    --color-code-bg: #1f1f1f;
 }
 
 /* ==========================================================================
@@ -127,8 +129,17 @@ body {
     max-width: var(--width-page);
     margin: 0 auto;
     padding: var(--space-7) var(--space-4);
-    /* Smooth the theme swap so it doesn't feel jarring */
-    transition: background-color var(--transition), color var(--transition);
+}
+
+/* Smooth theme swap across every element with theme-tied properties.
+   Borders, surfaces, code backgrounds all fade together with the body.
+   Reduced-motion users opt out via the @media block at the bottom. */
+*,
+*::before,
+*::after {
+    transition: background-color var(--transition),
+                color var(--transition),
+                border-color var(--transition);
 }
 
 /* ==========================================================================
@@ -223,7 +234,6 @@ nav a[aria-current="page"] {
     color: var(--color-text);
     display: inline-flex;
     align-items: center;
-    transition: color var(--transition);
 }
 
 .theme-toggle:hover {
@@ -247,7 +257,6 @@ nav a[aria-current="page"] {
    ========================================================================== */
 
 .intro {
-    margin-bottom: var(--space-7);
     font-size: var(--font-lg);
     line-height: var(--leading-tight);
     max-width: var(--width-narrow);
@@ -424,7 +433,7 @@ nav a[aria-current="page"] {
 .design-system code {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: var(--font-sm);
-    background: var(--color-surface);
+    background: var(--color-code-bg);
     padding: 2px 6px;
     border-radius: var(--radius-sm);
 }
