@@ -1,0 +1,154 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/primitives/Section.astro';
+import Stack from '../components/primitives/Stack.astro';
+
+// Token data — kept in arrays so we can `.map()` over them below.
+// To add a token, add a row here. To rename a token, change it here AND in global.css.
+
+const fontTokens = [
+    { name: '--font-xxl',   value: '64px', use: '404 hero' },
+    { name: '--font-xl',    value: '32px', use: 'page heading' },
+    { name: '--font-intro', value: '24px', use: 'homepage intro' },
+    { name: '--font-lg',    value: '22px', use: 'in-body section heading' },
+    { name: '--font-base',  value: '18px', use: 'default body' },
+    { name: '--font-md',    value: '17px', use: 'long-form reading body' },
+    { name: '--font-sm',    value: '16px', use: 'card description' },
+    { name: '--font-xs',    value: '14px', use: 'footer, fine print' },
+];
+
+const spaceTokens = [
+    { name: '--space-1', value: '4px' },
+    { name: '--space-2', value: '8px' },
+    { name: '--space-3', value: '16px' },
+    { name: '--space-4', value: '24px' },
+    { name: '--space-5', value: '32px' },
+    { name: '--space-6', value: '48px' },
+    { name: '--space-7', value: '80px' },
+    { name: '--space-8', value: '120px' },
+];
+
+const colorTokens = [
+    { name: '--color-text',    value: '#1a1a1a', use: 'primary text' },
+    { name: '--color-muted',   value: '#666',    use: 'secondary text' },
+    { name: '--color-bg',      value: '#fafafa', use: 'page background' },
+    { name: '--color-border',  value: '#e5e5e5', use: 'horizontal rules, dividers' },
+    { name: '--color-surface', value: '#e5e5e5', use: 'image placeholder' },
+];
+
+const widthTokens = [
+    { name: '--width-page',    value: '880px', use: 'outer page container' },
+    { name: '--width-reading', value: '680px', use: 'long-form text column' },
+    { name: '--width-narrow',  value: '600px', use: 'about, intro' },
+];
+
+const weights = [
+    { value: 100, label: 'Thin' },
+    { value: 200, label: 'Extra Light' },
+    { value: 300, label: 'Light' },
+    { value: 400, label: 'Regular' },
+    { value: 500, label: 'Medium' },
+    { value: 600, label: 'Semi Bold' },
+    { value: 700, label: 'Bold' },
+    { value: 800, label: 'Extra Bold' },
+    { value: 900, label: 'Black' },
+];
+---
+
+<Layout
+    title="Design System — Anuj Prajapati"
+    description="A live reference of every design token, type size, color, and spacing value used on this site."
+>
+    <article class="design-system">
+        <Section>
+            <Stack gap="lg">
+                <h1>Design system</h1>
+                <p>A live preview of every token used on this site. Values below are pulled directly from <code>global.css</code> — change a token there and this page updates.</p>
+            </Stack>
+        </Section>
+
+        <Section>
+            <Stack gap="lg">
+                <h2>Typography</h2>
+
+                <Stack gap="md">
+                    <h3>Font family</h3>
+                    <p style="font-size: var(--font-intro)">TASA Orbiter — variable, weight axis 100–900</p>
+                </Stack>
+
+                <Stack gap="md">
+                    <h3>Type scale</h3>
+                    <Stack gap="md">
+                        {fontTokens.map((t) => (
+                            <div class="ds-row">
+                                <span class="ds-sample" style={`font-size: var(${t.name})`}>Aa</span>
+                                <Stack gap="sm">
+                                    <span class="ds-meta">{t.name} · {t.value}</span>
+                                    <span class="ds-meta-secondary">{t.use}</span>
+                                </Stack>
+                            </div>
+                        ))}
+                    </Stack>
+                </Stack>
+
+                <Stack gap="md">
+                    <h3>Font weights</h3>
+                    <Stack gap="sm">
+                        {weights.map((w) => (
+                            <p style={`font-weight: ${w.value}; font-size: var(--font-base)`}>
+                                {w.value} — {w.label}: The quick brown fox jumps over the lazy dog
+                            </p>
+                        ))}
+                    </Stack>
+                </Stack>
+            </Stack>
+        </Section>
+
+        <Section>
+            <Stack gap="lg">
+                <h2>Spacing</h2>
+                <Stack gap="md">
+                    {spaceTokens.map((t) => (
+                        <div class="ds-row">
+                            <span class="ds-bar" style={`width: var(${t.name})`}></span>
+                            <span class="ds-meta">{t.name} · {t.value}</span>
+                        </div>
+                    ))}
+                </Stack>
+            </Stack>
+        </Section>
+
+        <Section>
+            <Stack gap="lg">
+                <h2>Color</h2>
+                <Stack gap="md">
+                    {colorTokens.map((t) => (
+                        <div class="ds-row">
+                            <span class="ds-swatch" style={`background: var(${t.name})`}></span>
+                            <Stack gap="sm">
+                                <span class="ds-meta">{t.name} · {t.value}</span>
+                                <span class="ds-meta-secondary">{t.use}</span>
+                            </Stack>
+                        </div>
+                    ))}
+                </Stack>
+            </Stack>
+        </Section>
+
+        <Section>
+            <Stack gap="lg">
+                <h2>Layout widths</h2>
+                <Stack gap="md">
+                    {widthTokens.map((t) => (
+                        <div class="ds-row">
+                            <Stack gap="sm">
+                                <span class="ds-meta">{t.name} · {t.value}</span>
+                                <span class="ds-meta-secondary">{t.use}</span>
+                            </Stack>
+                        </div>
+                    ))}
+                </Stack>
+            </Stack>
+        </Section>
+    </article>
+</Layout>

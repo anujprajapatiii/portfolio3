@@ -26,6 +26,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/pages/about.astro` | About page |
 | `src/pages/projects/[slug].astro` | Dynamic route — generates one page per Markdown project |
 | `src/pages/404.astro` | Custom 404 |
+| `src/pages/design-system.astro` | Internal reference page — visual catalog of every token. Not in nav; visit at `/design-system` |
 | `src/layouts/Layout.astro` | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current` |
 | `src/layouts/ProjectLayout.astro` | Wraps `Layout` with the project cover + title + description block |
 | `src/content.config.ts` | Defines the `projects` collection schema (Zod) |
