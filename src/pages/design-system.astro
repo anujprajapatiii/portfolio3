@@ -37,13 +37,91 @@ const spaceTokens = [
     { name: '--space-8', value: '120px' },
 ];
 
+// Primitive palette — theme-agnostic. Grouped by family.
+const primitiveFamilies = [
+    {
+        name: 'Neutral',
+        swatches: [
+            { name: 'black', value: '#000000' },
+            { name: '900',   value: '#0e0f12' },
+            { name: '800',   value: '#141619' },
+            { name: '700',   value: '#1c1f24' },
+            { name: '600',   value: '#21252b' },
+            { name: '500',   value: '#2c323a' },
+            { name: '400',   value: '#434b56' },
+            { name: '300',   value: '#99a1ac' },
+            { name: '200',   value: '#d3d7dd' },
+            { name: '100',   value: '#f6f7f8' },
+            { name: 'white', value: '#ffffff' },
+        ],
+    },
+    {
+        name: 'Blue',
+        swatches: [
+            { name: '100', value: '#f0f3ff' },
+            { name: '200', value: '#dae5ff' },
+            { name: '300', value: '#99b6ff' },
+            { name: '400', value: '#1e50d3' },
+            { name: '500', value: '#1841ac' },
+            { name: '600', value: '#002c83' },
+        ],
+    },
+    {
+        name: 'Yellow',
+        swatches: [
+            { name: '100', value: '#fff5f5' },
+            { name: '200', value: '#ffe9d0' },
+            { name: '300', value: '#ffd293' },
+            { name: '400', value: '#ffb700' },
+            { name: '500', value: '#d17600' },
+            { name: '600', value: '#853e0f' },
+        ],
+    },
+    {
+        name: 'Red',
+        swatches: [
+            { name: '100', value: '#f7a1a2' },
+            { name: '200', value: '#f2696a' },
+            { name: '300', value: '#ec2426' },
+            { name: '400', value: '#67090a' },
+        ],
+    },
+    {
+        name: 'Green',
+        swatches: [
+            { name: '100', value: '#b4e4be' },
+            { name: '200', value: '#53c069' },
+            { name: '300', value: '#37954a' },
+            { name: '400', value: '#1a4723' },
+        ],
+    },
+    {
+        name: 'Amber',
+        swatches: [
+            { name: '100', value: '#f5c2a3' },
+            { name: '200', value: '#ee9a68' },
+            { name: '300', value: '#e66c24' },
+            { name: '400', value: '#7c370e' },
+        ],
+    },
+    {
+        name: 'Standard',
+        swatches: [
+            { name: 'terra', value: '#847b73' },
+        ],
+    },
+];
+
+// Semantic tokens — what the rest of the site actually uses.
+// Each maps to a primitive; the L/D columns show which primitive
+// is referenced in light vs dark theme.
 const colorTokens = [
-    { name: '--color-text',    light: '#1a1a1a', dark: '#f2f2f2', use: 'primary text' },
-    { name: '--color-muted',   light: '#666',    dark: '#999',    use: 'secondary text' },
-    { name: '--color-bg',      light: '#fafafa', dark: '#0f0f0f', use: 'page background' },
-    { name: '--color-border',  light: '#e5e5e5', dark: '#262626', use: 'dividers, borders' },
-    { name: '--color-surface', light: '#e5e5e5', dark: '#1a1a1a', use: 'image placeholder' },
-    { name: '--color-code-bg', light: '#f0f0f0', dark: '#1f1f1f', use: 'inline code, code blocks' },
+    { name: '--color-text',    light: 'neutral-600', dark: 'neutral-200', use: 'primary text' },
+    { name: '--color-muted',   light: 'neutral-400', dark: 'neutral-300', use: 'secondary text' },
+    { name: '--color-bg',      light: 'neutral-100', dark: 'neutral-800', use: 'page background' },
+    { name: '--color-border',  light: 'neutral-300', dark: 'neutral-500', use: 'dividers, borders' },
+    { name: '--color-surface', light: 'neutral-200', dark: 'neutral-400', use: 'image placeholder' },
+    { name: '--color-code-bg', light: 'neutral-200', dark: 'neutral-700', use: 'inline code, code blocks' },
 ];
 
 const widthTokens = [
@@ -73,7 +151,7 @@ const weights = [
         <Section>
             <Stack gap="lg">
                 <h1>Design system</h1>
-                <p>A live preview of every token used on this site. Values below are pulled directly from <code>global.css</code> — change a token there and this page updates.</p>
+                <p>A live preview of every token used on this site. Values below mirror <code>global.css</code> — when changing tokens, update this catalogue alongside the CSS.</p>
             </Stack>
         </Section>
 
@@ -158,14 +236,36 @@ const weights = [
 
         <Section>
             <Stack gap="lg">
-                <h2>Color</h2>
-                <p class="ds-meta-secondary">Each token has a light and dark value. Both swatches are shown side-by-side regardless of the active theme so you can compare.</p>
+                <h2>Primitive colors</h2>
+                <p class="ds-meta-secondary">The raw palette. Theme-agnostic — these values don't change between light and dark mode. Semantic tokens below reference these.</p>
+
+                {primitiveFamilies.map((family) => (
+                    <Stack gap="md">
+                        <h3>{family.name}</h3>
+                        <div class="ds-palette">
+                            {family.swatches.map((s) => (
+                                <div class="ds-palette-cell">
+                                    <span class="ds-swatch" style={`background: ${s.value}`}></span>
+                                    <span class="ds-meta">{s.name}</span>
+                                    <span class="ds-meta-secondary">{s.value}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </Stack>
+                ))}
+            </Stack>
+        </Section>
+
+        <Section>
+            <Stack gap="lg">
+                <h2>Semantic colors</h2>
+                <p class="ds-meta-secondary">What the rest of the site actually uses. Each maps to a primitive; the L and D columns show which primitive is referenced in light vs dark theme.</p>
                 <Stack gap="md">
                     {colorTokens.map((t) => (
                         <div class="ds-row">
                             <div class="ds-swatch-pair">
-                                <span class="ds-swatch" style={`background: ${t.light}`} title={`Light: ${t.light}`}></span>
-                                <span class="ds-swatch" style={`background: ${t.dark}`} title={`Dark: ${t.dark}`}></span>
+                                <span class="ds-swatch" style={`background: var(--${t.light})`} title={`Light: ${t.light}`}></span>
+                                <span class="ds-swatch" style={`background: var(--${t.dark})`} title={`Dark: ${t.dark}`}></span>
                             </div>
                             <Stack gap="sm">
                                 <span class="ds-meta">{t.name}</span>
