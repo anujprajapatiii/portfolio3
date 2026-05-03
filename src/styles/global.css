@@ -298,17 +298,20 @@ body {
 .site-header--floating {
     position: fixed;
     top: 0;
-    left: 50%;
+    left: var(--space-4);
+    right: var(--space-4);
     z-index: 10;
-    width: min(
-        calc(100vw - var(--space-4) - var(--space-4)),
-        calc(var(--width-page) - var(--space-4) - var(--space-4))
-    );
-    transform: translate(-50%, 0);
+    max-width: calc(var(--width-page) - var(--space-4) - var(--space-4));
+    margin-inline: auto;
+    transform: translateY(0);
+}
+
+.site-header--instant {
+    transition: none;
 }
 
 .site-header--floating.site-header--hidden {
-    transform: translate(-50%, -100%);
+    transform: translateY(-100%);
 }
 
 .brand {

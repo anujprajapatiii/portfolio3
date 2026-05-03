@@ -120,9 +120,18 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
                 const revealAfter = shell.offsetTop + shell.offsetHeight;
 
                 if (y <= revealAfter) {
-                    header.classList.remove('site-header--floating', 'site-header--hidden');
+                    header.classList.remove(
+                        'site-header--floating',
+                        'site-header--hidden',
+                        'site-header--instant'
+                    );
                 } else if (y > lastY) {
+                    header.classList.add('site-header--instant');
                     header.classList.add('site-header--floating', 'site-header--hidden');
+
+                    requestAnimationFrame(() => {
+                        header.classList.remove('site-header--instant');
+                    });
                 } else if (y < lastY) {
                     header.classList.add('site-header--floating');
                     header.classList.remove('site-header--hidden');
