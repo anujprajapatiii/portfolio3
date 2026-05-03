@@ -136,6 +136,7 @@ Open `src/styles/global.css`, edit the tokens in `:root` at the top. Don't chang
 
 ## Things not to do
 
+- Don't use uppercase or mixed-case in filenames. Always lowercase, hyphen-separated (`hawaii.png`, not `Hawaii.png` or `Hawaii_island.png`). macOS is case-insensitive so a wrong-case rename works locally but breaks on Vercel's Linux build with "file not found." Same rule for image references in markdown.
 - Don't put rendered images in `public/`. They won't be optimized.
 - Don't use `src/content/config.ts` syntax (that's the old config). The schema lives in `src/content.config.ts` and uses the `glob()` loader from `astro/loaders`.
 - Don't add raw px values inside CSS rules. Extend the token scale instead.
