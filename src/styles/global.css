@@ -22,6 +22,8 @@
    ========================================================================== */
 
 :root {
+    color-scheme: light;
+
     /* Type family */
     --font-family: 'TASA Orbiter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
 
@@ -79,6 +81,8 @@
 /* Dark theme — only the tokens that need to differ.
    Everything else (type, spacing, widths) carries over unchanged. */
 [data-theme="dark"] {
+    color-scheme: dark;
+
     --color-text:    #f2f2f2;
     --color-muted:   #999;
     --color-bg:      #0f0f0f;
@@ -94,6 +98,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Focus
+   --------------------------------------------------------------------------
+   Single theme-aware focus ring for every focusable element.
+   :focus-visible only fires for keyboard focus, not mouse clicks,
+   so this doesn't affect mouse users.
+   ========================================================================== */
+
+:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
 }
 
 /* ==========================================================================
@@ -343,6 +361,16 @@ nav a[aria-current="page"] {
     text-align: center;
 }
 
+.project-body a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.project-body a:hover {
+    color: var(--color-muted);
+}
+
 /* ==========================================================================
    About page
    ========================================================================== */
@@ -462,6 +490,16 @@ nav a[aria-current="page"] {
     font-size: var(--font-base);
 }
 
+.not-found a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.not-found a:hover {
+    color: var(--color-muted);
+}
+
 /* ==========================================================================
    Footer
    ========================================================================== */
@@ -491,5 +529,24 @@ footer a:hover {
 @media (max-width: 640px) {
     .projects {
         grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   Reduced motion
+   --------------------------------------------------------------------------
+   Respect users who've opted out of animation in their OS settings.
+   We're not killing transitions entirely (0.01ms keeps the rules valid
+   without flicker) but anything moving becomes effectively instant.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
     }
 }
