@@ -24,7 +24,11 @@ pnpm-debug.log*
 .idea/
 
 # claude code metadata
-.claude/
+# Ignore worktrees and local settings, but keep .claude/skills/ tracked
+# so skills travel with the repo. (Don't blanket-ignore .claude/ — git
+# can't re-include children of an excluded parent directory.)
+.claude/worktrees/
+.claude/settings.local.json
 
 # obsidian vault metadata
 .obsidian/
