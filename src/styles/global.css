@@ -59,11 +59,11 @@
     --space-8: 120px;
 
     /* Color — light theme defaults. Dark overrides live in [data-theme="dark"] below. */
-    --color-text:    #1a1a1a;
-    --color-muted:   #666;
-    --color-bg:      #fafafa;
-    --color-border:  #e5e5e5;
-    --color-surface: #e5e5e5;   /* image placeholder background */
+    --color-text:    #21252b;
+    --color-muted:   #434b56;
+    --color-bg:      #f6f7f8;
+    --color-border:  #99a1ac;
+    --color-surface: #d3d7dd;   /* image placeholder background */
     --color-code-bg: #f0f0f0;   /* inline code, code blocks */
 
     /* Layout widths */
@@ -84,11 +84,11 @@
 [data-theme="dark"] {
     color-scheme: dark;
 
-    --color-text:    #f2f2f2;
-    --color-muted:   #999;
-    --color-bg:      #0f0f0f;
-    --color-border:  #262626;
-    --color-surface: #1a1a1a;
+    --color-text:    #d3d7dd;
+    --color-muted:   #99a1ac;
+    --color-bg:      #141619;
+    --color-border:  #2c323a;
+    --color-surface: #434b56;
     --color-code-bg: #1f1f1f;
 }
 
