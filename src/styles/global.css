@@ -281,23 +281,34 @@ body {
    Header
    ========================================================================== */
 
+.site-header-shell {
+    min-height: var(--site-header-height, calc(var(--font-base) + var(--space-2) + var(--space-3) + var(--space-3)));
+    margin-block: calc(-1 * var(--space-3)) var(--space-7);
+}
+
 .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     padding-block: var(--space-3);
-    margin-block: calc(-1 * var(--space-3)) var(--space-7);
     background: var(--color-bg);
     transition: transform var(--transition);
 }
 
-/* Auto-hide on scroll-down. The .header--hidden class is toggled
-   by the inline script in Layout.astro. */
-.site-header.header--hidden {
-    transform: translateY(-100%);
+.site-header--floating {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 10;
+    width: min(
+        calc(100vw - var(--space-4) - var(--space-4)),
+        calc(var(--width-page) - var(--space-4) - var(--space-4))
+    );
+    transform: translate(-50%, 0);
+}
+
+.site-header--floating.site-header--hidden {
+    transform: translate(-50%, -100%);
 }
 
 .brand {

@@ -77,18 +77,20 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <header class="site-header">
-        <a href="/" class="brand">Anuj Prajapati</a>
-        <nav aria-label="Primary">
-            {navLinks.map((link) => (
-                <a
-                    href={link.href}
-                    aria-current={currentPath === link.href ? 'page' : undefined}
-                >{link.label}</a>
-            ))}
-            <ThemeToggle />
-        </nav>
-    </header>
+    <div class="site-header-shell">
+        <header class="site-header">
+            <a href="/" class="brand">Anuj Prajapati</a>
+            <nav aria-label="Primary">
+                {navLinks.map((link) => (
+                    <a
+                        href={link.href}
+                        aria-current={currentPath === link.href ? 'page' : undefined}
+                    >{link.label}</a>
+                ))}
+                <ThemeToggle />
+            </nav>
+        </header>
+    </div>
 
     <main id="main">
         <slot />
@@ -98,26 +100,32 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         <p>© 2026 Anuj Prajapati. <a href="/design-system">Design system</a></p>
     </footer>
 
-    <!-- Auto-hide header on scroll-down, reveal on scroll-up.
-         Always shown when within TOP_ZONE pixels of the page top. -->
+    <!-- The header starts in normal document flow and scrolls away naturally.
+         After it leaves the viewport, it returns only when the user scrolls up. -->
     <script is:inline>
         (function () {
             const header = document.querySelector('.site-header');
-            if (!header) return;
+            const shell = document.querySelector('.site-header-shell');
+            if (!header || !shell) return;
 
             let lastY = window.scrollY;
             let ticking = false;
-            const TOP_ZONE = 100;
+
+            const syncHeaderHeight = () => {
+                shell.style.setProperty('--site-header-height', `${header.offsetHeight}px`);
+            };
 
             const onScroll = () => {
                 const y = window.scrollY;
+                const revealAfter = shell.offsetTop + shell.offsetHeight;
 
-                if (y < TOP_ZONE) {
-                    header.classList.remove('header--hidden');
+                if (y <= revealAfter) {
+                    header.classList.remove('site-header--floating', 'site-header--hidden');
                 } else if (y > lastY) {
-                    header.classList.add('header--hidden');
+                    header.classList.add('site-header--floating', 'site-header--hidden');
                 } else if (y < lastY) {
-                    header.classList.remove('header--hidden');
+                    header.classList.add('site-header--floating');
+                    header.classList.remove('site-header--hidden');
                 }
 
                 lastY = y;
@@ -130,6 +138,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
                     ticking = true;
                 }
             }, { passive: true });
+
+            syncHeaderHeight();
+            window.addEventListener('resize', syncHeaderHeight);
         })();
     </script>
 </body>
