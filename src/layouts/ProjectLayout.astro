@@ -1,6 +1,7 @@
 ---
 import Layout from './Layout.astro';
 import { Image, getImage } from 'astro:assets';
+import PageHeader from '../components/primitives/PageHeader.astro';
 
 const { project } = Astro.props;
 const { title, description, cover } = project.data;
@@ -15,7 +16,7 @@ const og = await getImage({
 ---
 
 <Layout
-    title={`${title} — Your Name`}
+    title={`${title} — Anuj Prajapati`}
     description={description}
     ogImage={og.src}
     ogType="article"
@@ -29,8 +30,11 @@ const og = await getImage({
             loading="eager"
             class="project-cover"
         />
-        <h1 class="project-title">{title}</h1>
-        <p class="project-description">{description}</p>
+        <PageHeader
+            title={title}
+            description={description}
+            class="project-header"
+        />
         <div class="project-body">
             <slot />
         </div>

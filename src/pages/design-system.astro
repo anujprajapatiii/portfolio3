@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/primitives/PageHeader.astro';
 import Section from '../components/primitives/Section.astro';
 import Stack from '../components/primitives/Stack.astro';
 
@@ -149,10 +150,9 @@ const weights = [
 >
     <article class="design-system">
         <Section>
-            <Stack gap="lg">
-                <h1>Design system</h1>
+            <PageHeader title="Design system">
                 <p>A live preview of every token used on this site. Values below mirror <code>global.css</code> — when changing tokens, update this catalogue alongside the CSS.</p>
-            </Stack>
+            </PageHeader>
         </Section>
 
         <Section>

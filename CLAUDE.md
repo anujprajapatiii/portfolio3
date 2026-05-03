@@ -33,7 +33,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/content/projects/<slug>/index.md` | One folder = one case study |
 | `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
 | `src/content/projects/<slug>/*.png` | Inline images for that case study |
-| `src/components/primitives/` | Layout primitives — `Section.astro`, `Stack.astro` |
+| `src/components/primitives/` | Layout primitives — `PageHeader.astro`, `Section.astro`, `Stack.astro` |
 | `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
 | `astro.config.mjs` | Site URL + sitemap integration |
 | `public/` | Static files served as-is — favicons only, no source images |
@@ -75,7 +75,7 @@ Create `src/pages/<name>.astro`:
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="<Name> — Your Name" description="...">
+<Layout title="<Name> — Anuj Prajapati" description="...">
     <section class="<name>">
         <!-- content -->
     </section>
@@ -115,8 +115,9 @@ Edit the `navLinks` array in `src/layouts/Layout.astro`. Active-link styling com
 
 ### Compose a page with primitives
 
-Two layout components live in `src/components/primitives/`:
+Three layout components live in `src/components/primitives/`:
 
+- **`<PageHeader title="..." description="...">`** — consistent top-level page/project heading. Use `description` for plain text or the default slot for richer intro content.
 - **`<Section>`** — outer wrapper for a chunk of a page. Two sections in a row get a consistent `--space-7` (80px) gap between them. No props.
 - **`<Stack gap="sm | md | lg">`** — vertical list of children with consistent gap (8px / 16px / 32px). Default is `md`. Stacks can nest — outer Stack handles "heading vs body" rhythm, inner Stack handles "paragraph to paragraph" rhythm.
 
@@ -125,7 +126,7 @@ Pattern:
 ```astro
 <Section>
     <Stack gap="lg">
-        <h1>Page heading</h1>
+        <PageHeader title="Page heading" />
         <Stack>
             <p>Body paragraph.</p>
             <p>Body paragraph.</p>

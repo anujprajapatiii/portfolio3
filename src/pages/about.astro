@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/primitives/PageHeader.astro';
 import Section from '../components/primitives/Section.astro';
 import Stack from '../components/primitives/Stack.astro';
 ---
@@ -11,7 +12,7 @@ import Stack from '../components/primitives/Stack.astro';
     <article class="about">
         <Section>
             <Stack gap="lg">
-                <h1>About</h1>
+                <PageHeader title="About" />
                 <Stack gap="md">
                     <p>I'm a designer based in Mumbai. I work across visual identity and digital products — sometimes for early-stage startups, sometimes for established teams that need a fresh eye.</p>
                     <p>Before going independent, I led design at [Place] and trained at [School]. I care about the seams: the tiny moments where craft separates a product that feels right from one that almost does.</p>
