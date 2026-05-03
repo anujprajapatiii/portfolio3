@@ -1,0 +1,20 @@
+---
+// Stack — vertical layout with consistent gap between children.
+// Like Figma auto-layout (vertical) or Webflow flex-vertical-with-gap.
+//
+// Props:
+//   gap — 'sm' | 'md' | 'lg' (default: 'md')
+//     sm = 8px   (tight — for list items, label+control)
+//     md = 16px  (standard — for paragraphs)
+//     lg = 32px  (loose — for distinct content blocks)
+
+interface Props {
+    gap?: 'sm' | 'md' | 'lg';
+}
+
+const { gap = 'md' } = Astro.props;
+---
+
+<div class:list={['stack', `stack--gap-${gap}`]}>
+    <slot />
+</div>

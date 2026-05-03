@@ -32,6 +32,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/content/projects/<slug>/index.md` | One folder = one case study |
 | `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
 | `src/content/projects/<slug>/*.png` | Inline images for that case study |
+| `src/components/primitives/` | Layout primitives — `Section.astro`, `Stack.astro` |
 | `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
 | `astro.config.mjs` | Site URL + sitemap integration |
 | `public/` | Static files served as-is — favicons only, no source images |
@@ -110,6 +111,39 @@ Styling for both forms lives under `.project-body img` and `.project-body figure
 ### Add a nav link
 
 Edit the `navLinks` array in `src/layouts/Layout.astro`. Active-link styling comes for free via `aria-current="page"`.
+
+### Compose a page with primitives
+
+Two layout components live in `src/components/primitives/`:
+
+- **`<Section>`** — outer wrapper for a chunk of a page. Two sections in a row get a consistent `--space-7` (80px) gap between them. No props.
+- **`<Stack gap="sm | md | lg">`** — vertical list of children with consistent gap (8px / 16px / 32px). Default is `md`. Stacks can nest — outer Stack handles "heading vs body" rhythm, inner Stack handles "paragraph to paragraph" rhythm.
+
+Pattern:
+
+```astro
+<Section>
+    <Stack gap="lg">
+        <h1>Page heading</h1>
+        <Stack>
+            <p>Body paragraph.</p>
+            <p>Body paragraph.</p>
+        </Stack>
+    </Stack>
+</Section>
+
+<Section>
+    <Stack gap="md">
+        <h2>Next section</h2>
+        <Stack gap="sm">
+            <a href="...">Tight list item</a>
+            <a href="...">Tight list item</a>
+        </Stack>
+    </Stack>
+</Section>
+```
+
+When using these primitives, **don't add `margin-top` or `margin-bottom` to inner elements** — Stack handles spacing. Single source of truth.
 
 ### Change the global look
 
