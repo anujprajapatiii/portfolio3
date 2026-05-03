@@ -10,7 +10,7 @@ order: 3
 
 Age of Empires II shipped in 1999 and still looks readable today. That's not nostalgia — it's discipline. The team was painting tiny isometric tiles that had to communicate "this is a Frankish knight on a stone road next to a market" at a single glance, often when the player was zoomed out and watching twelve other things at once. The art direction is a masterclass in legibility under constraint.
 
-![Comparison of Western European architecture](./architecture.png)
+![A Western European stone keep with blue team markings from Age of Empires II, shown on grassy terrain with a dirt path and medieval architectural details](./architecture.png)
 
 ## Civilization sets
 
@@ -20,6 +20,10 @@ The Definitive Edition added more sets and reskinned the originals. Worth compar
 
 - The original Western European keep silhouette is squatter and heavier than the DE version.
 - DE pushed contrast and saturation, which reads better on modern displays but loses some of the painterly feel.
+- A new Hawaiian style would need broad, readable forms: open-air hale structures, sweeping low roofs, lava-rock foundations, and rich botanical silhouettes. It should favor immediate island identity over literal detail, giving the player a quick visual cue of a coastal culture with a different architectural rhythm.
+
+![Hawaii](./Hawaii.png)
+
 
 ## Color and ownership
 
