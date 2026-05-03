@@ -97,5 +97,40 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <footer>
         <p>© 2026 Your Name. <a href="/design-system">Design system</a></p>
     </footer>
+
+    <!-- Auto-hide header on scroll-down, reveal on scroll-up.
+         Always shown when within TOP_ZONE pixels of the page top. -->
+    <script is:inline>
+        (function () {
+            const header = document.querySelector('header');
+            if (!header) return;
+
+            let lastY = window.scrollY;
+            let ticking = false;
+            const TOP_ZONE = 100;
+
+            const onScroll = () => {
+                const y = window.scrollY;
+
+                if (y < TOP_ZONE) {
+                    header.classList.remove('header--hidden');
+                } else if (y > lastY) {
+                    header.classList.add('header--hidden');
+                } else if (y < lastY) {
+                    header.classList.remove('header--hidden');
+                }
+
+                lastY = y;
+                ticking = false;
+            };
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(onScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
+    </script>
 </body>
 </html>

@@ -195,10 +195,22 @@ body {
    ========================================================================== */
 
 header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: var(--space-7);
+    padding-block: var(--space-3);
+    margin-block: calc(-1 * var(--space-3)) var(--space-7);
+    background: var(--color-bg);
+    transition: transform var(--transition);
+}
+
+/* Auto-hide on scroll-down. The .header--hidden class is toggled
+   by the inline script in Layout.astro. */
+header.header--hidden {
+    transform: translateY(-100%);
 }
 
 .brand {
