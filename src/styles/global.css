@@ -1,10 +1,11 @@
-/* Reset and base */
+/* === Reset === */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* === Base === */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
     font-size: 18px;
@@ -16,6 +17,26 @@ body {
     padding: 60px 24px;
 }
 
+/* === Skip-to-content link === */
+.skip-link {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 8px 12px;
+    background: #1a1a1a;
+    color: #fafafa;
+    text-decoration: none;
+    border-radius: 4px;
+    transform: translateY(-150%);
+    transition: transform 0.15s;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+/* === Header === */
 header {
     display: flex;
     justify-content: space-between;
@@ -23,9 +44,11 @@ header {
     margin-bottom: 80px;
 }
 
-h1 {
+.brand {
     font-size: 20px;
     font-weight: 500;
+    color: #1a1a1a;
+    text-decoration: none;
 }
 
 nav a {
@@ -38,12 +61,18 @@ nav a:hover {
     text-decoration: underline;
 }
 
+nav a[aria-current="page"] {
+    text-decoration: underline;
+}
+
+/* === Homepage intro === */
 .intro {
     margin-bottom: 80px;
     font-size: 24px;
     max-width: 600px;
 }
 
+/* === Project grid (homepage) === */
 .projects {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -74,18 +103,23 @@ nav a:hover {
     color: #666;
 }
 
-footer {
-    margin-top: 120px;
-    padding-top: 24px;
-    border-top: 1px solid #e5e5e5;
-    font-size: 14px;
-    color: #666;
+/* === Project detail page === */
+.project-cover {
+    width: 100%;
+    height: auto;
+    margin-bottom: 32px;
 }
 
-@media (max-width: 640px) {
-    .projects {
-        grid-template-columns: 1fr;
-    }
+.project-title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.project-description {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 48px;
 }
 
 .project-body {
@@ -115,6 +149,7 @@ footer {
     margin-bottom: 4px;
 }
 
+/* === About page === */
 .about {
     max-width: 600px;
 }
@@ -142,4 +177,35 @@ footer {
 
 .about li {
     margin-bottom: 8px;
+}
+
+/* === 404 page === */
+.not-found {
+    max-width: 600px;
+}
+
+.not-found h1 {
+    font-size: 64px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.not-found p {
+    font-size: 18px;
+}
+
+/* === Footer === */
+footer {
+    margin-top: 120px;
+    padding-top: 24px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 14px;
+    color: #666;
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+    .projects {
+        grid-template-columns: 1fr;
+    }
 }
