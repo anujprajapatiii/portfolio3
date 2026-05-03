@@ -77,20 +77,18 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <div class="site-header-shell">
-        <header class="site-header">
-            <a href="/" class="brand">Anuj Prajapati</a>
-            <nav aria-label="Primary">
-                {navLinks.map((link) => (
-                    <a
-                        href={link.href}
-                        aria-current={currentPath === link.href ? 'page' : undefined}
-                    >{link.label}</a>
-                ))}
-                <ThemeToggle />
-            </nav>
-        </header>
-    </div>
+    <header class="site-header">
+        <a href="/" class="brand">Anuj Prajapati</a>
+        <nav aria-label="Primary">
+            {navLinks.map((link) => (
+                <a
+                    href={link.href}
+                    aria-current={currentPath === link.href ? 'page' : undefined}
+                >{link.label}</a>
+            ))}
+            <ThemeToggle />
+        </nav>
+    </header>
 
     <main id="main">
         <slot />
@@ -100,57 +98,5 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         <p>© 2026 Anuj Prajapati. <a href="/design-system">Design system</a></p>
     </footer>
 
-    <!-- The header starts in normal document flow and scrolls away naturally.
-         After it leaves the viewport, it returns only when the user scrolls up. -->
-    <script is:inline>
-        (function () {
-            const header = document.querySelector('.site-header');
-            const shell = document.querySelector('.site-header-shell');
-            if (!header || !shell) return;
-
-            let lastY = window.scrollY;
-            let ticking = false;
-
-            const syncHeaderHeight = () => {
-                shell.style.setProperty('--site-header-height', `${header.offsetHeight}px`);
-            };
-
-            const onScroll = () => {
-                const y = window.scrollY;
-                const revealAfter = shell.offsetTop + shell.offsetHeight;
-
-                if (y <= revealAfter) {
-                    header.classList.remove(
-                        'site-header--floating',
-                        'site-header--hidden',
-                        'site-header--instant'
-                    );
-                } else if (y > lastY) {
-                    header.classList.add('site-header--instant');
-                    header.classList.add('site-header--floating', 'site-header--hidden');
-
-                    requestAnimationFrame(() => {
-                        header.classList.remove('site-header--instant');
-                    });
-                } else if (y < lastY) {
-                    header.classList.add('site-header--floating');
-                    header.classList.remove('site-header--hidden');
-                }
-
-                lastY = y;
-                ticking = false;
-            };
-
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(onScroll);
-                    ticking = true;
-                }
-            }, { passive: true });
-
-            syncHeaderHeight();
-            window.addEventListener('resize', syncHeaderHeight);
-        })();
-    </script>
 </body>
 </html>

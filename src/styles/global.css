@@ -281,37 +281,13 @@ body {
    Header
    ========================================================================== */
 
-.site-header-shell {
-    min-height: var(--site-header-height, calc(var(--font-base) + var(--space-2) + var(--space-3) + var(--space-3)));
-    margin-block: calc(-1 * var(--space-3)) var(--space-7);
-}
-
 .site-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     padding-block: var(--space-3);
+    margin-block: calc(-1 * var(--space-3)) var(--space-7);
     background: var(--color-bg);
-    transition: transform var(--transition);
-}
-
-.site-header--floating {
-    position: fixed;
-    top: 0;
-    left: var(--space-4);
-    right: var(--space-4);
-    z-index: 10;
-    max-width: calc(var(--width-page) - var(--space-4) - var(--space-4));
-    margin-inline: auto;
-    transform: translateY(0);
-}
-
-.site-header--instant {
-    transition: none;
-}
-
-.site-header--floating.site-header--hidden {
-    transform: translateY(-100%);
 }
 
 .brand {
