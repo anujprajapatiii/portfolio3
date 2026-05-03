@@ -56,7 +56,7 @@
     --space-7: 80px;
     --space-8: 120px;
 
-    /* Color */
+    /* Color — light theme defaults. Dark overrides live in [data-theme="dark"] below. */
     --color-text:    #1a1a1a;
     --color-muted:   #666;
     --color-bg:      #fafafa;
@@ -74,6 +74,16 @@
     /* Other */
     --radius-sm:   4px;
     --transition:  0.15s;
+}
+
+/* Dark theme — only the tokens that need to differ.
+   Everything else (type, spacing, widths) carries over unchanged. */
+[data-theme="dark"] {
+    --color-text:    #f2f2f2;
+    --color-muted:   #999;
+    --color-bg:      #0f0f0f;
+    --color-border:  #262626;
+    --color-surface: #1a1a1a;
 }
 
 /* ==========================================================================
@@ -99,6 +109,8 @@ body {
     max-width: var(--width-page);
     margin: 0 auto;
     padding: var(--space-7) var(--space-4);
+    /* Smooth the theme swap so it doesn't feel jarring */
+    transition: background-color var(--transition), color var(--transition);
 }
 
 /* ==========================================================================
@@ -177,6 +189,37 @@ nav a:hover {
 nav a[aria-current="page"] {
     text-decoration: underline;
 }
+
+/* === Theme toggle button === */
+
+.theme-toggle {
+    margin-left: var(--space-4);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+    transition: color var(--transition);
+}
+
+.theme-toggle:hover {
+    color: var(--color-muted);
+}
+
+.theme-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Show moon by default (clicking switches to dark). Show sun in dark mode. */
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: block; }
+
+[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* ==========================================================================
    Homepage intro

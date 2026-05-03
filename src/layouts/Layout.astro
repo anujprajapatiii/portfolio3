@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
 
 interface Props {
     title?: string;
@@ -30,6 +31,18 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Set theme BEFORE first paint to prevent a flash of the wrong theme.
+         Reads saved preference, falls back to OS preference, defaults to light. -->
+    <script is:inline>
+        (function () {
+            const stored = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="canonical" href={canonicalUrl} />
@@ -71,6 +84,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
                     aria-current={currentPath === link.href ? 'page' : undefined}
                 >{link.label}</a>
             ))}
+            <ThemeToggle />
         </nav>
     </header>
 

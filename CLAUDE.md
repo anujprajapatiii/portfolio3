@@ -154,6 +154,7 @@ Open `src/styles/global.css`, edit the tokens in `:root` at the top. Don't chang
 
 ## Conventions
 
+- **Theming** uses a `data-theme` attribute on `<html>`. Default is light (defined in `:root` in `global.css`). Dark overrides only the color tokens via `[data-theme="dark"]`. To add a new theme (e.g. editorial, high-contrast), add another `[data-theme="<name>"]` block alongside the dark one and override whichever tokens differ. Theme is set by an inline script in `Layout.astro` <head> that runs before paint to prevent a flash; it reads `localStorage.theme`, falls back to `prefers-color-scheme`, defaults to light. The `<ThemeToggle />` component in the header writes to `localStorage` on click.
 - **Fonts** live in `public/fonts/`. Active font: TASA Orbiter (variable, 100–900 weight axis). Loaded via `@font-face` in `global.css` and preloaded via a `<link rel="preload">` in `Layout.astro`. To swap fonts, replace the file in `public/fonts/`, update both the `@font-face` `src` and the preload `href`, and update `--font-family` in tokens.
 - **Image rule:** if it gets rendered into a page, it lives in `src/` and goes through `<Image />`. If it's a favicon or robots.txt, it lives in `public/`.
 - **One `<h1>` per page.** The header brand is `<a class="brand">`, not an `<h1>`.
