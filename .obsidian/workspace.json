@@ -1,0 +1,198 @@
+{
+  "main": {
+    "id": "60ca10a3d8069d8f",
+    "type": "split",
+    "children": [
+      {
+        "id": "b6da1a0b49c58a47",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "40a73e82ffd84d3f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CLAUDE.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CLAUDE"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "cc0e3bc80aeb6d13",
+    "type": "split",
+    "children": [
+      {
+        "id": "866ed4e672f8347c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6008135202aa4216",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "e91621b7308a1b39",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "5639729469b6b3f1",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c2a84c6d7c3b2aae",
+    "type": "split",
+    "children": [
+      {
+        "id": "7ef47dc69c1c5f4e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cdd4094d966a588c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "CLAUDE.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for CLAUDE"
+            }
+          },
+          {
+            "id": "0b83442ee701dbf9",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "CLAUDE.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from CLAUDE"
+            }
+          },
+          {
+            "id": "e37a76ff67015cb0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "3ff048dac703c9be",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "b008500e9a066775",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "CLAUDE.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of CLAUDE"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "40a73e82ffd84d3f",
+  "lastOpenFiles": [
+    "README.md",
+    "public/favicon.svg",
+    "src/content/projects/aoe2-art-direction/architecture.png",
+    "src/content/projects/project-one/index.md",
+    "src/content/projects/project-one/cover.png",
+    "src/content/projects/aoe2-art-direction/index.md",
+    "src/content/projects/aoe2-art-direction/hawaii.png",
+    "src/content/projects/aoe2-art-direction/cover.png",
+    "CLAUDE.md"
+  ]
+}

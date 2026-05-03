@@ -119,6 +119,7 @@ Open `src/styles/global.css`, edit the tokens in `:root` at the top. Don't chang
 
 ## Conventions
 
+- **Fonts** live in `public/fonts/`. Active font: TASA Orbiter (variable, 100–900 weight axis). Loaded via `@font-face` in `global.css` and preloaded via a `<link rel="preload">` in `Layout.astro`. To swap fonts, replace the file in `public/fonts/`, update both the `@font-face` `src` and the preload `href`, and update `--font-family` in tokens.
 - **Image rule:** if it gets rendered into a page, it lives in `src/` and goes through `<Image />`. If it's a favicon or robots.txt, it lives in `public/`.
 - **One `<h1>` per page.** The header brand is `<a class="brand">`, not an `<h1>`.
 - **Class names are semantic** (`.brand`, `.project-card`, `.about`), never visual (`.red`, `.big`).

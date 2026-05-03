@@ -1,4 +1,19 @@
 /* ==========================================================================
+   Web fonts
+   --------------------------------------------------------------------------
+   TASA Orbiter — variable font, weight axis 100–900, single .ttf file.
+   Lives in /public/fonts/ so it's served from the site root.
+   ========================================================================== */
+
+@font-face {
+    font-family: 'TASA Orbiter';
+    src: url('/fonts/TASAOrbiter-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================================================
    Design tokens
    --------------------------------------------------------------------------
    Every value below is referenced by name throughout the rest of this file.
@@ -7,6 +22,9 @@
    ========================================================================== */
 
 :root {
+    /* Type family */
+    --font-family: 'TASA Orbiter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
     /* Type scale */
     --font-xs:  14px;   /* footer, fine print */
     --font-sm:  16px;   /* card description */
@@ -19,6 +37,7 @@
 
     --line-tight: 1.5;
     --line-loose: 1.6;
+    --weight-regular: 400;
     --weight-medium: 500;
 
     /* Spacing scale — multiples of 8 */
@@ -66,7 +85,7 @@
    ========================================================================== */
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     font-size: var(--font-base);
     line-height: var(--line-tight);
     color: var(--color-text);

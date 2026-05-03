@@ -34,6 +34,15 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <link rel="icon" href="/favicon.ico" />
     <link rel="canonical" href={canonicalUrl} />
 
+    <!-- Preload the variable font so it's available before CSS parses -->
+    <link
+        rel="preload"
+        href="/fonts/TASAOrbiter-VariableFont_wght.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin
+    />
+
     <title>{title}</title>
     <meta name="description" content={description} />
 
