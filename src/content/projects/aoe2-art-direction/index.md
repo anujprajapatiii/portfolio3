@@ -10,6 +10,8 @@ order: 3
 
 Age of Empires II shipped in 1999 and still looks readable today. That's not nostalgia — it's discipline. The team was painting tiny isometric tiles that had to communicate "this is a Frankish knight on a stone road next to a market" at a single glance, often when the player was zoomed out and watching twelve other things at once. The art direction is a masterclass in legibility under constraint.
 
+![Comparison of Western European architecture](./architecture.png)
+
 ## Civilization sets
 
 Each of the original thirteen civilizations got its own architecture set, but the game only used four visual families: West European, East European, Middle Eastern, and East Asian. That's an interesting compromise. Authentic-per-civ would have been impossible to render at the time and would have hurt readability — the player has to recognize "that's an enemy castle" in a quarter-second. Four families, with palette and silhouette as the differentiators, was enough to feel diverse without becoming visual noise.
