@@ -7,14 +7,23 @@ import Stack from '../components/primitives/Stack.astro';
 // To add a token, add a row here. To rename a token, change it here AND in global.css.
 
 const fontTokens = [
-    { name: '--font-xxl',   value: '64px', use: '404 hero' },
-    { name: '--font-xl',    value: '32px', use: 'page heading' },
-    { name: '--font-intro', value: '24px', use: 'homepage intro' },
-    { name: '--font-lg',    value: '22px', use: 'in-body section heading' },
-    { name: '--font-base',  value: '18px', use: 'default body' },
-    { name: '--font-md',    value: '17px', use: 'long-form reading body' },
-    { name: '--font-sm',    value: '16px', use: 'card description' },
-    { name: '--font-xs',    value: '14px', use: 'footer, fine print' },
+    { name: '--font-display', value: '72px', use: 'hero / landing moments' },
+    { name: '--font-xl',      value: '40px', use: 'page heading' },
+    { name: '--font-lg',      value: '24px', use: 'in-body heading, homepage intro' },
+    { name: '--font-base',    value: '18px', use: 'body' },
+    { name: '--font-sm',      value: '16px', use: 'secondary body, card descriptions' },
+    { name: '--font-xs',      value: '13px', use: 'fine print, captions' },
+];
+
+const leadingTokens = [
+    { name: '--leading-display', value: '1.05', use: '40px+' },
+    { name: '--leading-tight',   value: '1.3',  use: '22–32px' },
+    { name: '--leading-base',    value: '1.5',  use: 'body default' },
+    { name: '--leading-loose',   value: '1.6',  use: 'long-form reading' },
+];
+
+const trackingTokens = [
+    { name: '--tracking-tight', value: '-0.015em', use: 'display sizes' },
 ];
 
 const spaceTokens = [
@@ -81,7 +90,35 @@ const weights = [
                     <Stack gap="md">
                         {fontTokens.map((t) => (
                             <div class="ds-row">
-                                <span class="ds-sample" style={`font-size: var(${t.name})`}>Aa</span>
+                                <span class="ds-sample" style={`font-size: var(${t.name}); line-height: 1`}>Aa</span>
+                                <Stack gap="sm">
+                                    <span class="ds-meta">{t.name} · {t.value}</span>
+                                    <span class="ds-meta-secondary">{t.use}</span>
+                                </Stack>
+                            </div>
+                        ))}
+                    </Stack>
+                </Stack>
+
+                <Stack gap="md">
+                    <h3>Line height</h3>
+                    <Stack gap="md">
+                        {leadingTokens.map((t) => (
+                            <div class="ds-row">
+                                <Stack gap="sm">
+                                    <span class="ds-meta">{t.name} · {t.value}</span>
+                                    <span class="ds-meta-secondary">{t.use}</span>
+                                </Stack>
+                            </div>
+                        ))}
+                    </Stack>
+                </Stack>
+
+                <Stack gap="md">
+                    <h3>Letter spacing</h3>
+                    <Stack gap="md">
+                        {trackingTokens.map((t) => (
+                            <div class="ds-row">
                                 <Stack gap="sm">
                                     <span class="ds-meta">{t.name} · {t.value}</span>
                                     <span class="ds-meta-secondary">{t.use}</span>
