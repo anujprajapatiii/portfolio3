@@ -22,7 +22,7 @@ The Definitive Edition added more sets and reskinned the originals. Worth compar
 - DE pushed contrast and saturation, which reads better on modern displays but loses some of the painterly feel.
 - A new Hawaiian style would need broad, readable forms: open-air hale structures, sweeping low roofs, lava-rock foundations, and rich botanical silhouettes. It should favor immediate island identity over literal detail, giving the player a quick visual cue of a coastal culture with a different architectural rhythm.
 
-![Hawaii](./Hawaii.png)
+![Hawaii](./hawaii.png)
 
 
 ## Color and ownership
