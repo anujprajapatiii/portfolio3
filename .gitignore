@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # claude code metadata
 .claude/
+
+# obsidian vault metadata
+.obsidian/
