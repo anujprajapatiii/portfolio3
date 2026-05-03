@@ -22,7 +22,7 @@ const projects = (await getCollection('projects')).sort(
                         src={project.data.cover}
                         alt={`${project.data.title} cover`}
                         widths={[400, 800, 1200]}
-                        sizes="(max-width: 640px) 100vw, 400px"
+                        sizes="(max-width: 640px) calc(100vw - 48px), 344px"
                         loading={i === 0 ? 'eager' : 'lazy'}
                     />
                     <h2>{project.data.title}</h2>

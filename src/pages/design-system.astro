@@ -126,9 +126,26 @@ const colorTokens = [
 ];
 
 const widthTokens = [
-    { name: '--width-page',    value: '880px', use: 'outer page container' },
-    { name: '--width-reading', value: '680px', use: 'long-form text column' },
-    { name: '--width-narrow',  value: '600px', use: 'about, intro' },
+    {
+        name: '--width-container',
+        value: '720px',
+        use: 'primary content column',
+    },
+    {
+        name: '--width-page',
+        value: 'calc(var(--width-container) + var(--space-4) + var(--space-4))',
+        use: 'body shell including side padding',
+    },
+    {
+        name: '--width-reading',
+        value: 'var(--width-container)',
+        use: 'long-form text column',
+    },
+    {
+        name: '--width-narrow',
+        value: 'var(--width-container)',
+        use: 'about, intro',
+    },
 ];
 
 const weights = [

@@ -129,9 +129,12 @@
     --space-8: 120px;
 
     /* Layout widths */
-    --width-page:    880px;     /* outer page container */
-    --width-reading: 680px;     /* long-form text */
-    --width-narrow:  600px;     /* about, intro */
+    --width-container: 720px;   /* primary content column */
+    --width-page: calc(
+        var(--width-container) + var(--space-4) + var(--space-4)
+    ); /* body shell including side padding */
+    --width-reading: var(--width-container);
+    --width-narrow: var(--width-container);
 
     /* Breakpoints (referenced in @media) */
     --bp-mobile: 640px;
