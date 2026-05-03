@@ -34,6 +34,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
 | `src/content/projects/<slug>/*.png` | Inline images for that case study |
 | `src/components/primitives/` | Layout primitives — `Section.astro`, `Stack.astro` |
+| `src/components/**/*.stories.ts` | Astrobook stories. Live next to the component they document. |
 | `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
 | `astro.config.mjs` | Site URL + sitemap integration |
 | `public/` | Static files served as-is — favicons only, no source images |
@@ -112,6 +113,24 @@ Styling for both forms lives under `.project-body img` and `.project-body figure
 ### Add a nav link
 
 Edit the `navLinks` array in `src/layouts/Layout.astro`. Active-link styling comes for free via `aria-current="page"`.
+
+### Document a component with Astrobook
+
+Astrobook (component playground) is integrated. The playground lives at `/dashboard` (visit in dev or production). To add a component to it, drop a `*.stories.ts` file next to the component:
+
+```ts
+// src/components/primitives/MyComponent.stories.ts
+import MyComponent from './MyComponent.astro';
+
+export default {
+    component: MyComponent,
+};
+
+export const Default = { args: {} };
+export const WithProp = { args: { variant: 'lg' } };
+```
+
+Each named export becomes a story shown in the dashboard sidebar. Astrobook's playground routes (`/dashboard/*` and `/stories/*`) are excluded from the sitemap so they don't get indexed.
 
 ### Compose a page with primitives
 
