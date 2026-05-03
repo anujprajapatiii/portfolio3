@@ -29,8 +29,9 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/layouts/Layout.astro` | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current` |
 | `src/layouts/ProjectLayout.astro` | Wraps `Layout` with the project cover + title + description block |
 | `src/content.config.ts` | Defines the `projects` collection schema (Zod) |
-| `src/content/projects/*.md` | One file = one case study |
-| `src/content/projects/*.png` | Cover images, co-located with the markdown |
+| `src/content/projects/<slug>/index.md` | One folder = one case study |
+| `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
+| `src/content/projects/<slug>/*.png` | Inline images for that case study |
 | `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
 | `astro.config.mjs` | Site URL + sitemap integration |
 | `public/` | Static files served as-is — favicons only, no source images |
@@ -41,13 +42,16 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 
 ### Add a new project
 
-1. Drop a cover image into `src/content/projects/`. Convention: `<slug>-cover.png` (or `.jpg`).
-2. Create `src/content/projects/<slug>.md` with this frontmatter shape:
+Each project lives in its own folder. The folder name becomes the URL slug.
+
+1. Create `src/content/projects/<slug>/`.
+2. Drop a cover image inside as `cover.png` (or `.jpg`).
+3. Create `src/content/projects/<slug>/index.md`:
    ```md
    ---
    title: Project Name
    description: One-line summary shown on cards and project page
-   cover: ./<slug>-cover.png
+   cover: ./cover.png
    date: 2026-05-03
    order: 4
    ---
@@ -56,9 +60,9 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 
    Body content as plain Markdown.
    ```
-3. Save. Dev server hot-reloads. The project appears on the homepage at `order` position and at the URL `/projects/<slug>`.
+4. Save. Dev server hot-reloads. The project appears on the homepage at `order` position and at the URL `/projects/<slug>`.
 
-No HTML, no JavaScript, no homepage edits.
+The slug-stripping logic (`generateId` in `content.config.ts`) is what turns `<slug>/index.md` into the URL `/projects/<slug>` rather than `/projects/<slug>/index`.
 
 ### Add a new page
 
@@ -80,7 +84,28 @@ Add a corresponding rule block in `global.css` referencing tokens.
 
 ### Swap a cover image
 
-Replace the file at `src/content/projects/<slug>-cover.png`. Filename must match what's in the markdown's `cover:` field. No other changes needed.
+Replace `src/content/projects/<slug>/cover.png` with the new file at the same name. No other changes needed.
+
+### Add inline images inside a case study
+
+Drop the image into the project's folder next to `index.md`. Reference it with standard Markdown syntax and a relative path:
+
+```md
+![Alt text describing the image](./architecture.png)
+```
+
+The leading `./` is required — it tells Astro to optimize the image. Filenames can be short (e.g. `architecture.png`, `team-colors.png`) since they're already scoped to the project's folder.
+
+For a caption, drop in a raw HTML `<figure>` (Markdown supports inline HTML, separate it with blank lines above and below):
+
+```md
+<figure>
+  <img src="./team-colors.png" alt="...">
+  <figcaption>Caption text.</figcaption>
+</figure>
+```
+
+Styling for both forms lives under `.project-body img` and `.project-body figure` in `global.css`.
 
 ### Add a nav link
 

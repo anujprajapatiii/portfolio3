@@ -223,6 +223,28 @@ nav a[aria-current="page"] {
     margin-bottom: var(--space-1);
 }
 
+.project-body img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: var(--space-6) 0;
+    background: var(--color-surface);
+}
+
+.project-body figure {
+    margin: var(--space-6) 0;
+}
+
+.project-body figure img {
+    margin: 0 0 var(--space-2) 0;
+}
+
+.project-body figcaption {
+    font-size: var(--font-sm);
+    color: var(--color-muted);
+    text-align: center;
+}
+
 /* ==========================================================================
    About page
    ========================================================================== */

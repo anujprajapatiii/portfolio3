@@ -1,7 +1,7 @@
 ---
 title: Project Two
 description: Mobile app redesign for a fintech
-cover: ./project-two-cover.png
+cover: ./cover.png
 date: 2026-02-20
 order: 2
 ---

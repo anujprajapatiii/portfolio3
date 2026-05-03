@@ -1,7 +1,7 @@
 ---
 title: Age of Empires II — An Art Direction Study
 description: Notes on legibility, civilization sets, and the craft of medieval pixel art
-cover: ./aoe2-cover.png
+cover: ./cover.png
 date: 2026-05-03
 order: 3
 ---

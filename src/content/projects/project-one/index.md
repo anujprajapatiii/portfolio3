@@ -1,7 +1,7 @@
 ---
 title: Project One
 description: Brand identity for a coffee roaster
-cover: ./project-one-cover.png
+cover: ./cover.png
 date: 2026-01-15
 order: 1
 ---
