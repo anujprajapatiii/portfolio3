@@ -1,13 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
 ---
 
 <Layout
     title="Page not found — Your Name"
     description="The page you're looking for doesn't exist."
 >
-    <section class="not-found">
-        <h1>404</h1>
-        <p>This page doesn't exist. <a href="/">Go home</a>.</p>
-    </section>
+    <Section size="lg">
+        <Container size="narrow">
+            <div class="not-found">
+                <Stack gap="md">
+                    <h1>404</h1>
+                    <p>This page doesn't exist. <a href="/">Go home</a>.</p>
+                </Stack>
+            </div>
+        </Container>
+    </Section>
 </Layout>

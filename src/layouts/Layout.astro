@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import PageWrapper from '../components/primitives/PageWrapper.astro';
+import Container from '../components/primitives/Container.astro';
+import Cluster from '../components/primitives/Cluster.astro';
 
 interface Props {
     title?: string;
@@ -78,24 +81,36 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <a href="#main" class="skip-link">Skip to content</a>
 
     <header>
-        <a href="/" class="brand">Your Name</a>
-        <nav aria-label="Primary">
-            {navLinks.map((link) => (
-                <a
-                    href={link.href}
-                    aria-current={currentPath === link.href ? 'page' : undefined}
-                >{link.label}</a>
-            ))}
-            <ThemeToggle />
-        </nav>
+        <PageWrapper>
+            <Container size="page">
+                <Cluster justify="between" align="baseline">
+                    <a href="/" class="brand">Your Name</a>
+                    <Cluster as="nav" gap="md" align="center" aria-label="Primary">
+                        {navLinks.map((link) => (
+                            <a
+                                href={link.href}
+                                aria-current={currentPath === link.href ? 'page' : undefined}
+                            >{link.label}</a>
+                        ))}
+                        <ThemeToggle />
+                    </Cluster>
+                </Cluster>
+            </Container>
+        </PageWrapper>
     </header>
 
     <main id="main">
-        <slot />
+        <PageWrapper>
+            <slot />
+        </PageWrapper>
     </main>
 
     <footer>
-        <p>© 2026 Your Name. <a href="/design-system">Design system</a></p>
+        <PageWrapper>
+            <Container size="page">
+                <p>© 2026 Your Name. <a href="/design-system">Design system</a></p>
+            </Container>
+        </PageWrapper>
     </footer>
 
     <!-- Auto-hide header on scroll-down, reveal on scroll-up.

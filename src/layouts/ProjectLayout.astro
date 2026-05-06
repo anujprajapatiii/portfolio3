@@ -1,5 +1,8 @@
 ---
 import Layout from './Layout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
 import { Image, getImage } from 'astro:assets';
 
 const { project } = Astro.props;
@@ -21,18 +24,31 @@ const og = await getImage({
     ogType="article"
 >
     <article>
-        <Image
-            src={cover}
-            alt={`${title} cover`}
-            widths={[600, 1200, 1800]}
-            sizes="(max-width: 880px) 100vw, 832px"
-            loading="eager"
-            class="project-cover"
-        />
-        <h1 class="project-title">{title}</h1>
-        <p class="project-description">{description}</p>
-        <div class="project-body">
-            <slot />
-        </div>
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <Image
+                        src={cover}
+                        alt={`${title} cover`}
+                        widths={[600, 1200, 1800]}
+                        sizes="(max-width: 880px) 100vw, 832px"
+                        loading="eager"
+                        class="project-cover"
+                    />
+                    <Stack gap="sm">
+                        <h1 class="project-title">{title}</h1>
+                        <p class="project-description">{description}</p>
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="reading">
+                <div class="project-body">
+                    <slot />
+                </div>
+            </Container>
+        </Section>
     </article>
 </Layout>

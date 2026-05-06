@@ -1,0 +1,20 @@
+---
+// Container — caps content to a max-width and centers it.
+// Sits inside <Section>, around your <Stack>/<Grid>/<Cluster> + content.
+//
+// Props:
+//   size — 'page' | 'reading' | 'narrow' (default: 'page')
+//     page    = 880px — homepage, project covers, design system
+//     reading = 680px — long-form text (project body)
+//     narrow  = 600px — about, intro
+
+interface Props {
+    size?: 'page' | 'reading' | 'narrow';
+}
+
+const { size = 'page' } = Astro.props;
+---
+
+<div class:list={['container', `container--${size}`]}>
+    <slot />
+</div>

@@ -1,7 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
 import Stack from '../components/primitives/Stack.astro';
+import Cluster from '../components/primitives/Cluster.astro';
+import Grid from '../components/primitives/Grid.astro';
 
 // Token data — kept in arrays so we can `.map()` over them below.
 // To add a token, add a row here. To rename a token, change it here AND in global.css.
@@ -130,6 +133,54 @@ const widthTokens = [
     { name: '--width-narrow',  value: '600px', use: 'about, intro' },
 ];
 
+const breakpointTokens = [
+    { name: '--bp-sm', value: '480px',  use: 'small mobile → larger mobile' },
+    { name: '--bp-md', value: '768px',  use: 'mobile → tablet (primary split)' },
+    { name: '--bp-lg', value: '1024px', use: 'tablet → laptop' },
+    { name: '--bp-xl', value: '1280px', use: 'laptop → desktop' },
+];
+
+// Layout primitives — the five components that compose every page.
+const layoutPrimitives = [
+    {
+        name: '<PageWrapper>',
+        props: 'no props',
+        use: 'horizontal page padding (24px mobile, 32px tablet+). Used by header, main, footer.',
+    },
+    {
+        name: '<Section size>',
+        props: 'size: sm | md | lg | xl',
+        use: 'vertical chunk of a page. padding-block per size. Default md.',
+    },
+    {
+        name: '<Container size>',
+        props: 'size: page | reading | narrow',
+        use: 'max-width + center. Inside Section. Default page.',
+    },
+    {
+        name: '<Stack gap>',
+        props: 'gap: sm | md | lg',
+        use: 'vertical flex with gap. Default md.',
+    },
+    {
+        name: '<Cluster gap align justify as>',
+        props: 'gap, align, justify, as',
+        use: 'horizontal flex with wrap. For nav, tag rows.',
+    },
+    {
+        name: '<Grid min gap>',
+        props: 'min: 220px | 280px | 360px; gap: md | lg',
+        use: 'auto-fit responsive grid. No media query needed.',
+    },
+];
+
+const sectionSizes = [
+    { size: 'sm', value: '32px', use: 'tight related blocks' },
+    { size: 'md', value: '48px', use: 'default' },
+    { size: 'lg', value: '80px', use: 'distinct page chapters' },
+    { size: 'xl', value: '120px', use: 'hero / landing' },
+];
+
 const weights = [
     { value: 100, label: 'Thin' },
     { value: 200, label: 'Extra Light' },
@@ -148,149 +199,267 @@ const weights = [
     description="A live reference of every design token, type size, color, and spacing value used on this site."
 >
     <article class="design-system">
-        <Section>
-            <Stack gap="lg">
-                <h1>Design system</h1>
-                <p>A live preview of every token used on this site. Values below mirror <code>global.css</code> — when changing tokens, update this catalogue alongside the CSS.</p>
-            </Stack>
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h1>Design system</h1>
+                    <p>A live preview of every token used on this site. Values below are pulled directly from <code>global.css</code> — change a token there and this page updates.</p>
+                </Stack>
+            </Container>
         </Section>
 
-        <Section>
-            <Stack gap="lg">
-                <h2>Typography</h2>
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Layout primitives</h2>
+                    <p class="ds-meta-secondary">Every page composes from these. See <code>.claude/skills/portfolio-layout-primitives/SKILL.md</code> for the rules.</p>
 
-                <Stack gap="md">
-                    <h3>Font family</h3>
-                    <p style="font-size: var(--font-lg)">TASA Orbiter — variable, weight axis 100–900</p>
-                </Stack>
-
-                <Stack gap="md">
-                    <h3>Type scale</h3>
                     <Stack gap="md">
-                        {fontTokens.map((t) => (
-                            <div class="ds-row">
-                                <span class="ds-sample" style={`font-size: var(${t.name}); line-height: 1`}>Aa</span>
-                                <Stack gap="sm">
-                                    <span class="ds-meta">{t.name} · {t.value}</span>
-                                    <span class="ds-meta-secondary">{t.use}</span>
-                                </Stack>
-                            </div>
-                        ))}
+                        <h3>Composition rule</h3>
+<pre class="ds-code">PageWrapper
+└─ Section size="sm|md|lg|xl"
+   └─ Container size="page|reading|narrow"
+      └─ Stack | Grid | Cluster
+         └─ content</pre>
                     </Stack>
-                </Stack>
 
-                <Stack gap="md">
-                    <h3>Line height</h3>
                     <Stack gap="md">
-                        {leadingTokens.map((t) => (
-                            <div class="ds-row">
-                                <Stack gap="sm">
-                                    <span class="ds-meta">{t.name} · {t.value}</span>
-                                    <span class="ds-meta-secondary">{t.use}</span>
-                                </Stack>
-                            </div>
-                        ))}
-                    </Stack>
-                </Stack>
-
-                <Stack gap="md">
-                    <h3>Letter spacing</h3>
-                    <Stack gap="md">
-                        {trackingTokens.map((t) => (
-                            <div class="ds-row">
-                                <Stack gap="sm">
-                                    <span class="ds-meta">{t.name} · {t.value}</span>
-                                    <span class="ds-meta-secondary">{t.use}</span>
-                                </Stack>
-                            </div>
-                        ))}
-                    </Stack>
-                </Stack>
-
-                <Stack gap="md">
-                    <h3>Font weights</h3>
-                    <Stack gap="sm">
-                        {weights.map((w) => (
-                            <p style={`font-weight: ${w.value}; font-size: var(--font-base)`}>
-                                {w.value} — {w.label}: The quick brown fox jumps over the lazy dog
-                            </p>
-                        ))}
-                    </Stack>
-                </Stack>
-            </Stack>
-        </Section>
-
-        <Section>
-            <Stack gap="lg">
-                <h2>Spacing</h2>
-                <Stack gap="md">
-                    {spaceTokens.map((t) => (
-                        <div class="ds-row">
-                            <span class="ds-bar" style={`width: var(${t.name})`}></span>
-                            <span class="ds-meta">{t.name} · {t.value}</span>
-                        </div>
-                    ))}
-                </Stack>
-            </Stack>
-        </Section>
-
-        <Section>
-            <Stack gap="lg">
-                <h2>Primitive colors</h2>
-                <p class="ds-meta-secondary">The raw palette. Theme-agnostic — these values don't change between light and dark mode. Semantic tokens below reference these.</p>
-
-                {primitiveFamilies.map((family) => (
-                    <Stack gap="md">
-                        <h3>{family.name}</h3>
-                        <div class="ds-palette">
-                            {family.swatches.map((s) => (
-                                <div class="ds-palette-cell">
-                                    <span class="ds-swatch" style={`background: ${s.value}`}></span>
-                                    <span class="ds-meta">{s.name}</span>
-                                    <span class="ds-meta-secondary">{s.value}</span>
+                        <h3>Primitives</h3>
+                        <Stack gap="sm">
+                            {layoutPrimitives.map((p) => (
+                                <div class="ds-row">
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">{p.name}</span>
+                                        <span class="ds-meta-secondary"><code>{p.props}</code> · {p.use}</span>
+                                    </Stack>
                                 </div>
                             ))}
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Section sizes</h3>
+                        <p class="ds-meta-secondary">padding-block per size. Bars show the actual top-or-bottom padding height.</p>
+                        <Stack gap="md">
+                            {sectionSizes.map((s) => (
+                                <div class="ds-row">
+                                    <span class="ds-section-bar" style={`height: ${s.value}`}></span>
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">size="{s.size}" · {s.value}</span>
+                                        <span class="ds-meta-secondary">{s.use}</span>
+                                    </Stack>
+                                </div>
+                            ))}
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Container sizes</h3>
+                        <p class="ds-meta-secondary">Visual stack of the three max-widths. The page container wraps the others for comparison.</p>
+                        <div class="ds-container-demo ds-container-demo--page">
+                            <span class="ds-meta">page · 880px</span>
+                            <div class="ds-container-demo ds-container-demo--reading">
+                                <span class="ds-meta">reading · 680px</span>
+                                <div class="ds-container-demo ds-container-demo--narrow">
+                                    <span class="ds-meta">narrow · 600px</span>
+                                </div>
+                            </div>
                         </div>
                     </Stack>
-                ))}
-            </Stack>
+
+                    <Stack gap="md">
+                        <h3>Grid demo</h3>
+                        <p class="ds-meta-secondary">Resize the window — columns auto-fit at 220px minimum.</p>
+                        <Grid min="220px" gap="md">
+                            <div class="ds-grid-cell">1</div>
+                            <div class="ds-grid-cell">2</div>
+                            <div class="ds-grid-cell">3</div>
+                            <div class="ds-grid-cell">4</div>
+                            <div class="ds-grid-cell">5</div>
+                            <div class="ds-grid-cell">6</div>
+                        </Grid>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Cluster demo</h3>
+                        <p class="ds-meta-secondary">Horizontal items with wrap.</p>
+                        <Cluster gap="md">
+                            <span class="ds-tag">item one</span>
+                            <span class="ds-tag">item two</span>
+                            <span class="ds-tag">item three</span>
+                            <span class="ds-tag">item four</span>
+                            <span class="ds-tag">item five</span>
+                        </Cluster>
+                    </Stack>
+                </Stack>
+            </Container>
         </Section>
 
-        <Section>
-            <Stack gap="lg">
-                <h2>Semantic colors</h2>
-                <p class="ds-meta-secondary">What the rest of the site actually uses. Each maps to a primitive; the L and D columns show which primitive is referenced in light vs dark theme.</p>
-                <Stack gap="md">
-                    {colorTokens.map((t) => (
-                        <div class="ds-row">
-                            <div class="ds-swatch-pair">
-                                <span class="ds-swatch" style={`background: var(--${t.light})`} title={`Light: ${t.light}`}></span>
-                                <span class="ds-swatch" style={`background: var(--${t.dark})`} title={`Dark: ${t.dark}`}></span>
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Breakpoints</h2>
+                    <p class="ds-meta-secondary">CSS custom properties don't work inside <code>@media</code> queries — these tokens document the values used in <code>@media</code> rules. Keep in sync.</p>
+                    <Stack gap="md">
+                        {breakpointTokens.map((t) => (
+                            <div class="ds-row">
+                                <Stack gap="sm">
+                                    <span class="ds-meta">{t.name} · {t.value}</span>
+                                    <span class="ds-meta-secondary">{t.use}</span>
+                                </Stack>
                             </div>
-                            <Stack gap="sm">
-                                <span class="ds-meta">{t.name}</span>
-                                <span class="ds-meta-secondary">L {t.light} · D {t.dark} · {t.use}</span>
-                            </Stack>
-                        </div>
-                    ))}
+                        ))}
+                    </Stack>
                 </Stack>
-            </Stack>
+            </Container>
         </Section>
 
-        <Section>
-            <Stack gap="lg">
-                <h2>Layout widths</h2>
-                <Stack gap="md">
-                    {widthTokens.map((t) => (
-                        <div class="ds-row">
-                            <Stack gap="sm">
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Typography</h2>
+
+                    <Stack gap="md">
+                        <h3>Font family</h3>
+                        <p style="font-size: var(--font-lg)">TASA Orbiter — variable, weight axis 100–900</p>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Type scale</h3>
+                        <Stack gap="md">
+                            {fontTokens.map((t) => (
+                                <div class="ds-row">
+                                    <span class="ds-sample" style={`font-size: var(${t.name}); line-height: 1`}>Aa</span>
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">{t.name} · {t.value}</span>
+                                        <span class="ds-meta-secondary">{t.use}</span>
+                                    </Stack>
+                                </div>
+                            ))}
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Line height</h3>
+                        <Stack gap="md">
+                            {leadingTokens.map((t) => (
+                                <div class="ds-row">
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">{t.name} · {t.value}</span>
+                                        <span class="ds-meta-secondary">{t.use}</span>
+                                    </Stack>
+                                </div>
+                            ))}
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Letter spacing</h3>
+                        <Stack gap="md">
+                            {trackingTokens.map((t) => (
+                                <div class="ds-row">
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">{t.name} · {t.value}</span>
+                                        <span class="ds-meta-secondary">{t.use}</span>
+                                    </Stack>
+                                </div>
+                            ))}
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h3>Font weights</h3>
+                        <Stack gap="sm">
+                            {weights.map((w) => (
+                                <p style={`font-weight: ${w.value}; font-size: var(--font-base)`}>
+                                    {w.value} — {w.label}: The quick brown fox jumps over the lazy dog
+                                </p>
+                            ))}
+                        </Stack>
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Spacing</h2>
+                    <Stack gap="md">
+                        {spaceTokens.map((t) => (
+                            <div class="ds-row">
+                                <span class="ds-bar" style={`width: var(${t.name})`}></span>
                                 <span class="ds-meta">{t.name} · {t.value}</span>
-                                <span class="ds-meta-secondary">{t.use}</span>
-                            </Stack>
-                        </div>
+                            </div>
+                        ))}
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Primitive colors</h2>
+                    <p class="ds-meta-secondary">The raw palette. Theme-agnostic — these values don't change between light and dark mode. Semantic tokens below reference these.</p>
+
+                    {primitiveFamilies.map((family) => (
+                        <Stack gap="md">
+                            <h3>{family.name}</h3>
+                            <div class="ds-palette">
+                                {family.swatches.map((s) => (
+                                    <div class="ds-palette-cell">
+                                        <span class="ds-swatch" style={`background: ${s.value}`}></span>
+                                        <span class="ds-meta">{s.name}</span>
+                                        <span class="ds-meta-secondary">{s.value}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </Stack>
                     ))}
                 </Stack>
-            </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Semantic colors</h2>
+                    <p class="ds-meta-secondary">What the rest of the site actually uses. Each maps to a primitive; the L and D columns show which primitive is referenced in light vs dark theme.</p>
+                    <Stack gap="md">
+                        {colorTokens.map((t) => (
+                            <div class="ds-row">
+                                <div class="ds-swatch-pair">
+                                    <span class="ds-swatch" style={`background: var(--${t.light})`} title={`Light: ${t.light}`}></span>
+                                    <span class="ds-swatch" style={`background: var(--${t.dark})`} title={`Dark: ${t.dark}`}></span>
+                                </div>
+                                <Stack gap="sm">
+                                    <span class="ds-meta">{t.name}</span>
+                                    <span class="ds-meta-secondary">L {t.light} · D {t.dark} · {t.use}</span>
+                                </Stack>
+                            </div>
+                        ))}
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Layout widths</h2>
+                    <Stack gap="md">
+                        {widthTokens.map((t) => (
+                            <div class="ds-row">
+                                <Stack gap="sm">
+                                    <span class="ds-meta">{t.name} · {t.value}</span>
+                                    <span class="ds-meta-secondary">{t.use}</span>
+                                </Stack>
+                            </div>
+                        ))}
+                    </Stack>
+                </Stack>
+            </Container>
         </Section>
     </article>
 </Layout>

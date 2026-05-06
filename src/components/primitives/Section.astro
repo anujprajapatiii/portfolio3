@@ -1,10 +1,22 @@
 ---
-// Section — a vertical chunk of the page.
-// Two sections in a row get consistent spacing between them
-// (handled by .section + .section in global.css).
-// Use it as the outer wrapper for any logical "block" on a page.
+// Section — a vertical chunk of the page. Owns padding-block.
+// Replaces the older "two sections in a row get a margin between them"
+// pattern with explicit padding so order doesn't matter.
+//
+// Props:
+//   size — 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
+//     sm = 32px  — tight related blocks
+//     md = 48px  — default, most content
+//     lg = 80px  — distinct page chapters
+//     xl = 120px — hero / landing moments
+
+interface Props {
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const { size = 'md' } = Astro.props;
 ---
 
-<section class="section">
+<section class:list={['section', `section--${size}`]}>
     <slot />
 </section>
