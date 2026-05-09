@@ -1,0 +1,23 @@
+---
+// Grid — responsive auto-fit grid. Picks column count from available width
+// using `repeat(auto-fit, minmax(<min>, 1fr))`, so it collapses naturally
+// on narrow screens without a media query.
+//
+// Props:
+//   min — '220px' | '280px' | '360px' (default: '280px')
+//     Minimum column width before the grid drops to fewer columns.
+//   gap — 'md' | 'lg' (default: 'lg')
+//     16px or 32px between cells.
+
+interface Props {
+    min?: '220px' | '280px' | '360px';
+    gap?: 'md' | 'lg';
+}
+
+const { min = '280px', gap = 'lg' } = Astro.props;
+const minClass = min.replace('px', '');
+---
+
+<div class:list={['grid', `grid--min-${minClass}`, `grid--gap-${gap}`]}>
+    <slot />
+</div>

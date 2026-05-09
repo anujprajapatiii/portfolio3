@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PageHeader from '../components/primitives/PageHeader.astro';
 import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
 import Stack from '../components/primitives/Stack.astro';
 ---
 
@@ -10,36 +10,40 @@ import Stack from '../components/primitives/Stack.astro';
     description="About Anuj Prajapati — designer based in Mumbai working across visual identity and digital products."
 >
     <article class="about">
-        <Section>
-            <Stack gap="lg">
-                <PageHeader title="About" />
-                <Stack gap="md">
-                    <p>I'm a designer based in Mumbai. I work across visual identity and digital products — sometimes for early-stage startups, sometimes for established teams that need a fresh eye.</p>
-                    <p>Before going independent, I led design at [Place] and trained at [School]. I care about the seams: the tiny moments where craft separates a product that feels right from one that almost does.</p>
-                    <p>When I'm not designing, I'm usually drawing, reading, or learning a new tool the hard way (this site, for instance).</p>
+        <Section size="lg">
+            <Container size="narrow">
+                <Stack gap="lg">
+                    <h1>About</h1>
+                    <Stack gap="md">
+                        <p>I'm a designer based in Mumbai. I work across visual identity and digital products — sometimes for early-stage startups, sometimes for established teams that need a fresh eye.</p>
+                        <p>Before going independent, I led design at [Place] and trained at [School]. I care about the seams: the tiny moments where craft separates a product that feels right from one that almost does.</p>
+                        <p>When I'm not designing, I'm usually drawing, reading, or learning a new tool the hard way (this site, for instance).</p>
+                    </Stack>
                 </Stack>
-            </Stack>
+            </Container>
         </Section>
 
-        <Section>
-            <Stack gap="md">
-                <h2>Work</h2>
+        <Section size="lg">
+            <Container size="narrow">
                 <Stack gap="md">
+                    <h2>Work</h2>
                     <p>I'm currently available for freelance work. If you think I might be a good fit for your project, <a href="mailto:hello@anujprajapati.com">get in touch</a>.</p>
                 </Stack>
-            </Stack>
+            </Container>
         </Section>
 
-        <Section>
-            <Stack gap="md">
-                <h2>Elsewhere</h2>
-                <Stack gap="sm">
-                    <a href="mailto:hello@anujprajapati.com">Email</a>
-                    <a href="https://twitter.com/anujprajapati">Twitter</a>
-                    <a href="https://www.linkedin.com/in/anujprajapati">LinkedIn</a>
-                    <a href="https://www.are.na/anujprajapati">Are.na</a>
+        <Section size="lg">
+            <Container size="narrow">
+                <Stack gap="md">
+                    <h2>Elsewhere</h2>
+                    <Stack gap="sm">
+                        <a href="mailto:hello@anujprajapati.com">Email</a>
+                        <a href="https://twitter.com/anujprajapati">Twitter</a>
+                        <a href="https://www.linkedin.com/in/anujprajapati">LinkedIn</a>
+                        <a href="https://www.are.na/anujprajapati">Are.na</a>
+                    </Stack>
                 </Stack>
-            </Stack>
+            </Container>
         </Section>
     </article>
 </Layout>

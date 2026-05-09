@@ -1,0 +1,37 @@
+---
+// Cluster — horizontal layout with consistent gap and wrap.
+// Like Figma auto-layout (horizontal) or Webflow flex-horizontal-with-gap.
+// Use for nav, tag rows, link lists, "brand on left, nav on right" headers.
+//
+// Props:
+//   gap     — 'sm' | 'md' | 'lg' (default: 'md')
+//   align   — 'start' | 'center' | 'baseline' (default: 'center')
+//   justify — 'start' | 'between' (default: 'start')
+//   as      — 'div' | 'nav' | 'ul' (default: 'div')
+
+interface Props {
+    gap?: 'sm' | 'md' | 'lg';
+    align?: 'start' | 'center' | 'baseline';
+    justify?: 'start' | 'between';
+    as?: 'div' | 'nav' | 'ul';
+}
+
+const {
+    gap = 'md',
+    align = 'center',
+    justify = 'start',
+    as: Tag = 'div',
+    ...rest
+} = Astro.props;
+
+const classes = [
+    'cluster',
+    `cluster--gap-${gap}`,
+    `cluster--align-${align}`,
+    `cluster--justify-${justify}`,
+];
+---
+
+<Tag class:list={classes} {...rest}>
+    <slot />
+</Tag>

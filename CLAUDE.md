@@ -33,7 +33,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/content/projects/<slug>/index.md` | One folder = one case study |
 | `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
 | `src/content/projects/<slug>/*.png` | Inline images for that case study |
-| `src/components/primitives/` | Layout primitives — `PageHeader.astro`, `Section.astro`, `Stack.astro` |
+| `src/components/primitives/` | Layout primitives — `PageWrapper`, `Section`, `Container`, `Stack`, `Cluster`, `Grid` |
 | `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
 | `astro.config.mjs` | Site URL + sitemap integration |
 | `public/` | Static files served as-is — favicons only, no source images |
@@ -75,7 +75,7 @@ Create `src/pages/<name>.astro`:
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="<Name> — Anuj Prajapati" description="...">
+<Layout title="<Name> — Your Name" description="...">
     <section class="<name>">
         <!-- content -->
     </section>
@@ -115,37 +115,50 @@ Edit the `navLinks` array in `src/layouts/Layout.astro`. Active-link styling com
 
 ### Compose a page with primitives
 
-Three layout components live in `src/components/primitives/`:
+Six layout components live in `src/components/primitives/`. Every page composes them in this exact order:
 
-- **`<PageHeader title="..." description="...">`** — consistent top-level page/project heading. Use `description` for plain text or the default slot for richer intro content.
-- **`<Section>`** — outer wrapper for a chunk of a page. Two sections in a row get a consistent `--space-7` (80px) gap between them. No props.
-- **`<Stack gap="sm | md | lg">`** — vertical list of children with consistent gap (8px / 16px / 32px). Default is `md`. Stacks can nest — outer Stack handles "heading vs body" rhythm, inner Stack handles "paragraph to paragraph" rhythm.
+```
+PageWrapper (in Layout.astro — wraps <main>, <header>, <footer>)
+└─ Section size="sm|md|lg|xl"     ← vertical chunk, owns padding-block
+   └─ Container size="page|reading|narrow"    ← max-width + center
+      └─ Stack | Grid | Cluster   ← gap-based layout
+         └─ content
+```
+
+Quick reference:
+
+- **`<Section size>`** — `sm` (32px), `md` (48px, default), `lg` (80px), `xl` (120px). Owns vertical padding.
+- **`<Container size>`** — `page` (880px, default), `reading` (680px), `narrow` (600px). Owns horizontal max-width.
+- **`<Stack gap>`** — vertical flex. `sm` (8px), `md` (16px, default), `lg` (32px).
+- **`<Cluster gap align justify as>`** — horizontal flex with wrap. For nav, tag rows.
+- **`<Grid min gap>`** — responsive auto-fit grid. `min` is `220px | 280px | 360px`. No media query needed.
+- **`<PageWrapper>`** — horizontal page padding. Already in `Layout.astro`; pages don't add it.
 
 Pattern:
 
 ```astro
-<Section>
-    <Stack gap="lg">
-        <PageHeader title="Page heading" />
-        <Stack>
-            <p>Body paragraph.</p>
-            <p>Body paragraph.</p>
+<Section size="lg">
+    <Container size="narrow">
+        <Stack gap="lg">
+            <h1>Page heading</h1>
+            <Stack gap="md">
+                <p>Body paragraph.</p>
+                <p>Body paragraph.</p>
+            </Stack>
         </Stack>
-    </Stack>
+    </Container>
 </Section>
 
-<Section>
-    <Stack gap="md">
-        <h2>Next section</h2>
-        <Stack gap="sm">
-            <a href="...">Tight list item</a>
-            <a href="...">Tight list item</a>
-        </Stack>
-    </Stack>
+<Section size="lg">
+    <Container size="page">
+        <Grid min="280px" gap="lg">
+            {items.map(...)}
+        </Grid>
+    </Container>
 </Section>
 ```
 
-When using these primitives, **don't add `margin-top` or `margin-bottom` to inner elements** — Stack handles spacing. Single source of truth.
+**Discipline:** never inline `max-width`, `padding-block`, `padding-inline`, `margin`, or `margin-top` in page or component CSS. All layout comes from primitives. See the `portfolio-layout-primitives` skill for the full rules and the four-width screenshot verification workflow.
 
 ### Change the global look
 
@@ -178,7 +191,9 @@ Open `src/styles/global.css`, edit the tokens in `:root` at the top. Don't chang
 - Don't put rendered images in `public/`. They won't be optimized.
 - Don't use `src/content/config.ts` syntax (that's the old config). The schema lives in `src/content.config.ts` and uses the `glob()` loader from `astro/loaders`.
 - Don't add raw px values inside CSS rules. Extend the token scale instead.
-- Don't add a media-query breakpoint unless something genuinely breaks at that width. One breakpoint at `640px` is intentional.
+- Don't add a media-query breakpoint unless something genuinely breaks at that width. The defined scale is `--bp-sm` 480px, `--bp-md` 768px (the primary mobile/desktop split), `--bp-lg` 1024px, `--bp-xl` 1280px — pick from this scale, don't invent new numbers.
+- Don't put `display: grid` or `display: flex` for layout in component CSS. Use `<Grid>`, `<Stack>`, or `<Cluster>` primitives.
+- Don't inline `max-width` / `padding-block` / `padding-inline` / `margin-top` in page or component CSS. Layout comes from primitives.
 - Don't restart the dev server on every change — only after editing `astro.config.mjs` or `src/content.config.ts`. Everything else hot-reloads.
 - Don't commit `.claude/` (already gitignored).
 

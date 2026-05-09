@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import PageWrapper from '../components/primitives/PageWrapper.astro';
+import Container from '../components/primitives/Container.astro';
+import Cluster from '../components/primitives/Cluster.astro';
 
 interface Props {
     title?: string;
@@ -10,7 +13,7 @@ interface Props {
 }
 
 const {
-    title = 'Anuj Prajapati — Designer',
+    title = 'Your Name — Designer',
     description = 'Designer working across visual identity and digital products. Based in Mumbai.',
     ogImage,
     ogType = 'website',
@@ -77,26 +80,72 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 <body>
     <a href="#main" class="skip-link">Skip to content</a>
 
-    <header class="site-header">
-        <a href="/" class="brand">Anuj Prajapati</a>
-        <nav aria-label="Primary">
-            {navLinks.map((link) => (
-                <a
-                    href={link.href}
-                    aria-current={currentPath === link.href ? 'page' : undefined}
-                >{link.label}</a>
-            ))}
-            <ThemeToggle />
-        </nav>
+    <header>
+        <PageWrapper>
+            <Container size="page">
+                <Cluster justify="between" align="baseline">
+                    <a href="/" class="brand">Your Name</a>
+                    <Cluster as="nav" gap="md" align="center" aria-label="Primary">
+                        {navLinks.map((link) => (
+                            <a
+                                href={link.href}
+                                aria-current={currentPath === link.href ? 'page' : undefined}
+                            >{link.label}</a>
+                        ))}
+                        <ThemeToggle />
+                    </Cluster>
+                </Cluster>
+            </Container>
+        </PageWrapper>
     </header>
 
     <main id="main">
-        <slot />
+        <PageWrapper>
+            <slot />
+        </PageWrapper>
     </main>
 
     <footer>
-        <p>© 2026 Anuj Prajapati. <a href="/design-system">Design system</a></p>
+        <PageWrapper>
+            <Container size="page">
+                <p>© 2026 Your Name. <a href="/design-system">Design system</a></p>
+            </Container>
+        </PageWrapper>
     </footer>
 
+    <!-- Auto-hide header on scroll-down, reveal on scroll-up.
+         Always shown when within TOP_ZONE pixels of the page top. -->
+    <script is:inline>
+        (function () {
+            const header = document.querySelector('header');
+            if (!header) return;
+
+            let lastY = window.scrollY;
+            let ticking = false;
+            const TOP_ZONE = 100;
+
+            const onScroll = () => {
+                const y = window.scrollY;
+
+                if (y < TOP_ZONE) {
+                    header.classList.remove('header--hidden');
+                } else if (y > lastY) {
+                    header.classList.add('header--hidden');
+                } else if (y < lastY) {
+                    header.classList.remove('header--hidden');
+                }
+
+                lastY = y;
+                ticking = false;
+            };
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(onScroll);
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
+    </script>
 </body>
 </html>
