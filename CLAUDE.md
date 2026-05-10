@@ -20,26 +20,26 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 
 ## File map
 
-| Path | Purpose |
-|---|---|
-| `src/pages/index.astro` | Homepage — lists all projects from the collection |
-| `src/pages/about.astro` | About page |
-| `src/pages/projects/[slug].astro` | Dynamic route — generates one page per Markdown project |
-| `src/pages/404.astro` | Custom 404 |
-| `src/pages/design-system/index.astro` | Internal reference page — visual catalog of every token. Not in nav; visit at `/design-system` |
-| `src/pages/design-system/sections.astro` | Copy-and-paste catalog of section patterns. Visit at `/design-system/sections` |
-| `src/layouts/Layout.astro` | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current` |
-| `src/layouts/ProjectLayout.astro` | Wraps `Layout` with the project cover + title + description block |
-| `src/content.config.ts` | Defines the `projects` collection schema (Zod) |
-| `src/content/projects/<slug>/index.md` | One folder = one case study |
-| `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
-| `src/content/projects/<slug>/*.png` | Inline images for that case study |
-| `src/components/Footer.astro` | Site footer — three columns of links, projects column auto-pulled from collection |
-| `src/components/ThemeToggle.astro` | Sun/moon button in the header that flips light/dark |
-| `src/components/primitives/` | Layout primitives — `PageWrapper`, `Section`, `Container`, `Stack`, `Cluster`, `Grid` |
-| `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
-| `astro.config.mjs` | Site URL + sitemap integration |
-| `public/` | Static files served as-is — favicons (`favicon.svg`, `favicon.ico`) and the TASA Orbiter font (`fonts/`). No source images. |
+| Path                                     | Purpose                                                                                                                     |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `src/pages/index.astro`                  | Homepage — lists all projects from the collection                                                                           |
+| `src/pages/about.astro`                  | About page                                                                                                                  |
+| `src/pages/projects/[slug].astro`        | Dynamic route — generates one page per Markdown project                                                                     |
+| `src/pages/404.astro`                    | Custom 404                                                                                                                  |
+| `src/pages/design-system/index.astro`    | Internal reference page — visual catalog of every token. Not in nav; visit at `/design-system`                              |
+| `src/pages/design-system/sections.astro` | Copy-and-paste catalog of section patterns. Visit at `/design-system/sections`                                              |
+| `src/layouts/Layout.astro`               | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current`                       |
+| `src/layouts/ProjectLayout.astro`        | Wraps `Layout` with the project cover + title + description block                                                           |
+| `src/content.config.ts`                  | Defines the `projects` collection schema (Zod)                                                                              |
+| `src/content/projects/<slug>/index.md`   | One folder = one case study                                                                                                 |
+| `src/content/projects/<slug>/cover.png`  | Cover image, sits next to its `index.md`                                                                                    |
+| `src/content/projects/<slug>/*.png`      | Inline images for that case study                                                                                           |
+| `src/components/Footer.astro`            | Site footer — three columns of links, projects column auto-pulled from collection                                           |
+| `src/components/ThemeToggle.astro`       | Sun/moon button in the header that flips light/dark                                                                         |
+| `src/components/primitives/`             | Layout primitives — `PageWrapper`, `Section`, `Container`, `Stack`, `Cluster`, `Grid`                                       |
+| `src/styles/global.css`                  | All styling. Design tokens at the top, semantic classes below                                                               |
+| `astro.config.mjs`                       | Site URL + sitemap integration                                                                                              |
+| `public/`                                | Static files served as-is — favicons (`favicon.svg`, `favicon.ico`) and the TASA Orbiter font (`fonts/`). No source images. |
 
 ---
 
@@ -52,19 +52,21 @@ Each project lives in its own folder. The folder name becomes the URL slug.
 1. Create `src/content/projects/<slug>/`.
 2. Drop a cover image inside as `cover.png` (or `.jpg`).
 3. Create `src/content/projects/<slug>/index.md`:
-   ```md
-   ---
-   title: Project Name
-   description: One-line summary shown on cards and project page
-   cover: ./cover.png
-   date: 2026-05-03
-   order: 4
-   ---
 
-   ## Section heading
+    ```md
+    ---
+    title: Project Name
+    description: One-line summary shown on cards and project page
+    cover: ./cover.png
+    date: 2026-05-03
+    order: 4
+    ---
 
-   Body content as plain Markdown.
-   ```
+    ## Section heading
+
+    Body content as plain Markdown.
+    ```
+
 4. Save. Dev server hot-reloads. The project appears on the homepage at `order` position and at the URL `/projects/<slug>`.
 
 The slug-stripping logic (`generateId` in `content.config.ts`) is what turns `<slug>/index.md` into the URL `/projects/<slug>` rather than `/projects/<slug>/index`.
@@ -165,7 +167,7 @@ Pattern:
 <Section size="lg">
     <Container size="page">
         <Grid min="280px" gap="lg">
-            {items.map(...)}
+            {items.map((item) => <Card {...item} />)}
         </Grid>
     </Container>
 </Section>
@@ -208,6 +210,7 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 - **Spacing/font sizes/colors come from tokens.** No raw px values in the rules. If a needed value isn't in the token scale, extend the scale — don't hard-code.
 - **OG images** are auto-generated for project pages via `getImage()` in `ProjectLayout.astro` (1200×630 webp).
 - **Above-the-fold images** use `loading="eager"`. The first homepage card and project covers are eager; everything else lazy.
+- **Code style is owned by Prettier.** Run `npm run format` before committing. Config lives in `.prettierrc.json`; CI runs `format:check` so PRs with style drift fail. Don't argue with the formatter — change the config if needed.
 
 ---
 

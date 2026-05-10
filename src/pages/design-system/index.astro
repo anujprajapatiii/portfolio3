@@ -11,23 +11,21 @@ import Grid from '../../components/primitives/Grid.astro';
 
 const fontTokens = [
     { name: '--font-display', value: '72px', use: 'hero / landing moments' },
-    { name: '--font-xl',      value: '40px', use: 'page heading' },
-    { name: '--font-lg',      value: '24px', use: 'in-body heading, homepage intro' },
-    { name: '--font-base',    value: '18px', use: 'body' },
-    { name: '--font-sm',      value: '16px', use: 'secondary body, card descriptions' },
-    { name: '--font-xs',      value: '13px', use: 'fine print, captions' },
+    { name: '--font-xl', value: '40px', use: 'page heading' },
+    { name: '--font-lg', value: '24px', use: 'in-body heading, homepage intro' },
+    { name: '--font-base', value: '18px', use: 'body' },
+    { name: '--font-sm', value: '16px', use: 'secondary body, card descriptions' },
+    { name: '--font-xs', value: '13px', use: 'fine print, captions' },
 ];
 
 const leadingTokens = [
     { name: '--leading-display', value: '1.05', use: '40px+' },
-    { name: '--leading-tight',   value: '1.3',  use: '22–32px' },
-    { name: '--leading-base',    value: '1.5',  use: 'body default' },
-    { name: '--leading-loose',   value: '1.6',  use: 'long-form reading' },
+    { name: '--leading-tight', value: '1.3', use: '22–32px' },
+    { name: '--leading-base', value: '1.5', use: 'body default' },
+    { name: '--leading-loose', value: '1.6', use: 'long-form reading' },
 ];
 
-const trackingTokens = [
-    { name: '--tracking-tight', value: '-0.015em', use: 'display sizes' },
-];
+const trackingTokens = [{ name: '--tracking-tight', value: '-0.015em', use: 'display sizes' }];
 
 const spaceTokens = [
     { name: '--space-1', value: '4px' },
@@ -46,15 +44,15 @@ const primitiveFamilies = [
         name: 'Neutral',
         swatches: [
             { name: 'black', value: '#000000' },
-            { name: '900',   value: '#0e0f12' },
-            { name: '800',   value: '#141619' },
-            { name: '700',   value: '#1c1f24' },
-            { name: '600',   value: '#21252b' },
-            { name: '500',   value: '#2c323a' },
-            { name: '400',   value: '#434b56' },
-            { name: '300',   value: '#99a1ac' },
-            { name: '200',   value: '#d3d7dd' },
-            { name: '100',   value: '#f6f7f8' },
+            { name: '900', value: '#0e0f12' },
+            { name: '800', value: '#141619' },
+            { name: '700', value: '#1c1f24' },
+            { name: '600', value: '#21252b' },
+            { name: '500', value: '#2c323a' },
+            { name: '400', value: '#434b56' },
+            { name: '300', value: '#99a1ac' },
+            { name: '200', value: '#d3d7dd' },
+            { name: '100', value: '#f6f7f8' },
             { name: 'white', value: '#ffffff' },
         ],
     },
@@ -109,9 +107,7 @@ const primitiveFamilies = [
     },
     {
         name: 'Standard',
-        swatches: [
-            { name: 'terra', value: '#847b73' },
-        ],
+        swatches: [{ name: 'terra', value: '#847b73' }],
     },
 ];
 
@@ -119,23 +115,33 @@ const primitiveFamilies = [
 // Each maps to a primitive; the L/D columns show which primitive
 // is referenced in light vs dark theme.
 const colorTokens = [
-    { name: '--color-text',    light: 'neutral-600', dark: 'neutral-200', use: 'primary text' },
-    { name: '--color-muted',   light: 'neutral-400', dark: 'neutral-300', use: 'secondary text' },
-    { name: '--color-bg',      light: 'neutral-100', dark: 'neutral-800', use: 'page background' },
-    { name: '--color-border',  light: 'neutral-300', dark: 'neutral-500', use: 'dividers, borders' },
-    { name: '--color-surface', light: 'neutral-200', dark: 'neutral-400', use: 'image placeholder' },
-    { name: '--color-code-bg', light: 'neutral-200', dark: 'neutral-700', use: 'inline code, code blocks' },
+    { name: '--color-text', light: 'neutral-600', dark: 'neutral-200', use: 'primary text' },
+    { name: '--color-muted', light: 'neutral-400', dark: 'neutral-300', use: 'secondary text' },
+    { name: '--color-bg', light: 'neutral-100', dark: 'neutral-800', use: 'page background' },
+    { name: '--color-border', light: 'neutral-300', dark: 'neutral-500', use: 'dividers, borders' },
+    {
+        name: '--color-surface',
+        light: 'neutral-200',
+        dark: 'neutral-400',
+        use: 'image placeholder',
+    },
+    {
+        name: '--color-code-bg',
+        light: 'neutral-200',
+        dark: 'neutral-700',
+        use: 'inline code, code blocks',
+    },
 ];
 
 const widthTokens = [
-    { name: '--width-page',    value: '880px', use: 'outer page container' },
+    { name: '--width-page', value: '880px', use: 'outer page container' },
     { name: '--width-reading', value: '680px', use: 'long-form text column' },
-    { name: '--width-narrow',  value: '600px', use: 'about, intro' },
+    { name: '--width-narrow', value: '600px', use: 'about, intro' },
 ];
 
 const breakpointTokens = [
-    { name: '--bp-sm', value: '480px',  use: 'small mobile → larger mobile' },
-    { name: '--bp-md', value: '768px',  use: 'mobile → tablet (primary split)' },
+    { name: '--bp-sm', value: '480px', use: 'small mobile → larger mobile' },
+    { name: '--bp-md', value: '768px', use: 'mobile → tablet (primary split)' },
     { name: '--bp-lg', value: '1024px', use: 'tablet → laptop' },
     { name: '--bp-xl', value: '1280px', use: 'laptop → desktop' },
 ];
@@ -203,8 +209,15 @@ const weights = [
             <Container size="page">
                 <Stack gap="lg">
                     <h1>Design system</h1>
-                    <p>A live preview of every token used on this site. Values below are pulled directly from <code>global.css</code> — change a token there and this page updates.</p>
-                    <p>Looking for ready-to-paste section templates? See the <a href="/design-system/sections">Sections gallery</a>.</p>
+                    <p>
+                        A live preview of every token used on this site. Values below are pulled
+                        directly from <code>global.css</code> — change a token there and this page updates.
+                    </p>
+                    <p>
+                        Looking for ready-to-paste section templates? See the <a
+                            href="/design-system/sections">Sections gallery</a
+                        >.
+                    </p>
                 </Stack>
             </Container>
         </Section>
@@ -213,11 +226,16 @@ const weights = [
             <Container size="page">
                 <Stack gap="lg">
                     <h2>Layout primitives</h2>
-                    <p class="ds-meta-secondary">Every page composes from these. See <code>.claude/skills/portfolio-layout-primitives/SKILL.md</code> for the rules.</p>
+                    <p class="ds-meta-secondary">
+                        Every page composes from these. See <code
+                            >.claude/skills/portfolio-layout-primitives/SKILL.md</code
+                        > for the rules.
+                    </p>
 
                     <Stack gap="md">
                         <h3>Composition rule</h3>
-<pre class="ds-code">PageWrapper
+                        <pre
+                            class="ds-code">PageWrapper
 └─ Section size="sm|md|lg|xl"
    └─ Container size="page|reading|narrow"
       └─ Stack | Grid | Cluster
@@ -227,36 +245,50 @@ const weights = [
                     <Stack gap="md">
                         <h3>Primitives</h3>
                         <Stack gap="sm">
-                            {layoutPrimitives.map((p) => (
-                                <div class="ds-row">
-                                    <Stack gap="sm">
-                                        <span class="ds-meta">{p.name}</span>
-                                        <span class="ds-meta-secondary"><code>{p.props}</code> · {p.use}</span>
-                                    </Stack>
-                                </div>
-                            ))}
+                            {
+                                layoutPrimitives.map((p) => (
+                                    <div class="ds-row">
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">{p.name}</span>
+                                            <span class="ds-meta-secondary">
+                                                <code>{p.props}</code> · {p.use}
+                                            </span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
                         </Stack>
                     </Stack>
 
                     <Stack gap="md">
                         <h3>Section sizes</h3>
-                        <p class="ds-meta-secondary">padding-block per size. Bars show the actual top-or-bottom padding height.</p>
+                        <p class="ds-meta-secondary">
+                            padding-block per size. Bars show the actual top-or-bottom padding
+                            height.
+                        </p>
                         <Stack gap="md">
-                            {sectionSizes.map((s) => (
-                                <div class="ds-row">
-                                    <span class="ds-section-bar" style={`height: ${s.value}`}></span>
-                                    <Stack gap="sm">
-                                        <span class="ds-meta">size="{s.size}" · {s.value}</span>
-                                        <span class="ds-meta-secondary">{s.use}</span>
-                                    </Stack>
-                                </div>
-                            ))}
+                            {
+                                sectionSizes.map((s) => (
+                                    <div class="ds-row">
+                                        <span class="ds-section-bar" style={`height: ${s.value}`} />
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">
+                                                size="{s.size}" · {s.value}
+                                            </span>
+                                            <span class="ds-meta-secondary">{s.use}</span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
                         </Stack>
                     </Stack>
 
                     <Stack gap="md">
                         <h3>Container sizes</h3>
-                        <p class="ds-meta-secondary">Visual stack of the three max-widths. The page container wraps the others for comparison.</p>
+                        <p class="ds-meta-secondary">
+                            Visual stack of the three max-widths. The page container wraps the
+                            others for comparison.
+                        </p>
                         <div class="ds-container-demo ds-container-demo--page">
                             <span class="ds-meta">page · 880px</span>
                             <div class="ds-container-demo ds-container-demo--reading">
@@ -270,7 +302,9 @@ const weights = [
 
                     <Stack gap="md">
                         <h3>Grid demo</h3>
-                        <p class="ds-meta-secondary">Resize the window — columns auto-fit at 220px minimum.</p>
+                        <p class="ds-meta-secondary">
+                            Resize the window — columns auto-fit at 220px minimum.
+                        </p>
                         <Grid min="220px" gap="md">
                             <div class="ds-grid-cell">1</div>
                             <div class="ds-grid-cell">2</div>
@@ -300,16 +334,23 @@ const weights = [
             <Container size="page">
                 <Stack gap="lg">
                     <h2>Breakpoints</h2>
-                    <p class="ds-meta-secondary">CSS custom properties don't work inside <code>@media</code> queries — these tokens document the values used in <code>@media</code> rules. Keep in sync.</p>
+                    <p class="ds-meta-secondary">
+                        CSS custom properties don't work inside <code>@media</code> queries — these tokens
+                        document the values used in <code>@media</code> rules. Keep in sync.
+                    </p>
                     <Stack gap="md">
-                        {breakpointTokens.map((t) => (
-                            <div class="ds-row">
-                                <Stack gap="sm">
-                                    <span class="ds-meta">{t.name} · {t.value}</span>
-                                    <span class="ds-meta-secondary">{t.use}</span>
-                                </Stack>
-                            </div>
-                        ))}
+                        {
+                            breakpointTokens.map((t) => (
+                                <div class="ds-row">
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">
+                                            {t.name} · {t.value}
+                                        </span>
+                                        <span class="ds-meta-secondary">{t.use}</span>
+                                    </Stack>
+                                </div>
+                            ))
+                        }
                     </Stack>
                 </Stack>
             </Container>
@@ -322,60 +363,84 @@ const weights = [
 
                     <Stack gap="md">
                         <h3>Font family</h3>
-                        <p style="font-size: var(--font-lg)">TASA Orbiter — variable, weight axis 100–900</p>
+                        <p style="font-size: var(--font-lg)">
+                            TASA Orbiter — variable, weight axis 100–900
+                        </p>
                     </Stack>
 
                     <Stack gap="md">
                         <h3>Type scale</h3>
                         <Stack gap="md">
-                            {fontTokens.map((t) => (
-                                <div class="ds-row">
-                                    <span class="ds-sample" style={`font-size: var(${t.name}); line-height: 1`}>Aa</span>
-                                    <Stack gap="sm">
-                                        <span class="ds-meta">{t.name} · {t.value}</span>
-                                        <span class="ds-meta-secondary">{t.use}</span>
-                                    </Stack>
-                                </div>
-                            ))}
+                            {
+                                fontTokens.map((t) => (
+                                    <div class="ds-row">
+                                        <span
+                                            class="ds-sample"
+                                            style={`font-size: var(${t.name}); line-height: 1`}
+                                        >
+                                            Aa
+                                        </span>
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">
+                                                {t.name} · {t.value}
+                                            </span>
+                                            <span class="ds-meta-secondary">{t.use}</span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
                         </Stack>
                     </Stack>
 
                     <Stack gap="md">
                         <h3>Line height</h3>
                         <Stack gap="md">
-                            {leadingTokens.map((t) => (
-                                <div class="ds-row">
-                                    <Stack gap="sm">
-                                        <span class="ds-meta">{t.name} · {t.value}</span>
-                                        <span class="ds-meta-secondary">{t.use}</span>
-                                    </Stack>
-                                </div>
-                            ))}
+                            {
+                                leadingTokens.map((t) => (
+                                    <div class="ds-row">
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">
+                                                {t.name} · {t.value}
+                                            </span>
+                                            <span class="ds-meta-secondary">{t.use}</span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
                         </Stack>
                     </Stack>
 
                     <Stack gap="md">
                         <h3>Letter spacing</h3>
                         <Stack gap="md">
-                            {trackingTokens.map((t) => (
-                                <div class="ds-row">
-                                    <Stack gap="sm">
-                                        <span class="ds-meta">{t.name} · {t.value}</span>
-                                        <span class="ds-meta-secondary">{t.use}</span>
-                                    </Stack>
-                                </div>
-                            ))}
+                            {
+                                trackingTokens.map((t) => (
+                                    <div class="ds-row">
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">
+                                                {t.name} · {t.value}
+                                            </span>
+                                            <span class="ds-meta-secondary">{t.use}</span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
                         </Stack>
                     </Stack>
 
                     <Stack gap="md">
                         <h3>Font weights</h3>
                         <Stack gap="sm">
-                            {weights.map((w) => (
-                                <p style={`font-weight: ${w.value}; font-size: var(--font-base)`}>
-                                    {w.value} — {w.label}: The quick brown fox jumps over the lazy dog
-                                </p>
-                            ))}
+                            {
+                                weights.map((w) => (
+                                    <p
+                                        style={`font-weight: ${w.value}; font-size: var(--font-base)`}
+                                    >
+                                        {w.value} — {w.label}: The quick brown fox jumps over the
+                                        lazy dog
+                                    </p>
+                                ))
+                            }
                         </Stack>
                     </Stack>
                 </Stack>
@@ -387,12 +452,16 @@ const weights = [
                 <Stack gap="lg">
                     <h2>Spacing</h2>
                     <Stack gap="md">
-                        {spaceTokens.map((t) => (
-                            <div class="ds-row">
-                                <span class="ds-bar" style={`width: var(${t.name})`}></span>
-                                <span class="ds-meta">{t.name} · {t.value}</span>
-                            </div>
-                        ))}
+                        {
+                            spaceTokens.map((t) => (
+                                <div class="ds-row">
+                                    <span class="ds-bar" style={`width: var(${t.name})`} />
+                                    <span class="ds-meta">
+                                        {t.name} · {t.value}
+                                    </span>
+                                </div>
+                            ))
+                        }
                     </Stack>
                 </Stack>
             </Container>
@@ -402,22 +471,30 @@ const weights = [
             <Container size="page">
                 <Stack gap="lg">
                     <h2>Primitive colors</h2>
-                    <p class="ds-meta-secondary">The raw palette. Theme-agnostic — these values don't change between light and dark mode. Semantic tokens below reference these.</p>
+                    <p class="ds-meta-secondary">
+                        The raw palette. Theme-agnostic — these values don't change between light
+                        and dark mode. Semantic tokens below reference these.
+                    </p>
 
-                    {primitiveFamilies.map((family) => (
-                        <Stack gap="md">
-                            <h3>{family.name}</h3>
-                            <div class="ds-palette">
-                                {family.swatches.map((s) => (
-                                    <div class="ds-palette-cell">
-                                        <span class="ds-swatch" style={`background: ${s.value}`}></span>
-                                        <span class="ds-meta">{s.name}</span>
-                                        <span class="ds-meta-secondary">{s.value}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </Stack>
-                    ))}
+                    {
+                        primitiveFamilies.map((family) => (
+                            <Stack gap="md">
+                                <h3>{family.name}</h3>
+                                <div class="ds-palette">
+                                    {family.swatches.map((s) => (
+                                        <div class="ds-palette-cell">
+                                            <span
+                                                class="ds-swatch"
+                                                style={`background: ${s.value}`}
+                                            />
+                                            <span class="ds-meta">{s.name}</span>
+                                            <span class="ds-meta-secondary">{s.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Stack>
+                        ))
+                    }
                 </Stack>
             </Container>
         </Section>
@@ -426,20 +503,35 @@ const weights = [
             <Container size="page">
                 <Stack gap="lg">
                     <h2>Semantic colors</h2>
-                    <p class="ds-meta-secondary">What the rest of the site actually uses. Each maps to a primitive; the L and D columns show which primitive is referenced in light vs dark theme.</p>
+                    <p class="ds-meta-secondary">
+                        What the rest of the site actually uses. Each maps to a primitive; the L and
+                        D columns show which primitive is referenced in light vs dark theme.
+                    </p>
                     <Stack gap="md">
-                        {colorTokens.map((t) => (
-                            <div class="ds-row">
-                                <div class="ds-swatch-pair">
-                                    <span class="ds-swatch" style={`background: var(--${t.light})`} title={`Light: ${t.light}`}></span>
-                                    <span class="ds-swatch" style={`background: var(--${t.dark})`} title={`Dark: ${t.dark}`}></span>
+                        {
+                            colorTokens.map((t) => (
+                                <div class="ds-row">
+                                    <div class="ds-swatch-pair">
+                                        <span
+                                            class="ds-swatch"
+                                            style={`background: var(--${t.light})`}
+                                            title={`Light: ${t.light}`}
+                                        />
+                                        <span
+                                            class="ds-swatch"
+                                            style={`background: var(--${t.dark})`}
+                                            title={`Dark: ${t.dark}`}
+                                        />
+                                    </div>
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">{t.name}</span>
+                                        <span class="ds-meta-secondary">
+                                            L {t.light} · D {t.dark} · {t.use}
+                                        </span>
+                                    </Stack>
                                 </div>
-                                <Stack gap="sm">
-                                    <span class="ds-meta">{t.name}</span>
-                                    <span class="ds-meta-secondary">L {t.light} · D {t.dark} · {t.use}</span>
-                                </Stack>
-                            </div>
-                        ))}
+                            ))
+                        }
                     </Stack>
                 </Stack>
             </Container>
@@ -450,14 +542,18 @@ const weights = [
                 <Stack gap="lg">
                     <h2>Layout widths</h2>
                     <Stack gap="md">
-                        {widthTokens.map((t) => (
-                            <div class="ds-row">
-                                <Stack gap="sm">
-                                    <span class="ds-meta">{t.name} · {t.value}</span>
-                                    <span class="ds-meta-secondary">{t.use}</span>
-                                </Stack>
-                            </div>
-                        ))}
+                        {
+                            widthTokens.map((t) => (
+                                <div class="ds-row">
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">
+                                            {t.name} · {t.value}
+                                        </span>
+                                        <span class="ds-meta-secondary">{t.use}</span>
+                                    </Stack>
+                                </div>
+                            ))
+                        }
                     </Stack>
                 </Stack>
             </Container>

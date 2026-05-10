@@ -8,7 +8,7 @@ order: 4
 
 ## Overview
 
-This is an exploration of what it might look like to redesign and illustrate a new English translation of Homer's *Odyssey* — the kind of object that lives on a coffee table or a bookshelf and earns its weight. The brief is partly real, partly imagined: a publisher who wants something more bookish than airport, more confident than a school edition, and a designer who wants to spend a long time looking at sea, fire, and weaving.
+This is an exploration of what it might look like to redesign and illustrate a new English translation of Homer's _Odyssey_ — the kind of object that lives on a coffee table or a bookshelf and earns its weight. The brief is partly real, partly imagined: a publisher who wants something more bookish than airport, more confident than a school edition, and a designer who wants to spend a long time looking at sea, fire, and weaving.
 
 The work runs in three registers — a typographic system for the text, a sequence of full-bleed illustrations for the principal episodes, and a small set of marginalia and chapter ornaments. What follows is the visual direction and the choices that pulled it together.
 
@@ -21,7 +21,7 @@ The work runs in three registers — a typographic system for the text, a sequen
 
 Before any visuals, a long pass through the text. I read three translations side by side — Lattimore for fidelity, Fagles for cadence, Wilson for clarity — and underlined every concrete object that recurs: the wine-dark sea, the rosy-fingered dawn, the well-built ship, the gleaming threshold, the loom. The poem is more architectural than I'd remembered. Spaces matter as much as people. The cave of the Cyclops is a different room than the hall of the Phaeacians; the threshold of Odysseus's own house, when he finally crosses it, has been waiting twenty years.
 
-The visual direction starts there: this is a book about returning, and returning means returning *to* a place. The illustrations should let you stand inside each room.
+The visual direction starts there: this is a book about returning, and returning means returning _to_ a place. The illustrations should let you stand inside each room.
 
 ## Visual direction
 
@@ -38,7 +38,7 @@ Three principles, fixed before any drawings:
 
 ## The wandering
 
-The middle of the *Odyssey* is structured as a series of stories Odysseus tells the Phaeacians — a frame, then nine inset episodes. Each gets a full-bleed illustration as its opening spread.
+The middle of the _Odyssey_ is structured as a series of stories Odysseus tells the Phaeacians — a frame, then nine inset episodes. Each gets a full-bleed illustration as its opening spread.
 
 ### The Cyclops
 
@@ -90,7 +90,7 @@ A small set of character studies sits between the major episodes — half-page p
 
 - **Odysseus** appears in three states: the captain, the beggar, the bowman. Same line, very different color — sun-bronzed, dust-grey, gold-and-blood.
 - **Athena** is rendered as light, never as a body. She arrives as an angle of brightness on a wall, on a sail, on a face.
-- **Penelope** is at the loom in every appearance. The loom *is* her portrait. Twenty years of unweaving live in the tension of the threads.
+- **Penelope** is at the loom in every appearance. The loom _is_ her portrait. Twenty years of unweaving live in the tension of the threads.
 - **Telemachus** changes the most. The reader sees him grow over the course of the book — first sketch is a boy, last sketch is a young man with a sword.
 
 <figure>
@@ -129,7 +129,7 @@ The reader doesn't read this consciously, but they feel it. The book runs hotter
 
 The last quarter of the book is its own visual register. The illustrations stop being landscapes and start being interiors and faces. The bow scene is composed almost entirely of hands — Odysseus's, the suitors', Penelope's testing hand on the bedpost. The recognition between Odysseus and Penelope is two faces close together with a single shared pool of warm light.
 
-The very last spread is empty. A single line, low, on a cool field — *the bed they had made together, rooted in the living olive tree*. Nothing else.
+The very last spread is empty. A single line, low, on a cool field — _the bed they had made together, rooted in the living olive tree_. Nothing else.
 
 <figure>
   <img src="./bedchamber.png" alt="Bedchamber illustration placeholder">

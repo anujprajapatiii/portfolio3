@@ -14,8 +14,9 @@ import Container from './primitives/Container.astro';
 import Stack from './primitives/Stack.astro';
 import Grid from './primitives/Grid.astro';
 
-const projects = (await getCollection('projects'))
-    .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99));
+const projects = (await getCollection('projects')).sort(
+    (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
+);
 
 const columns = [
     {
@@ -33,7 +34,7 @@ const columns = [
         title: 'Site',
         links: [
             { label: 'Design system', href: '/design-system' },
-            { label: 'Sections',      href: '/design-system/sections' },
+            { label: 'Sections', href: '/design-system/sections' },
         ],
     },
 ];
@@ -41,27 +42,31 @@ const columns = [
 
 <footer>
     <PageWrapper>
-    <Section size="md">
-        <Container size="page">
-            <Grid min="220px" gap="lg">
-                {columns.map((col) => (
-                    <Stack gap="sm">
-                        <h3 class="footer-col-title">{col.title}</h3>
-                        <hr class="footer-rule" />
-                        <div class="footer-col-list">
-                            {col.links.length === 0 ? (
-                                <span class="footer-col-empty">—</span>
-                            ) : (
-                                col.links.map((link) => (
-                                    <a class="footer-link" href={link.href}>{link.label}</a>
-                                ))
-                            )}
-                        </div>
-                    </Stack>
-                ))}
-            </Grid>
-            <p class="footer-meta">© 2026 Your Name</p>
-        </Container>
-    </Section>
+        <Section size="md">
+            <Container size="page">
+                <Grid min="220px" gap="lg">
+                    {
+                        columns.map((col) => (
+                            <Stack gap="sm">
+                                <h3 class="footer-col-title">{col.title}</h3>
+                                <hr class="footer-rule" />
+                                <div class="footer-col-list">
+                                    {col.links.length === 0 ? (
+                                        <span class="footer-col-empty">—</span>
+                                    ) : (
+                                        col.links.map((link) => (
+                                            <a class="footer-link" href={link.href}>
+                                                {link.label}
+                                            </a>
+                                        ))
+                                    )}
+                                </div>
+                            </Stack>
+                        ))
+                    }
+                </Grid>
+                <p class="footer-meta">© 2026 Your Name</p>
+            </Container>
+        </Section>
     </PageWrapper>
 </footer>

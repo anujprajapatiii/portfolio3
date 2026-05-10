@@ -16,13 +16,7 @@ interface Props {
     as?: 'div' | 'nav' | 'ul';
 }
 
-const {
-    gap = 'md',
-    align = 'center',
-    justify = 'start',
-    as: Tag = 'div',
-    ...rest
-} = Astro.props;
+const { gap = 'md', align = 'center', justify = 'start', as: Tag = 'div', ...rest } = Astro.props;
 
 const classes = [
     'cluster',

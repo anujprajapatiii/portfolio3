@@ -24,7 +24,6 @@ The Definitive Edition added more sets and reskinned the originals. Worth compar
 
 ![Hawaii](./hawaii.png)
 
-
 ## Color and ownership
 
 Every unit and building takes on the player's team color through a small palette swap. This is the single most important readability decision in the game. You don't read units by their armor or by their face — you read them by the colored cloth on their tunic and the colored flag on their building. The actual unit art is monochromatic-ish, painted to leave room for the team-color overlay to do the heavy lifting.
