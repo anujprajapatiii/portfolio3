@@ -472,6 +472,13 @@ header nav a[aria-current="page"] {
     margin-bottom: var(--space-3);
 }
 
+.project-body h3 {
+    font-size: var(--font-base);
+    font-weight: var(--weight-medium);
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-2);
+}
+
 .project-body p {
     margin-bottom: var(--space-3);
 }
