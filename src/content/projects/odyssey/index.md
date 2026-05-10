@@ -1,5 +1,5 @@
 ---
-title: Homer's Odyssey — An Illustrated Edition
+title: Odyssey
 description: An editorial design study — illustration system, typography, and color for a new English translation
 cover: ./cover.png
 date: 2026-05-10

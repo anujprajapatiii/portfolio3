@@ -1,5 +1,5 @@
 ---
-title: Project Two
+title: Sanctuary
 description: Mobile app redesign for a fintech
 cover: ./cover.png
 date: 2026-02-20
