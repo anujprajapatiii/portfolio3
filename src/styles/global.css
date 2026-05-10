@@ -847,6 +847,13 @@ footer {
     margin: 0;
 }
 
+/* Column link list — vertical, no gap between links (intentionally
+   tighter than <Stack gap="sm">). */
+.footer-col-list {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer-link {
     color: var(--color-muted);
     text-decoration: none;
