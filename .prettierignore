@@ -1,0 +1,15 @@
+# Build artifacts
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Lockfiles (let npm own these)
+package-lock.json
+
+# Static public assets — favicons, fonts, etc. — not source we hand-edit
+public/
+
+# Claude Code metadata managed elsewhere
+.claude/
