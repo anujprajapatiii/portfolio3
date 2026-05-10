@@ -634,6 +634,82 @@ header nav a[aria-current="page"] {
     font-size: var(--font-sm);
 }
 
+/* ==========================================================================
+   Sections gallery (/design-system/sections)
+   --------------------------------------------------------------------------
+   A pattern entry = label + live preview + label + snippet, stacked.
+   The preview sits inside a dashed box so it reads as a demo, not as
+   real page content.
+   ========================================================================== */
+
+.ds-pattern {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.ds-pattern-label {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: var(--font-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    margin-top: var(--space-3);
+}
+
+.ds-pattern-label:first-child {
+    margin-top: 0;
+}
+
+.ds-pattern-preview {
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    /* The previews use real Section/Container primitives inside, which
+       provide their own padding-block. No extra padding needed here. */
+}
+
+/* Fake content placeholders inside previews — colored boxes that stand in
+   for project images, titles, descriptions so we don't need real assets. */
+.ds-fake-image {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+}
+
+.ds-fake-image--cover {
+    aspect-ratio: 16 / 9;
+}
+
+.ds-fake-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.ds-fake-card-title {
+    font-size: var(--font-base);
+    font-weight: var(--weight-medium);
+}
+
+.ds-fake-card-desc {
+    font-size: var(--font-sm);
+    color: var(--color-muted);
+}
+
+.ds-fake-title {
+    font-size: var(--font-xl);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-tight);
+}
+
+.ds-fake-desc {
+    font-size: var(--font-base);
+    color: var(--color-muted);
+}
+
 .ds-row {
     display: flex;
     align-items: center;

@@ -1,10 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Section from '../components/primitives/Section.astro';
-import Container from '../components/primitives/Container.astro';
-import Stack from '../components/primitives/Stack.astro';
-import Cluster from '../components/primitives/Cluster.astro';
-import Grid from '../components/primitives/Grid.astro';
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+import Cluster from '../../components/primitives/Cluster.astro';
+import Grid from '../../components/primitives/Grid.astro';
 
 // Token data — kept in arrays so we can `.map()` over them below.
 // To add a token, add a row here. To rename a token, change it here AND in global.css.
@@ -204,6 +204,7 @@ const weights = [
                 <Stack gap="lg">
                     <h1>Design system</h1>
                     <p>A live preview of every token used on this site. Values below are pulled directly from <code>global.css</code> — change a token there and this page updates.</p>
+                    <p>Looking for ready-to-paste section templates? See the <a href="/design-system/sections">Sections gallery</a>.</p>
                 </Stack>
             </Container>
         </Section>
