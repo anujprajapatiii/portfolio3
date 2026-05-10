@@ -178,7 +178,7 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 ```
 
 - Browse icons at <https://lucide.dev>. Convert the kebab-case slug (`arrow-right`) to PascalCase (`ArrowRight`) for the import name.
-- No client JS, no icon font, no extra request — each `<Icon>` is just an inline `<svg>` in the HTML.
+- No client JS, no icon font, no extra request — each icon is just an inline `<svg>` in the HTML.
 - Default props: `size={24}`, `color="currentColor"`, `stroke-width={2}`. Override per icon via props (`size={20}`, `stroke-width={1.5}`) or via CSS through the `class` prop.
 - Use `currentColor` (the default) so icons inherit text color and respect theme switches automatically.
 - For decorative icons, set `aria-hidden="true"`. For meaningful icons standing on their own (e.g. icon-only button), put `aria-label` on the parent element instead.
