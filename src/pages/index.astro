@@ -6,7 +6,7 @@ import Grid from '../components/primitives/Grid.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
-const projects = (await getCollection('projects')).sort(
+const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(
     (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
 );
 ---
