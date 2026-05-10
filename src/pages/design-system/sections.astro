@@ -1,0 +1,281 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+import Grid from '../../components/primitives/Grid.astro';
+
+// Each entry is one ready-to-paste section pattern.
+// Add an entry here when you ship a new section worth reusing.
+//
+// `code` is the snippet you'd paste into a page — kept as a plain string
+// so we can render it in a <pre> block. Mirror real usage from the actual
+// pages so the snippets compile if you copy them as-is.
+const patterns = [
+    {
+        slug: 'page-heading',
+        name: 'Page heading + intro',
+        use: 'Top of a content page (about, design-system, project body intros). Heading paired with one or more paragraphs.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Stack gap="lg">
+            <h1>About</h1>
+            <Stack gap="md">
+                <p>I'm a designer based in Mumbai…</p>
+                <p>Before going independent, I led design at [Place].</p>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'lede',
+        name: 'Lede paragraph',
+        use: 'Single oversized paragraph that sets the tone of a page. Used as the opening on the homepage.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <p class="intro">Designer working across visual identity and digital products. Based in Mumbai.</p>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'topic-block',
+        name: 'Topic block',
+        use: 'A small heading + a short body. Used to break a long page into addressable sections (Work, Elsewhere on /about).',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Stack gap="md">
+            <h2>Work</h2>
+            <p>I'm currently available for freelance work…</p>
+        </Stack>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'link-list',
+        name: 'Link list',
+        use: 'Heading followed by a tight vertical list of links. Used for "Elsewhere" social links on /about.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Stack gap="md">
+            <h2>Elsewhere</h2>
+            <Stack gap="sm">
+                <a href="…">Email</a>
+                <a href="…">Twitter</a>
+                <a href="…">LinkedIn</a>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'card-grid',
+        name: 'Card grid (auto-fit)',
+        use: 'Page-width responsive grid of cards. Auto-collapses from N → 1 columns based on viewport — no media query. Used for the project list on the homepage.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Grid min="280px" gap="lg">
+            {projects.map((project) => (
+                <a href={\`/projects/\${project.id}\`} class="project-card">
+                    <Image src={project.data.cover} alt="…" />
+                    <h2>{project.data.title}</h2>
+                    <p>{project.data.description}</p>
+                </a>
+            ))}
+        </Grid>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'project-hero',
+        name: 'Project hero',
+        use: 'Full-width cover image followed by title + description. Used at the top of every project page.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Stack gap="lg">
+            <Image src={cover} alt="…" class="project-cover" />
+            <Stack gap="sm">
+                <h1 class="project-title">{title}</h1>
+                <p class="project-description">{description}</p>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'reading-column',
+        name: 'Reading column',
+        use: 'Long-form Markdown body for project case-study text.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <div class="project-body">
+            <slot />
+        </div>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'short-message',
+        name: 'Short message',
+        use: 'Tiny page with a heading and a single line of body. Used by the 404.',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Stack gap="md">
+            <h1>404</h1>
+            <p>This page doesn't exist. <a href="/">Go home</a>.</p>
+        </Stack>
+    </Container>
+</Section>`,
+    },
+];
+---
+
+<Layout
+    title="Sections — Design System"
+    description="Ready-to-paste section templates used across this portfolio. Copy a snippet, drop it into a page, change the content."
+>
+    <article class="design-system">
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h1>Sections gallery</h1>
+                    <p>Ready-to-paste section templates. Each card shows a live preview and the snippet that produced it. Copy the snippet, paste into a page, change the content.</p>
+                    <p>Back to <a href="/design-system">tokens &amp; primitives</a>.</p>
+                </Stack>
+            </Container>
+        </Section>
+
+        {patterns.map((p) => (
+            <Section size="lg">
+                <Container size="page">
+                    <Stack gap="lg">
+                        <Stack gap="sm">
+                            <h2 id={p.slug}>{p.name}</h2>
+                            <p class="ds-meta-secondary">{p.use}</p>
+                        </Stack>
+
+                        <div class="ds-pattern">
+                            <span class="ds-pattern-label">Preview</span>
+                            <div class="ds-pattern-preview">
+                                {p.slug === 'page-heading' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <Stack gap="lg">
+                                                <h1>About</h1>
+                                                <Stack gap="md">
+                                                    <p>I'm a designer based in Mumbai. I work across visual identity and digital products — sometimes for early-stage startups, sometimes for established teams that need a fresh eye.</p>
+                                                    <p>Before going independent, I led design at [Place] and trained at [School].</p>
+                                                </Stack>
+                                            </Stack>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'lede' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <p class="intro">Designer working across visual identity and digital products. Based in Mumbai.</p>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'topic-block' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <Stack gap="md">
+                                                <h2>Work</h2>
+                                                <p>I'm currently available for freelance work. If you think I might be a good fit for your project, <a href="#">get in touch</a>.</p>
+                                            </Stack>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'link-list' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <Stack gap="md">
+                                                <h2>Elsewhere</h2>
+                                                <Stack gap="sm">
+                                                    <a href="#">Email</a>
+                                                    <a href="#">Twitter</a>
+                                                    <a href="#">LinkedIn</a>
+                                                    <a href="#">Are.na</a>
+                                                </Stack>
+                                            </Stack>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'card-grid' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <Grid min="280px" gap="lg">
+                                                <div class="ds-fake-card">
+                                                    <div class="ds-fake-image"></div>
+                                                    <div class="ds-fake-card-title">Project name</div>
+                                                    <div class="ds-fake-card-desc">A short description of the project.</div>
+                                                </div>
+                                                <div class="ds-fake-card">
+                                                    <div class="ds-fake-image"></div>
+                                                    <div class="ds-fake-card-title">Project name</div>
+                                                    <div class="ds-fake-card-desc">A short description of the project.</div>
+                                                </div>
+                                                <div class="ds-fake-card">
+                                                    <div class="ds-fake-image"></div>
+                                                    <div class="ds-fake-card-title">Project name</div>
+                                                    <div class="ds-fake-card-desc">A short description of the project.</div>
+                                                </div>
+                                            </Grid>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'project-hero' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <Stack gap="lg">
+                                                <div class="ds-fake-image ds-fake-image--cover"></div>
+                                                <Stack gap="sm">
+                                                    <div class="ds-fake-title">Project name</div>
+                                                    <div class="ds-fake-desc">A short description of the project.</div>
+                                                </Stack>
+                                            </Stack>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'reading-column' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <div class="project-body">
+                                                <h2>Overview</h2>
+                                                <p>A short intro paragraph. Imagine this is the elevator pitch — what the project was, who it was for, what the goal was.</p>
+                                                <p>A second paragraph that goes a bit deeper — context, constraints, anything that frames the work.</p>
+                                                <h2>Process</h2>
+                                                <p>Body content as plain Markdown. Headings, paragraphs, lists, images all render through the global typography rules.</p>
+                                            </div>
+                                        </Container>
+                                    </Section>
+                                )}
+
+                                {p.slug === 'short-message' && (
+                                    <Section size="lg">
+                                        <Container size="page">
+                                            <Stack gap="md">
+                                                <h1>404</h1>
+                                                <p>This page doesn't exist. <a href="#">Go home</a>.</p>
+                                            </Stack>
+                                        </Container>
+                                    </Section>
+                                )}
+                            </div>
+
+                            <span class="ds-pattern-label">Snippet</span>
+                            <pre class="ds-code"><code>{p.code}</code></pre>
+                        </div>
+                    </Stack>
+                </Container>
+            </Section>
+        ))}
+    </article>
+</Layout>
