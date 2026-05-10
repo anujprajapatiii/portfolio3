@@ -164,6 +164,25 @@ Pattern:
 
 Open `src/styles/global.css`, edit the tokens in `:root` at the top. Don't change values inside the rules — change the token they reference.
 
+### Use an icon
+
+Icons come from **Lucide** via the `astro-icon` integration. Two-step usage:
+
+```astro
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<Icon name="lucide:arrow-right" class="some-class" aria-hidden="true" />
+```
+
+- Browse icons at <https://lucide.dev>. Use the lowercase, kebab-case slug (`arrow-right`, `external-link`).
+- Always prefix `lucide:` so future icon packs (Heroicons, etc.) can sit alongside without collision.
+- The `<Icon>` renders an inline SVG at build time — no client JS, no font, no extra request. Only icons you reference are bundled.
+- Style with CSS via the `class` prop. Use `currentColor` (the default) so icons inherit text color and theme correctly.
+- For decorative icons, set `aria-hidden="true"`. For icons that carry meaning (e.g. a standalone button), put a `aria-label` on the parent button instead.
+- Default size is 1em, so the icon scales with surrounding `font-size`. Override with `width="20"` / `height="20"` or via CSS.
+
 ---
 
 ## Conventions
