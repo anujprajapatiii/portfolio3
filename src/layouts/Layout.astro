@@ -32,115 +32,125 @@ const navLinks = [
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Set theme BEFORE first paint to prevent a flash of the wrong theme.
+        <!-- Set theme BEFORE first paint to prevent a flash of the wrong theme.
          Reads saved preference, falls back to OS preference, defaults to light. -->
-    <script is:inline>
-        (function () {
-            const stored = localStorage.getItem('theme');
-            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = stored || (systemDark ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
-        })();
-    </script>
+        <script is:inline>
+            (function () {
+                const stored = localStorage.getItem('theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = stored || (systemDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+            })();
+        </script>
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="canonical" href={canonicalUrl} />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Preload the variable font so it's available before CSS parses -->
-    <link
-        rel="preload"
-        href="/fonts/TASAOrbiter-VariableFont_wght.ttf"
-        as="font"
-        type="font/ttf"
-        crossorigin
-    />
+        <!-- Preload the variable font so it's available before CSS parses -->
+        <link
+            rel="preload"
+            href="/fonts/TASAOrbiter-VariableFont_wght.ttf"
+            as="font"
+            type="font/ttf"
+            crossorigin
+        />
 
-    <title>{title}</title>
-    <meta name="description" content={description} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content={ogType} />
-    <meta property="og:url" content={canonicalUrl} />
-    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+        <!-- Open Graph -->
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:url" content={canonicalUrl} />
+        {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
-</head>
-<body>
-    <a href="#main" class="skip-link">Skip to content</a>
+        <!-- Twitter -->
+        <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+    </head>
+    <body>
+        <a href="#main" class="skip-link">Skip to content</a>
 
-    <header>
-        <PageWrapper>
-            <Container size="page">
-                <Cluster justify="between" align="baseline">
-                    <a href="/" class="brand">Your Name</a>
-                    <Cluster as="nav" gap="md" align="center" aria-label="Primary">
-                        {navLinks.map((link) => (
-                            <a
-                                href={link.href}
-                                aria-current={currentPath === link.href ? 'page' : undefined}
-                            >{link.label}</a>
-                        ))}
-                        <ThemeToggle />
+        <header>
+            <PageWrapper>
+                <Container size="page">
+                    <Cluster justify="between" align="baseline">
+                        <a href="/" class="brand">Your Name</a>
+                        <Cluster as="nav" gap="md" align="center" aria-label="Primary">
+                            {
+                                navLinks.map((link) => (
+                                    <a
+                                        href={link.href}
+                                        aria-current={
+                                            currentPath === link.href ? 'page' : undefined
+                                        }
+                                    >
+                                        {link.label}
+                                    </a>
+                                ))
+                            }
+                            <ThemeToggle />
+                        </Cluster>
                     </Cluster>
-                </Cluster>
-            </Container>
-        </PageWrapper>
-    </header>
+                </Container>
+            </PageWrapper>
+        </header>
 
-    <main id="main">
-        <PageWrapper>
-            <slot />
-        </PageWrapper>
-    </main>
+        <main id="main">
+            <PageWrapper>
+                <slot />
+            </PageWrapper>
+        </main>
 
-    <Footer />
+        <Footer />
 
-    <!-- Auto-hide header on scroll-down, reveal on scroll-up.
+        <!-- Auto-hide header on scroll-down, reveal on scroll-up.
          Always shown when within TOP_ZONE pixels of the page top. -->
-    <script is:inline>
-        (function () {
-            const header = document.querySelector('header');
-            if (!header) return;
+        <script is:inline>
+            (function () {
+                const header = document.querySelector('header');
+                if (!header) return;
 
-            let lastY = window.scrollY;
-            let ticking = false;
-            const TOP_ZONE = 100;
+                let lastY = window.scrollY;
+                let ticking = false;
+                const TOP_ZONE = 100;
 
-            const onScroll = () => {
-                const y = window.scrollY;
+                const onScroll = () => {
+                    const y = window.scrollY;
 
-                if (y < TOP_ZONE) {
-                    header.classList.remove('header--hidden');
-                } else if (y > lastY) {
-                    header.classList.add('header--hidden');
-                } else if (y < lastY) {
-                    header.classList.remove('header--hidden');
-                }
+                    if (y < TOP_ZONE) {
+                        header.classList.remove('header--hidden');
+                    } else if (y > lastY) {
+                        header.classList.add('header--hidden');
+                    } else if (y < lastY) {
+                        header.classList.remove('header--hidden');
+                    }
 
-                lastY = y;
-                ticking = false;
-            };
+                    lastY = y;
+                    ticking = false;
+                };
 
-            window.addEventListener('scroll', () => {
-                if (!ticking) {
-                    requestAnimationFrame(onScroll);
-                    ticking = true;
-                }
-            }, { passive: true });
-        })();
-    </script>
-</body>
+                window.addEventListener(
+                    'scroll',
+                    () => {
+                        if (!ticking) {
+                            requestAnimationFrame(onScroll);
+                            ticking = true;
+                        }
+                    },
+                    { passive: true }
+                );
+            })();
+        </script>
+    </body>
 </html>

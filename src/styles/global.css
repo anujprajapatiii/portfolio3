@@ -32,15 +32,15 @@
 
     /* Neutral */
     --neutral-black: #000000;
-    --neutral-900:   #0e0f12;
-    --neutral-800:   #141619;
-    --neutral-700:   #1c1f24;
-    --neutral-600:   #21252b;
-    --neutral-500:   #2c323a;
-    --neutral-400:   #434b56;
-    --neutral-300:   #99a1ac;
-    --neutral-200:   #d3d7dd;
-    --neutral-100:   #f6f7f8;
+    --neutral-900: #0e0f12;
+    --neutral-800: #141619;
+    --neutral-700: #1c1f24;
+    --neutral-600: #21252b;
+    --neutral-500: #2c323a;
+    --neutral-400: #434b56;
+    --neutral-300: #99a1ac;
+    --neutral-200: #d3d7dd;
+    --neutral-100: #f6f7f8;
     --neutral-white: #ffffff;
 
     /* Blue (100 = lightest, 600 = darkest) */
@@ -85,32 +85,32 @@
        Light theme defaults. Dark overrides live in [data-theme="dark"] below.
        ---------------------------------------------------------------------- */
 
-    --color-text:    var(--neutral-600);
-    --color-muted:   var(--neutral-400);
-    --color-bg:      var(--neutral-100);
-    --color-border:  var(--neutral-300);
+    --color-text: var(--neutral-600);
+    --color-muted: var(--neutral-400);
+    --color-bg: var(--neutral-100);
+    --color-border: var(--neutral-300);
     --color-surface: var(--neutral-200);
     --color-code-bg: var(--neutral-200);
 
     /* ----------------------------------------------------------------------
        Type family
        ---------------------------------------------------------------------- */
-    --font-family: 'TASA Orbiter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --font-family: 'TASA Orbiter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
 
     /* Type scale — modular ratio ~1.333, base 18px.
        Six sizes only; each step is genuinely visible.  */
-    --font-xs:       13px;   /* fine print, captions */
-    --font-sm:       16px;   /* secondary body, card descriptions */
-    --font-base:     18px;   /* body */
-    --font-lg:       24px;   /* in-body heading, homepage intro */
-    --font-xl:       40px;   /* page heading */
-    --font-display:  72px;   /* hero / landing moments */
+    --font-xs: 13px; /* fine print, captions */
+    --font-sm: 16px; /* secondary body, card descriptions */
+    --font-base: 18px; /* body */
+    --font-lg: 24px; /* in-body heading, homepage intro */
+    --font-xl: 40px; /* page heading */
+    --font-display: 72px; /* hero / landing moments */
 
     /* Line-height per size range. Display sizes need much tighter leading. */
-    --leading-display: 1.05;  /* 40px+ */
-    --leading-tight:   1.3;   /* 22–32px */
-    --leading-base:    1.5;   /* body default */
-    --leading-loose:   1.6;   /* long-form reading */
+    --leading-display: 1.05; /* 40px+ */
+    --leading-tight: 1.3; /* 22–32px */
+    --leading-base: 1.5; /* body default */
+    --leading-loose: 1.6; /* long-form reading */
 
     /* Letter-spacing — apply to display sizes (40px+) */
     --tracking-tight: -0.015em;
@@ -129,32 +129,32 @@
     --space-8: 120px;
 
     /* Layout widths */
-    --width-page:    880px;     /* outer page container */
-    --width-reading: 680px;     /* long-form text */
-    --width-narrow:  600px;     /* about, intro */
+    --width-page: 880px; /* outer page container */
+    --width-reading: 680px; /* long-form text */
+    --width-narrow: 600px; /* about, intro */
 
     /* Breakpoints — used in @media rules below.
        Documented on the design-system page so they're discoverable.
        CSS custom properties don't work inside @media queries, so the
        numeric values are mirrored in the @media rules — keep in sync. */
-    --bp-sm:  480px;   /* small mobile  → larger mobile */
-    --bp-md:  768px;   /* mobile        → tablet */
-    --bp-lg:  1024px;  /* tablet        → laptop */
-    --bp-xl:  1280px;  /* laptop        → desktop */
+    --bp-sm: 480px; /* small mobile  → larger mobile */
+    --bp-md: 768px; /* mobile        → tablet */
+    --bp-lg: 1024px; /* tablet        → laptop */
+    --bp-xl: 1280px; /* laptop        → desktop */
 
     /* Other */
-    --radius-sm:   4px;
-    --transition:  0.15s;
+    --radius-sm: 4px;
+    --transition: 0.15s;
 }
 
 /* Dark theme — only re-maps the semantic tokens. Primitives don't change. */
-[data-theme="dark"] {
+[data-theme='dark'] {
     color-scheme: dark;
 
-    --color-text:    var(--neutral-200);
-    --color-muted:   var(--neutral-300);
-    --color-bg:      var(--neutral-800);
-    --color-border:  var(--neutral-500);
+    --color-text: var(--neutral-200);
+    --color-muted: var(--neutral-300);
+    --color-bg: var(--neutral-800);
+    --color-border: var(--neutral-500);
     --color-surface: var(--neutral-400);
     --color-code-bg: var(--neutral-700);
 }
@@ -227,35 +227,50 @@ body {
 /* PageWrapper — provides horizontal page padding so content edges don't
    touch the screen. Used by header, main, and footer independently. */
 .page-wrapper {
-    padding-inline: var(--space-4);  /* 24px on mobile */
+    padding-inline: var(--space-4); /* 24px on mobile */
 }
 
-@media (min-width: 768px) {  /* --bp-md */
+@media (min-width: 768px) {
+    /* --bp-md */
     .page-wrapper {
-        padding-inline: var(--space-5);  /* 32px tablet+ */
+        padding-inline: var(--space-5); /* 32px tablet+ */
     }
 }
 
 /* Section — vertical chunk of a page. Owns padding-block.
    Replaces the old .section + .section margin trick — order doesn't matter. */
 .section {
-    padding-block: var(--space-6);  /* default = md */
+    padding-block: var(--space-6); /* default = md */
 }
 
-.section--sm { padding-block: var(--space-5); }   /* 32px — tight related blocks */
-.section--md { padding-block: var(--space-6); }   /* 48px — default */
-.section--lg { padding-block: var(--space-7); }   /* 80px — distinct page chapters */
-.section--xl { padding-block: var(--space-8); }   /* 120px — hero / landing */
+.section--sm {
+    padding-block: var(--space-5);
+} /* 32px — tight related blocks */
+.section--md {
+    padding-block: var(--space-6);
+} /* 48px — default */
+.section--lg {
+    padding-block: var(--space-7);
+} /* 80px — distinct page chapters */
+.section--xl {
+    padding-block: var(--space-8);
+} /* 120px — hero / landing */
 
 /* Container — max-width + center. Sits inside Section. */
 .container {
     margin-inline: auto;
-    max-width: var(--width-page);  /* default = page */
+    max-width: var(--width-page); /* default = page */
 }
 
-.container--page    { max-width: var(--width-page); }    /* 880px */
-.container--reading { max-width: var(--width-reading); } /* 680px */
-.container--narrow  { max-width: var(--width-narrow); }  /* 600px */
+.container--page {
+    max-width: var(--width-page);
+} /* 880px */
+.container--reading {
+    max-width: var(--width-reading);
+} /* 680px */
+.container--narrow {
+    max-width: var(--width-narrow);
+} /* 600px */
 
 /* Stack — vertical flex with consistent gap. */
 .stack {
@@ -263,9 +278,15 @@ body {
     flex-direction: column;
 }
 
-.stack--gap-sm { gap: var(--space-2); }   /* 8px  — list items, label+control */
-.stack--gap-md { gap: var(--space-3); }   /* 16px — paragraphs */
-.stack--gap-lg { gap: var(--space-5); }   /* 32px — distinct content blocks */
+.stack--gap-sm {
+    gap: var(--space-2);
+} /* 8px  — list items, label+control */
+.stack--gap-md {
+    gap: var(--space-3);
+} /* 16px — paragraphs */
+.stack--gap-lg {
+    gap: var(--space-5);
+} /* 32px — distinct content blocks */
 
 /* Cluster — horizontal flex with wrap. For nav, tag rows, link lists. */
 .cluster {
@@ -273,16 +294,32 @@ body {
     flex-wrap: wrap;
 }
 
-.cluster--gap-sm { gap: var(--space-2); }
-.cluster--gap-md { gap: var(--space-3); }
-.cluster--gap-lg { gap: var(--space-5); }
+.cluster--gap-sm {
+    gap: var(--space-2);
+}
+.cluster--gap-md {
+    gap: var(--space-3);
+}
+.cluster--gap-lg {
+    gap: var(--space-5);
+}
 
-.cluster--align-start    { align-items: flex-start; }
-.cluster--align-center   { align-items: center; }
-.cluster--align-baseline { align-items: baseline; }
+.cluster--align-start {
+    align-items: flex-start;
+}
+.cluster--align-center {
+    align-items: center;
+}
+.cluster--align-baseline {
+    align-items: baseline;
+}
 
-.cluster--justify-start   { justify-content: flex-start; }
-.cluster--justify-between { justify-content: space-between; }
+.cluster--justify-start {
+    justify-content: flex-start;
+}
+.cluster--justify-between {
+    justify-content: space-between;
+}
 
 /* Grid — auto-fit responsive grid. Picks column count from available width.
    No media query needed — the grid collapses naturally on narrow screens. */
@@ -290,12 +327,22 @@ body {
     display: grid;
 }
 
-.grid--min-220 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.grid--min-280 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.grid--min-360 { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+.grid--min-220 {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.grid--min-280 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.grid--min-360 {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+}
 
-.grid--gap-md { gap: var(--space-3); }
-.grid--gap-lg { gap: var(--space-5); }
+.grid--gap-md {
+    gap: var(--space-3);
+}
+.grid--gap-lg {
+    gap: var(--space-5);
+}
 
 /* ==========================================================================
    Skip-to-content link
@@ -358,7 +405,7 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-header nav a[aria-current="page"] {
+header nav a[aria-current='page'] {
     text-decoration: underline;
 }
 
@@ -384,11 +431,19 @@ header nav a[aria-current="page"] {
 }
 
 /* Show moon by default (clicking switches to dark). Show sun in dark mode. */
-.theme-toggle .icon-sun  { display: none; }
-.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun {
+    display: none;
+}
+.theme-toggle .icon-moon {
+    display: block;
+}
 
-[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
-[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme='dark'] .theme-toggle .icon-sun {
+    display: block;
+}
+[data-theme='dark'] .theme-toggle .icon-moon {
+    display: none;
+}
 
 /* ==========================================================================
    Homepage intro
@@ -571,7 +626,7 @@ header nav a[aria-current="page"] {
 }
 
 .design-system code {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: var(--font-sm);
     background: var(--color-code-bg);
     padding: 2px 6px;
@@ -581,7 +636,7 @@ header nav a[aria-current="page"] {
 /* Design-system: layout-primitive demos */
 
 .ds-code {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: var(--font-sm);
     background: var(--color-code-bg);
     padding: var(--space-3);
@@ -615,9 +670,17 @@ header nav a[aria-current="page"] {
     margin-right: var(--space-3);
 }
 
-.ds-container-demo--page    { max-width: var(--width-page);    }
-.ds-container-demo--reading { max-width: var(--width-reading); margin-top: var(--space-3); }
-.ds-container-demo--narrow  { max-width: var(--width-narrow);  margin-top: var(--space-3); }
+.ds-container-demo--page {
+    max-width: var(--width-page);
+}
+.ds-container-demo--reading {
+    max-width: var(--width-reading);
+    margin-top: var(--space-3);
+}
+.ds-container-demo--narrow {
+    max-width: var(--width-narrow);
+    margin-top: var(--space-3);
+}
 
 .ds-container-demo > .ds-container-demo {
     flex-direction: column;
@@ -630,7 +693,7 @@ header nav a[aria-current="page"] {
     padding: var(--space-4);
     border-radius: var(--radius-sm);
     text-align: center;
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
 }
 
 /* Cluster demo tags. */
@@ -656,7 +719,7 @@ header nav a[aria-current="page"] {
 }
 
 .ds-pattern-label {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: var(--font-xs);
     text-transform: uppercase;
     letter-spacing: 0.06em;
@@ -788,7 +851,7 @@ header nav a[aria-current="page"] {
 }
 
 .ds-meta {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
     font-size: var(--font-sm);
 }
 
