@@ -166,22 +166,22 @@ Open `src/styles/global.css`, edit the tokens in `:root` at the top. Don't chang
 
 ### Use an icon
 
-Icons come from **Lucide** via the `astro-icon` integration. Two-step usage:
+Icons come from **Lucide** via the official `@lucide/astro` package. Each icon is a named import that renders as an inline SVG at build time.
 
 ```astro
 ---
-import { Icon } from 'astro-icon/components';
+import { ArrowRight, ExternalLink } from '@lucide/astro';
 ---
 
-<Icon name="lucide:arrow-right" class="some-class" aria-hidden="true" />
+<ArrowRight aria-hidden="true" />
+<ExternalLink class="some-class" size={20} />
 ```
 
-- Browse icons at <https://lucide.dev>. Use the lowercase, kebab-case slug (`arrow-right`, `external-link`).
-- Always prefix `lucide:` so future icon packs (Heroicons, etc.) can sit alongside without collision.
-- The `<Icon>` renders an inline SVG at build time — no client JS, no font, no extra request. Only icons you reference are bundled.
-- Style with CSS via the `class` prop. Use `currentColor` (the default) so icons inherit text color and theme correctly.
-- For decorative icons, set `aria-hidden="true"`. For icons that carry meaning (e.g. a standalone button), put a `aria-label` on the parent button instead.
-- Default size is 1em, so the icon scales with surrounding `font-size`. Override with `width="20"` / `height="20"` or via CSS.
+- Browse icons at <https://lucide.dev>. Convert the kebab-case slug (`arrow-right`) to PascalCase (`ArrowRight`) for the import name.
+- No client JS, no icon font, no extra request — each `<Icon>` is just an inline `<svg>` in the HTML.
+- Default props: `size={24}`, `color="currentColor"`, `stroke-width={2}`. Override per icon via props (`size={20}`, `stroke-width={1.5}`) or via CSS through the `class` prop.
+- Use `currentColor` (the default) so icons inherit text color and respect theme switches automatically.
+- For decorative icons, set `aria-hidden="true"`. For meaningful icons standing on their own (e.g. icon-only button), put `aria-label` on the parent element instead.
 
 ---
 

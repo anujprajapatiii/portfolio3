@@ -7,8 +7,8 @@
 //   Light mode → moon visible (click to go dark)
 //   Dark mode  → sun visible  (click to go light)
 //
-// Icons are from Lucide via astro-icon — see CLAUDE.md → Icons.
-import { Icon } from 'astro-icon/components';
+// Icons are from Lucide via @lucide/astro — see CLAUDE.md → Icons.
+import { Moon, Sun } from '@lucide/astro';
 ---
 
 <button
@@ -18,8 +18,8 @@ import { Icon } from 'astro-icon/components';
     aria-label="Toggle color theme"
     title="Toggle color theme"
 >
-    <Icon name="lucide:moon" class="icon-moon" aria-hidden="true" />
-    <Icon name="lucide:sun"  class="icon-sun"  aria-hidden="true" />
+    <Moon class="icon-moon" aria-hidden="true" />
+    <Sun  class="icon-sun"  aria-hidden="true" />
 </button>
 
 <script is:inline>
