@@ -26,17 +26,20 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/pages/about.astro` | About page |
 | `src/pages/projects/[slug].astro` | Dynamic route — generates one page per Markdown project |
 | `src/pages/404.astro` | Custom 404 |
-| `src/pages/design-system.astro` | Internal reference page — visual catalog of every token. Not in nav; visit at `/design-system` |
+| `src/pages/design-system/index.astro` | Internal reference page — visual catalog of every token. Not in nav; visit at `/design-system` |
+| `src/pages/design-system/sections.astro` | Copy-and-paste catalog of section patterns. Visit at `/design-system/sections` |
 | `src/layouts/Layout.astro` | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current` |
 | `src/layouts/ProjectLayout.astro` | Wraps `Layout` with the project cover + title + description block |
 | `src/content.config.ts` | Defines the `projects` collection schema (Zod) |
 | `src/content/projects/<slug>/index.md` | One folder = one case study |
 | `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md` |
 | `src/content/projects/<slug>/*.png` | Inline images for that case study |
+| `src/components/Footer.astro` | Site footer — three columns of links, projects column auto-pulled from collection |
+| `src/components/ThemeToggle.astro` | Sun/moon button in the header that flips light/dark |
 | `src/components/primitives/` | Layout primitives — `PageWrapper`, `Section`, `Container`, `Stack`, `Cluster`, `Grid` |
 | `src/styles/global.css` | All styling. Design tokens at the top, semantic classes below |
 | `astro.config.mjs` | Site URL + sitemap integration |
-| `public/` | Static files served as-is — favicons only, no source images |
+| `public/` | Static files served as-is — favicons (`favicon.svg`, `favicon.ico`) and the TASA Orbiter font (`fonts/`). No source images. |
 
 ---
 
@@ -68,21 +71,31 @@ The slug-stripping logic (`generateId` in `content.config.ts`) is what turns `<s
 
 ### Add a new page
 
-Create `src/pages/<name>.astro`:
+Create `src/pages/<name>.astro`. Compose with the layout primitives — every page follows the same `Section > Container > Stack | Grid | Cluster` shape (PageWrapper sits in `Layout.astro` already, around `<main>`).
 
 ```astro
 ---
 import Layout from '../layouts/Layout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
 ---
 
-<Layout title="<Name> — Your Name" description="...">
-    <section class="<name>">
-        <!-- content -->
-    </section>
+<Layout title="<Name> — Anuj Prajapati" description="...">
+    <Section size="lg">
+        <Container size="page">
+            <Stack gap="lg">
+                <h1>Page heading</h1>
+                <Stack gap="md">
+                    <p>Body paragraph.</p>
+                </Stack>
+            </Stack>
+        </Container>
+    </Section>
 </Layout>
 ```
 
-Add a corresponding rule block in `global.css` referencing tokens.
+If the page needs typography or color rules beyond tokens, add a class to the outer wrapper (e.g. `<article class="<name>">`) and put scoped typography rules in `global.css`. **Don't** put `max-width`, `padding-block`, or `margin` in component CSS — layout always comes from primitives. See `/design-system/sections` for ready-to-paste section patterns and the `portfolio-layout-primitives` skill for the full discipline.
 
 ### Swap a cover image
 
@@ -214,7 +227,7 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 - Don't put `display: grid` or `display: flex` for layout in component CSS. Use `<Grid>`, `<Stack>`, or `<Cluster>` primitives.
 - Don't inline `max-width` / `padding-block` / `padding-inline` / `margin-top` in page or component CSS. Layout comes from primitives.
 - Don't restart the dev server on every change — only after editing `astro.config.mjs` or `src/content.config.ts`. Everything else hot-reloads.
-- Don't commit `.claude/` (already gitignored).
+- Don't commit `.claude/worktrees/` or `.claude/settings.local.json` (gitignored). `.claude/skills/` and `.claude/launch.json` ARE tracked on purpose so the layout/colour skills and the Claude Preview MCP launch config travel with the repo.
 
 ---
 
