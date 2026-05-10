@@ -60,6 +60,8 @@ Each project lives in its own folder. The folder name becomes the URL slug.
     cover: ./cover.png
     date: 2026-05-03
     order: 4
+    tags: ['identity', 'editorial'] # optional, no UI yet — exists for future filtering
+    draft: false # set true to commit-but-hide; defaults to false
     ---
 
     ## Section heading
@@ -67,7 +69,7 @@ Each project lives in its own folder. The folder name becomes the URL slug.
     Body content as plain Markdown.
     ```
 
-4. Save. Dev server hot-reloads. The project appears on the homepage at `order` position and at the URL `/projects/<slug>`.
+4. Save. Dev server hot-reloads. The project appears on the homepage at `order` position and at the URL `/projects/<slug>`. If `draft: true`, it's committed but invisible on `/` and the footer.
 
 The slug-stripping logic (`generateId` in `content.config.ts`) is what turns `<slug>/index.md` into the URL `/projects/<slug>` rather than `/projects/<slug>/index`.
 
