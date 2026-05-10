@@ -15,9 +15,9 @@ const patterns = [
     {
         slug: 'page-heading',
         name: 'Page heading + intro',
-        use: 'Top of a content page (about, design-system, project body intros). Heading paired with one or more paragraphs in a narrow reading column.',
+        use: 'Top of a content page (about, design-system, project body intros). Heading paired with one or more paragraphs.',
         code: `<Section size="lg">
-    <Container size="narrow">
+    <Container size="page">
         <Stack gap="lg">
             <h1>About</h1>
             <Stack gap="md">
@@ -33,7 +33,7 @@ const patterns = [
         name: 'Lede paragraph',
         use: 'Single oversized paragraph that sets the tone of a page. Used as the opening on the homepage.',
         code: `<Section size="lg">
-    <Container size="narrow">
+    <Container size="page">
         <p class="intro">Designer working across visual identity and digital products. Based in Mumbai.</p>
     </Container>
 </Section>`,
@@ -43,7 +43,7 @@ const patterns = [
         name: 'Topic block',
         use: 'A small heading + a short body. Used to break a long page into addressable sections (Work, Elsewhere on /about).',
         code: `<Section size="lg">
-    <Container size="narrow">
+    <Container size="page">
         <Stack gap="md">
             <h2>Work</h2>
             <p>I'm currently available for freelance work…</p>
@@ -56,7 +56,7 @@ const patterns = [
         name: 'Link list',
         use: 'Heading followed by a tight vertical list of links. Used for "Elsewhere" social links on /about.',
         code: `<Section size="lg">
-    <Container size="narrow">
+    <Container size="page">
         <Stack gap="md">
             <h2>Elsewhere</h2>
             <Stack gap="sm">
@@ -105,9 +105,9 @@ const patterns = [
     {
         slug: 'reading-column',
         name: 'Reading column',
-        use: 'Long-form Markdown body in a 680px column. Used for project case-study text.',
+        use: 'Long-form Markdown body for project case-study text.',
         code: `<Section size="lg">
-    <Container size="reading">
+    <Container size="page">
         <div class="project-body">
             <slot />
         </div>
@@ -117,9 +117,9 @@ const patterns = [
     {
         slug: 'short-message',
         name: 'Short message',
-        use: 'Tiny narrow page with a heading and a single line of body. Used by the 404.',
+        use: 'Tiny page with a heading and a single line of body. Used by the 404.',
         code: `<Section size="lg">
-    <Container size="narrow">
+    <Container size="page">
         <Stack gap="md">
             <h1>404</h1>
             <p>This page doesn't exist. <a href="/">Go home</a>.</p>
@@ -159,7 +159,7 @@ const patterns = [
                             <div class="ds-pattern-preview">
                                 {p.slug === 'page-heading' && (
                                     <Section size="lg">
-                                        <Container size="narrow">
+                                        <Container size="page">
                                             <Stack gap="lg">
                                                 <h1>About</h1>
                                                 <Stack gap="md">
@@ -173,7 +173,7 @@ const patterns = [
 
                                 {p.slug === 'lede' && (
                                     <Section size="lg">
-                                        <Container size="narrow">
+                                        <Container size="page">
                                             <p class="intro">Designer working across visual identity and digital products. Based in Mumbai.</p>
                                         </Container>
                                     </Section>
@@ -181,7 +181,7 @@ const patterns = [
 
                                 {p.slug === 'topic-block' && (
                                     <Section size="lg">
-                                        <Container size="narrow">
+                                        <Container size="page">
                                             <Stack gap="md">
                                                 <h2>Work</h2>
                                                 <p>I'm currently available for freelance work. If you think I might be a good fit for your project, <a href="#">get in touch</a>.</p>
@@ -192,7 +192,7 @@ const patterns = [
 
                                 {p.slug === 'link-list' && (
                                     <Section size="lg">
-                                        <Container size="narrow">
+                                        <Container size="page">
                                             <Stack gap="md">
                                                 <h2>Elsewhere</h2>
                                                 <Stack gap="sm">
@@ -246,7 +246,7 @@ const patterns = [
 
                                 {p.slug === 'reading-column' && (
                                     <Section size="lg">
-                                        <Container size="reading">
+                                        <Container size="page">
                                             <div class="project-body">
                                                 <h2>Overview</h2>
                                                 <p>A short intro paragraph. Imagine this is the elevator pitch — what the project was, who it was for, what the goal was.</p>
@@ -260,7 +260,7 @@ const patterns = [
 
                                 {p.slug === 'short-message' && (
                                     <Section size="lg">
-                                        <Container size="narrow">
+                                        <Container size="page">
                                             <Stack gap="md">
                                                 <h1>404</h1>
                                                 <p>This page doesn't exist. <a href="#">Go home</a>.</p>

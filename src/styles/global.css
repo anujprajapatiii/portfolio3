@@ -394,7 +394,7 @@ header nav a[aria-current="page"] {
    Homepage intro
    ========================================================================== */
 
-/* Layout (max-width) now comes from <Container size="narrow">. */
+/* Layout (max-width) now comes from <Container size="page">. */
 
 .intro {
     font-size: var(--font-lg);
@@ -456,7 +456,7 @@ header nav a[aria-current="page"] {
     color: var(--color-muted);
 }
 
-/* Layout (max-width) now comes from <Container size="reading">.
+/* Layout (max-width) now comes from <Container size="page">.
    This block only handles typography for the rendered Markdown body. */
 
 .project-body {
@@ -521,7 +521,7 @@ header nav a[aria-current="page"] {
    About page
    ========================================================================== */
 
-/* Layout (max-width) now comes from <Container size="narrow">.
+/* Layout (max-width) now comes from <Container size="page">.
    This block only handles typography + link color. */
 
 .about h1 {
@@ -794,7 +794,7 @@ header nav a[aria-current="page"] {
    404 page
    ========================================================================== */
 
-/* Layout (max-width) now comes from <Container size="narrow">. */
+/* Layout (max-width) now comes from <Container size="page">. */
 
 .not-found h1 {
     font-size: var(--font-display);
