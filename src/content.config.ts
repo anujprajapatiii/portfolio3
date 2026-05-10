@@ -5,8 +5,8 @@ const projects = defineCollection({
     loader: glob({
         pattern: '**/*.md',
         base: './src/content/projects',
-        // Strip "/index" so a folder like aoe2-art-direction/index.md
-        // produces the slug "aoe2-art-direction" (URL: /projects/aoe2-art-direction).
+        // Strip "/index" so a folder like aoe2-art/index.md
+        // produces the slug "aoe2-art" (URL: /projects/aoe2-art).
         generateId: ({ entry }) => entry.replace(/(\/index)?\.md$/, ''),
     }),
     schema: ({ image }) =>

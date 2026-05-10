@@ -1,5 +1,5 @@
 ---
-title: Kepler-186f — A Visual Field Guide
+title: Kepler-186f
 description: An editorial study of the first Earth-sized planet found in the habitable zone of another star
 cover: ./cover.png
 date: 2026-05-10
