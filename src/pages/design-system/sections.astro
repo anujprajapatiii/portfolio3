@@ -54,8 +54,9 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
                                     <header class="sections-group-header">
                                         <h2>{categoryLabel(c)}</h2>
                                         <p class="sections-group-count">
-                                            {sectionsByCategory(c).length} section
-                                            {sectionsByCategory(c).length === 1 ? '' : 's'}
+                                            {`${sectionsByCategory(c).length} section${
+                                                sectionsByCategory(c).length === 1 ? '' : 's'
+                                            }`}
                                         </p>
                                     </header>
 
@@ -179,9 +180,23 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
         }
     }
 
+    /* Sticky positioning, in layers. The site header is sticky at top:0
+       with z-index:10 (set in global.css). Everything in this page that is
+       also sticky must:
+         a) sit BELOW the site header in viewport position (top >= --sticky-top)
+         b) sit BELOW it in stacking order (z-index < 10)
+         c) carry a solid background so the page content doesn't bleed through.
+
+       --sticky-top is the offset that clears the site header (~59px tall)
+       with a small breathing gap. Everything that pins to the top of the
+       viewport on this page references it. */
+    .sections-gallery {
+        --sticky-top: var(--space-7); /* 80px */
+        --sticky-z: 5;
+    }
+
     /* Sticky rail. Hidden below the md breakpoint — narrow viewports get the
-       inline category headings as their navigation, jump-links still work.
-       Top offset clears the sticky site header (~59px) with breathing room. */
+       inline category headings as their navigation, jump-links still work. */
     .sections-rail {
         display: none;
     }
@@ -190,8 +205,11 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
         .sections-rail {
             display: block;
             position: sticky;
-            top: var(--space-7);
+            top: var(--sticky-top);
+            z-index: var(--sticky-z);
+            background: var(--color-bg);
             align-self: start;
+            padding-block: var(--space-2);
         }
     }
 
@@ -243,16 +261,24 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
     }
 
     .sections-group {
-        scroll-margin-top: var(--space-7);
+        scroll-margin-top: var(--sticky-top);
     }
 
+    /* Category header — sticks within its `.sections-group` parent. When you
+       scroll through Hero's cards, "Hero" stays pinned. When the next
+       category's group scrolls in, its header pushes the old one up out of
+       the sticky zone (each header is scoped to its own .sections-group). */
     .sections-group-header {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
         gap: var(--space-3);
+        position: sticky;
+        top: var(--sticky-top);
+        z-index: var(--sticky-z);
+        background: var(--color-bg);
         border-bottom: 1px solid var(--color-border);
-        padding-bottom: var(--space-3);
+        padding-block: var(--space-3);
         margin-bottom: var(--space-5);
     }
 
@@ -267,12 +293,15 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
         font-variant-numeric: tabular-nums;
     }
 
-    /* A single section card: heading + preview + snippet. */
+    /* A single section card: heading + preview + snippet.
+       scroll-margin-top clears both the site header AND the sticky category
+       h2 above it, so direct-linking to a section card (#content-page-heading)
+       lands below both. */
     .section-card {
         display: flex;
         flex-direction: column;
         gap: var(--space-4);
-        scroll-margin-top: var(--space-7);
+        scroll-margin-top: calc(var(--sticky-top) + var(--space-6));
     }
 
     .section-card-header h3 {
