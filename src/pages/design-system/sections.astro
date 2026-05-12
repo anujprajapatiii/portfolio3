@@ -180,7 +180,8 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
     }
 
     /* Sticky rail. Hidden below the md breakpoint — narrow viewports get the
-       inline category headings as their navigation, jump-links still work. */
+       inline category headings as their navigation, jump-links still work.
+       Top offset clears the sticky site header (~59px) with breathing room. */
     .sections-rail {
         display: none;
     }
@@ -189,7 +190,7 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
         .sections-rail {
             display: block;
             position: sticky;
-            top: var(--space-5);
+            top: var(--space-7);
             align-self: start;
         }
     }
@@ -242,7 +243,7 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
     }
 
     .sections-group {
-        scroll-margin-top: var(--space-5);
+        scroll-margin-top: var(--space-7);
     }
 
     .sections-group-header {
@@ -271,7 +272,7 @@ import { sections, categories, categoryLabel, sectionsByCategory } from '../../l
         display: flex;
         flex-direction: column;
         gap: var(--space-4);
-        scroll-margin-top: var(--space-5);
+        scroll-margin-top: var(--space-7);
     }
 
     .section-card-header h3 {
