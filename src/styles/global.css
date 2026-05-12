@@ -372,8 +372,11 @@ body {
 
 /* Header is full-bleed, sticky, with its own padding-block. Internally it
    uses <PageWrapper> + <Container> + <Cluster> for horizontal layout, so
-   the structure matches the rest of the page. */
-header {
+   the structure matches the rest of the page.
+   Selector is scoped to direct children of <body> so nested HTML5
+   <header> elements (e.g. inside a card or section) don't inherit
+   position:sticky / z-index:10 — they're semantic, not the site header. */
+body > header {
     position: sticky;
     top: 0;
     z-index: 10;
@@ -384,7 +387,7 @@ header {
 
 /* Auto-hide on scroll-down. The .header--hidden class is toggled
    by the inline script in Layout.astro. */
-header.header--hidden {
+body > header.header--hidden {
     transform: translateY(-100%);
 }
 
@@ -396,16 +399,16 @@ header.header--hidden {
 }
 
 /* Header nav is a Cluster — these rules just style the links inside it. */
-header nav a {
+body > header nav a {
     color: var(--color-text);
     text-decoration: none;
 }
 
-header nav a:hover {
+body > header nav a:hover {
     text-decoration: underline;
 }
 
-header nav a[aria-current='page'] {
+body > header nav a[aria-current='page'] {
     text-decoration: underline;
 }
 
