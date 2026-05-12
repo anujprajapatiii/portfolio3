@@ -1,0 +1,26 @@
+---
+export const meta = {
+    name: 'Link list',
+    category: 'content',
+    use: 'Heading followed by a tight vertical list of links. Used for "Elsewhere" social links on /about.',
+    order: 4,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <Stack gap="md">
+            <h2>Elsewhere</h2>
+            <Stack gap="sm">
+                <a href="#">Email</a>
+                <a href="#">Twitter</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Are.na</a>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>

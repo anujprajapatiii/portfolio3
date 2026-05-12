@@ -1,336 +1,325 @@
 ---
+import { Code } from 'astro:components';
 import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/primitives/Section.astro';
 import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
-import Grid from '../../components/primitives/Grid.astro';
-
-// Each entry is one ready-to-paste section pattern.
-// Add an entry here when you ship a new section worth reusing.
-//
-// `code` is the snippet you'd paste into a page — kept as a plain string
-// so we can render it in a <pre> block. Mirror real usage from the actual
-// pages so the snippets compile if you copy them as-is.
-const patterns = [
-    {
-        slug: 'page-heading',
-        name: 'Page heading + intro',
-        use: 'Top of a content page (about, design-system, project body intros). Heading paired with one or more paragraphs.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <Stack gap="lg">
-            <h1>About</h1>
-            <Stack gap="md">
-                <p>I'm a designer based in Mumbai…</p>
-                <p>Before going independent, I led design at [Place].</p>
-            </Stack>
-        </Stack>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'lede',
-        name: 'Lede paragraph',
-        use: 'Single oversized paragraph that sets the tone of a page. Used as the opening on the homepage.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <p class="intro">Designer working across visual identity and digital products. Based in Mumbai.</p>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'topic-block',
-        name: 'Topic block',
-        use: 'A small heading + a short body. Used to break a long page into addressable sections (Work, Elsewhere on /about).',
-        code: `<Section size="lg">
-    <Container size="page">
-        <Stack gap="md">
-            <h2>Work</h2>
-            <p>I'm currently available for freelance work…</p>
-        </Stack>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'link-list',
-        name: 'Link list',
-        use: 'Heading followed by a tight vertical list of links. Used for "Elsewhere" social links on /about.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <Stack gap="md">
-            <h2>Elsewhere</h2>
-            <Stack gap="sm">
-                <a href="…">Email</a>
-                <a href="…">Twitter</a>
-                <a href="…">LinkedIn</a>
-            </Stack>
-        </Stack>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'card-grid',
-        name: 'Card grid (auto-fit)',
-        use: 'Page-width responsive grid of cards. Auto-collapses from N → 1 columns based on viewport — no media query. Used for the project list on the homepage.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <Grid min="280px" gap="lg">
-            {projects.map((project) => (
-                <a href={\`/projects/\${project.id}\`} class="project-card">
-                    <Image src={project.data.cover} alt="…" />
-                    <h2>{project.data.title}</h2>
-                    <p>{project.data.description}</p>
-                </a>
-            ))}
-        </Grid>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'project-hero',
-        name: 'Project hero',
-        use: 'Full-width cover image followed by title + description. Used at the top of every project page.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <Stack gap="lg">
-            <Image src={cover} alt="…" class="project-cover" />
-            <Stack gap="sm">
-                <h1 class="project-title">{title}</h1>
-                <p class="project-description">{description}</p>
-            </Stack>
-        </Stack>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'reading-column',
-        name: 'Reading column',
-        use: 'Long-form Markdown body for project case-study text.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <div class="project-body">
-            <slot />
-        </div>
-    </Container>
-</Section>`,
-    },
-    {
-        slug: 'short-message',
-        name: 'Short message',
-        use: 'Tiny page with a heading and a single line of body. Used by the 404.',
-        code: `<Section size="lg">
-    <Container size="page">
-        <Stack gap="md">
-            <h1>404</h1>
-            <p>This page doesn't exist. <a href="/">Go home</a>.</p>
-        </Stack>
-    </Container>
-</Section>`,
-    },
-];
+import { sections, categories, categoryLabel, sectionsByCategory } from '../../lib/sections';
 ---
 
 <Layout
     title="Sections — Design System"
-    description="Ready-to-paste section templates used across this portfolio. Copy a snippet, drop it into a page, change the content."
+    description="Ready-to-paste section templates used across this portfolio. Browse by category, copy a snippet, drop it into a page, change the content."
 >
-    <article class="design-system">
+    <article class="design-system sections-gallery">
         <Section size="lg">
             <Container size="page">
                 <Stack gap="lg">
                     <h1>Sections gallery</h1>
                     <p>
-                        Ready-to-paste section templates. Each card shows a live preview and the
-                        snippet that produced it. Copy the snippet, paste into a page, change the
-                        content.
+                        Ready-to-paste section templates, organised by category. Each card shows a
+                        live preview and the snippet that produced it. Copy the snippet, paste into
+                        a page, change the content.
                     </p>
                     <p>Back to <a href="/design-system">tokens &amp; primitives</a>.</p>
                 </Stack>
             </Container>
         </Section>
 
-        {
-            patterns.map((p) => (
-                <Section size="lg">
-                    <Container size="page">
-                        <Stack gap="lg">
-                            <Stack gap="sm">
-                                <h2 id={p.slug}>{p.name}</h2>
-                                <p class="ds-meta-secondary">{p.use}</p>
-                            </Stack>
+        <Section size="lg">
+            <Container size="page">
+                <div class="sections-layout">
+                    <aside class="sections-rail" aria-label="Sections by category">
+                        <p class="sections-rail-eyebrow">{sections.length} sections</p>
+                        <ul class="sections-rail-list">
+                            {
+                                categories.map((c) => (
+                                    <li>
+                                        <a href={`#${c}`} class="sections-rail-link">
+                                            <span>{categoryLabel(c)}</span>
+                                            <span class="sections-rail-count">
+                                                {sectionsByCategory(c).length}
+                                            </span>
+                                        </a>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </aside>
 
-                            <div class="ds-pattern">
-                                <span class="ds-pattern-label">Preview</span>
-                                <div class="ds-pattern-preview">
-                                    {p.slug === 'page-heading' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <Stack gap="lg">
-                                                    <h1>About</h1>
-                                                    <Stack gap="md">
-                                                        <p>
-                                                            I'm a designer based in Mumbai. I work
-                                                            across visual identity and digital
-                                                            products — sometimes for early-stage
-                                                            startups, sometimes for established
-                                                            teams that need a fresh eye.
-                                                        </p>
-                                                        <p>
-                                                            Before going independent, I led design
-                                                            at [Place] and trained at [School].
-                                                        </p>
-                                                    </Stack>
-                                                </Stack>
-                                            </Container>
-                                        </Section>
-                                    )}
+                    <div class="sections-main">
+                        {
+                            categories.map((c) => (
+                                <section class="sections-group" id={c}>
+                                    <header class="sections-group-header">
+                                        <h2>{categoryLabel(c)}</h2>
+                                        <p class="sections-group-count">
+                                            {sectionsByCategory(c).length} section
+                                            {sectionsByCategory(c).length === 1 ? '' : 's'}
+                                        </p>
+                                    </header>
 
-                                    {p.slug === 'lede' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <p class="intro">
-                                                    Designer working across visual identity and
-                                                    digital products. Based in Mumbai.
-                                                </p>
-                                            </Container>
-                                        </Section>
-                                    )}
+                                    <Stack gap="lg">
+                                        {sectionsByCategory(c).map((entry) => {
+                                            const Preview = entry.Component;
+                                            return (
+                                                <article class="section-card" id={entry.slug}>
+                                                    <header class="section-card-header">
+                                                        <h3>{entry.name}</h3>
+                                                        <p class="ds-meta-secondary">{entry.use}</p>
+                                                    </header>
 
-                                    {p.slug === 'topic-block' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <Stack gap="md">
-                                                    <h2>Work</h2>
-                                                    <p>
-                                                        I'm currently available for freelance work.
-                                                        If you think I might be a good fit for your
-                                                        project, <a href="#">get in touch</a>.
-                                                    </p>
-                                                </Stack>
-                                            </Container>
-                                        </Section>
-                                    )}
-
-                                    {p.slug === 'link-list' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <Stack gap="md">
-                                                    <h2>Elsewhere</h2>
-                                                    <Stack gap="sm">
-                                                        <a href="#">Email</a>
-                                                        <a href="#">Twitter</a>
-                                                        <a href="#">LinkedIn</a>
-                                                        <a href="#">Are.na</a>
-                                                    </Stack>
-                                                </Stack>
-                                            </Container>
-                                        </Section>
-                                    )}
-
-                                    {p.slug === 'card-grid' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <Grid min="280px" gap="lg">
-                                                    <div class="ds-fake-card">
-                                                        <div class="ds-fake-image" />
-                                                        <div class="ds-fake-card-title">
-                                                            Project name
-                                                        </div>
-                                                        <div class="ds-fake-card-desc">
-                                                            A short description of the project.
-                                                        </div>
+                                                    <div class="section-card-preview">
+                                                        <Preview />
                                                     </div>
-                                                    <div class="ds-fake-card">
-                                                        <div class="ds-fake-image" />
-                                                        <div class="ds-fake-card-title">
-                                                            Project name
-                                                        </div>
-                                                        <div class="ds-fake-card-desc">
-                                                            A short description of the project.
-                                                        </div>
+
+                                                    <div class="section-card-snippet">
+                                                        <button
+                                                            type="button"
+                                                            class="section-copy"
+                                                            data-section-copy={entry.source}
+                                                            aria-label={`Copy ${entry.name} snippet`}
+                                                        >
+                                                            Copy
+                                                        </button>
+                                                        <Code
+                                                            lang="astro"
+                                                            code={entry.source}
+                                                            wrap
+                                                        />
                                                     </div>
-                                                    <div class="ds-fake-card">
-                                                        <div class="ds-fake-image" />
-                                                        <div class="ds-fake-card-title">
-                                                            Project name
-                                                        </div>
-                                                        <div class="ds-fake-card-desc">
-                                                            A short description of the project.
-                                                        </div>
-                                                    </div>
-                                                </Grid>
-                                            </Container>
-                                        </Section>
-                                    )}
-
-                                    {p.slug === 'project-hero' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <Stack gap="lg">
-                                                    <div class="ds-fake-image ds-fake-image--cover" />
-                                                    <Stack gap="sm">
-                                                        <div class="ds-fake-title">
-                                                            Project name
-                                                        </div>
-                                                        <div class="ds-fake-desc">
-                                                            A short description of the project.
-                                                        </div>
-                                                    </Stack>
-                                                </Stack>
-                                            </Container>
-                                        </Section>
-                                    )}
-
-                                    {p.slug === 'reading-column' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <div class="project-body">
-                                                    <h2>Overview</h2>
-                                                    <p>
-                                                        A short intro paragraph. Imagine this is the
-                                                        elevator pitch — what the project was, who
-                                                        it was for, what the goal was.
-                                                    </p>
-                                                    <p>
-                                                        A second paragraph that goes a bit deeper —
-                                                        context, constraints, anything that frames
-                                                        the work.
-                                                    </p>
-                                                    <h2>Process</h2>
-                                                    <p>
-                                                        Body content as plain Markdown. Headings,
-                                                        paragraphs, lists, images all render through
-                                                        the global typography rules.
-                                                    </p>
-                                                </div>
-                                            </Container>
-                                        </Section>
-                                    )}
-
-                                    {p.slug === 'short-message' && (
-                                        <Section size="lg">
-                                            <Container size="page">
-                                                <Stack gap="md">
-                                                    <h1>404</h1>
-                                                    <p>
-                                                        This page doesn't exist.{' '}
-                                                        <a href="#">Go home</a>.
-                                                    </p>
-                                                </Stack>
-                                            </Container>
-                                        </Section>
-                                    )}
-                                </div>
-
-                                <span class="ds-pattern-label">Snippet</span>
-                                <pre class="ds-code">
-                                    <code>{p.code}</code>
-                                </pre>
-                            </div>
-                        </Stack>
-                    </Container>
-                </Section>
-            ))
-        }
+                                                </article>
+                                            );
+                                        })}
+                                    </Stack>
+                                </section>
+                            ))
+                        }
+                    </div>
+                </div>
+            </Container>
+        </Section>
     </article>
+
+    <script>
+        // Single delegated listener — every Copy button stores its snippet
+        // on a `data-section-copy` attribute. No per-button JS, no client
+        // islands, no extra bundles.
+        function flashCopied(button: HTMLButtonElement) {
+            const original = button.textContent;
+            button.textContent = 'Copied';
+            button.classList.add('section-copy--copied');
+            window.setTimeout(() => {
+                button.textContent = original;
+                button.classList.remove('section-copy--copied');
+            }, 1400);
+        }
+
+        function legacyCopy(text: string): boolean {
+            // Fallback when navigator.clipboard isn't available or is denied
+            // (insecure context, headless browsers without permission, older
+            // Safari). A hidden textarea + execCommand works everywhere.
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            textarea.style.pointerEvents = 'none';
+            document.body.appendChild(textarea);
+            textarea.select();
+            let ok = false;
+            try {
+                ok = document.execCommand('copy');
+            } catch {
+                ok = false;
+            }
+            document.body.removeChild(textarea);
+            return ok;
+        }
+
+        document.addEventListener('click', async (event) => {
+            const target = event.target as HTMLElement;
+            const button = target.closest<HTMLButtonElement>('[data-section-copy]');
+            if (!button) return;
+            const source = button.dataset.sectionCopy ?? '';
+
+            if (navigator.clipboard?.writeText) {
+                try {
+                    await navigator.clipboard.writeText(source);
+                    flashCopied(button);
+                    return;
+                } catch {
+                    // fall through to legacy path
+                }
+            }
+            if (legacyCopy(source)) {
+                flashCopied(button);
+            } else {
+                button.textContent = 'Copy failed';
+            }
+        });
+    </script>
 </Layout>
+
+<style>
+    /* Page-scoped layout for the rail + main column.
+       This grid is specific to the sections gallery — not a shared layout
+       primitive — so it lives here rather than in global.css. */
+    .sections-layout {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+        align-items: start;
+    }
+
+    @media (min-width: 768px) {
+        .sections-layout {
+            grid-template-columns: 12rem 1fr;
+            gap: var(--space-7);
+        }
+    }
+
+    /* Sticky rail. Hidden below the md breakpoint — narrow viewports get the
+       inline category headings as their navigation, jump-links still work. */
+    .sections-rail {
+        display: none;
+    }
+
+    @media (min-width: 768px) {
+        .sections-rail {
+            display: block;
+            position: sticky;
+            top: var(--space-5);
+            align-self: start;
+        }
+    }
+
+    .sections-rail-eyebrow {
+        font-size: var(--font-xs);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin: 0 0 var(--space-3);
+    }
+
+    .sections-rail-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+    }
+
+    .sections-rail-link {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-3);
+        padding: var(--space-2) 0;
+        color: var(--color-text);
+        text-decoration: none;
+        font-size: var(--font-sm);
+        border-bottom: 1px solid transparent;
+        transition: border-color 120ms ease;
+    }
+
+    .sections-rail-link:hover {
+        border-bottom-color: var(--color-border);
+    }
+
+    .sections-rail-count {
+        font-variant-numeric: tabular-nums;
+        color: var(--color-muted);
+        font-size: var(--font-xs);
+    }
+
+    .sections-main {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-7);
+        min-width: 0; /* let inner Code blocks wrap rather than expand the grid */
+    }
+
+    .sections-group {
+        scroll-margin-top: var(--space-5);
+    }
+
+    .sections-group-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-3);
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: var(--space-3);
+        margin-bottom: var(--space-5);
+    }
+
+    .sections-group-header h2 {
+        margin: 0;
+    }
+
+    .sections-group-count {
+        margin: 0;
+        font-size: var(--font-sm);
+        color: var(--color-muted);
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* A single section card: heading + preview + snippet. */
+    .section-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+        scroll-margin-top: var(--space-5);
+    }
+
+    .section-card-header h3 {
+        margin: 0 0 var(--space-1);
+        font-size: var(--font-lg);
+    }
+
+    /* Frame around each preview. The preview's own Section/Container provides
+       the inner padding — the frame just gives a visible boundary. */
+    .section-card-preview {
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        overflow: hidden;
+        background: var(--color-bg);
+    }
+
+    /* The preview is rendered inside a card, not a real page. Cancel the
+       page-padding inheritance from PageWrapper so previews show edge-to-edge
+       within the frame. (PageWrapper sets padding-inline at the <main> level
+       — here we're nested below that already, so nothing extra to override.) */
+
+    .section-card-snippet {
+        position: relative;
+    }
+
+    .section-copy {
+        position: absolute;
+        top: var(--space-2);
+        right: var(--space-2);
+        z-index: 1;
+        font: inherit;
+        font-size: var(--font-xs);
+        padding: var(--space-1) var(--space-2);
+        border: 1px solid var(--color-border);
+        background: var(--color-bg);
+        color: var(--color-text);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 120ms ease;
+    }
+
+    .section-copy:hover {
+        background: var(--color-surface);
+    }
+
+    .section-copy--copied {
+        background: var(--color-text);
+        color: var(--color-bg);
+        border-color: var(--color-text);
+    }
+</style>

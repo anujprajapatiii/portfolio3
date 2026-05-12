@@ -1,0 +1,24 @@
+---
+export const meta = {
+    name: 'Centered CTA',
+    category: 'cta',
+    use: 'End-of-page call to action. One sentence, one link, a lot of breathing room.',
+    order: 1,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="xl">
+    <Container size="reading">
+        <Stack gap="md">
+            <h2>Want to work together?</h2>
+            <p>
+                I take on a handful of projects a year. <a href="#">Send a note</a> with a sentence about
+                what you're working on.
+            </p>
+        </Stack>
+    </Container>
+</Section>

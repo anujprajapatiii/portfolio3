@@ -1,0 +1,21 @@
+---
+export const meta = {
+    name: 'Short message',
+    category: 'content',
+    use: 'Tiny page with a heading and a single line of body. Used by the 404.',
+    order: 7,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <Stack gap="md">
+            <h1>404</h1>
+            <p>This page doesn't exist. <a href="#">Go home</a>.</p>
+        </Stack>
+    </Container>
+</Section>

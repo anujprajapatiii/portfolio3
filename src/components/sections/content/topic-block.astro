@@ -1,0 +1,24 @@
+---
+export const meta = {
+    name: 'Topic block',
+    category: 'content',
+    use: 'A small heading + a short body. Used to break a long page into addressable sections (Work, Elsewhere on /about).',
+    order: 3,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <Stack gap="md">
+            <h2>Work</h2>
+            <p>
+                I'm currently available for freelance work. If you think I might be a good fit for
+                your project, <a href="#">get in touch</a>.
+            </p>
+        </Stack>
+    </Container>
+</Section>

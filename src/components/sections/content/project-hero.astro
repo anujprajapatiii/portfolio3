@@ -1,0 +1,38 @@
+---
+export const meta = {
+    name: 'Project hero',
+    category: 'content',
+    use: 'Full-width cover image followed by title + description. Used at the top of every project page.',
+    order: 5,
+    // Snippet override: the preview uses a placeholder div for the image,
+    // but the paste-ready code references a real `<Image />` from the page's
+    // own imports.
+    snippet: `<Section size="lg">
+    <Container size="page">
+        <Stack gap="lg">
+            <Image src={cover} alt="…" class="project-cover" />
+            <Stack gap="sm">
+                <h1 class="project-title">{title}</h1>
+                <p class="project-description">{description}</p>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>`,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <Stack gap="lg">
+            <div class="ds-fake-image ds-fake-image--cover"></div>
+            <Stack gap="sm">
+                <h1 class="project-title">Project name</h1>
+                <p class="project-description">A short description of the project.</p>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>

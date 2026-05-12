@@ -1,0 +1,19 @@
+---
+export const meta = {
+    name: 'Lede paragraph',
+    category: 'content',
+    use: 'Single oversized paragraph that sets the tone of a page. Used as the opening on the homepage.',
+    order: 2,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <p class="intro">
+            Designer working across visual identity and digital products. Based in Mumbai.
+        </p>
+    </Container>
+</Section>

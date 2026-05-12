@@ -1,0 +1,41 @@
+---
+export const meta = {
+    name: 'Reading column',
+    category: 'content',
+    use: 'Long-form Markdown body for project case-study text.',
+    order: 6,
+    // Real usage of this section wraps a `<slot />` to render Markdown content
+    // from a content collection; the preview shows representative output.
+    snippet: `<Section size="lg">
+    <Container size="page">
+        <div class="project-body">
+            <slot />
+        </div>
+    </Container>
+</Section>`,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <div class="project-body">
+            <h2>Overview</h2>
+            <p>
+                A short intro paragraph. Imagine this is the elevator pitch — what the project was,
+                who it was for, what the goal was.
+            </p>
+            <p>
+                A second paragraph that goes a bit deeper — context, constraints, anything that
+                frames the work.
+            </p>
+            <h2>Process</h2>
+            <p>
+                Body content as plain Markdown. Headings, paragraphs, lists, images all render
+                through the global typography rules.
+            </p>
+        </div>
+    </Container>
+</Section>

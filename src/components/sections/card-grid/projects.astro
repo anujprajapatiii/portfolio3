@@ -1,0 +1,49 @@
+---
+export const meta = {
+    name: 'Card grid (auto-fit)',
+    category: 'card-grid',
+    use: 'Page-width responsive grid of cards. Auto-collapses from N → 1 columns based on viewport — no media query. Used for the project list on the homepage.',
+    order: 1,
+    // The preview shows static placeholder cards; real usage maps over a
+    // content collection.
+    snippet: `<Section size="lg">
+    <Container size="page">
+        <Grid min="280px" gap="lg">
+            {projects.map((project) => (
+                <a href={\`/projects/\${project.id}\`} class="project-card">
+                    <Image src={project.data.cover} alt="…" />
+                    <h2>{project.data.title}</h2>
+                    <p>{project.data.description}</p>
+                </a>
+            ))}
+        </Grid>
+    </Container>
+</Section>`,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Grid from '../../primitives/Grid.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <Grid min="280px" gap="lg">
+            <div class="ds-fake-card">
+                <div class="ds-fake-image"></div>
+                <div class="ds-fake-card-title">Project name</div>
+                <div class="ds-fake-card-desc">A short description of the project.</div>
+            </div>
+            <div class="ds-fake-card">
+                <div class="ds-fake-image"></div>
+                <div class="ds-fake-card-title">Project name</div>
+                <div class="ds-fake-card-desc">A short description of the project.</div>
+            </div>
+            <div class="ds-fake-card">
+                <div class="ds-fake-image"></div>
+                <div class="ds-fake-card-title">Project name</div>
+                <div class="ds-fake-card-desc">A short description of the project.</div>
+            </div>
+        </Grid>
+    </Container>
+</Section>

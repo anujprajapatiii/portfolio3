@@ -1,0 +1,28 @@
+---
+export const meta = {
+    name: 'Page heading + intro',
+    category: 'content',
+    use: 'Top of a content page (about, design-system, project body intros). Heading paired with one or more paragraphs.',
+    order: 1,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="lg">
+    <Container size="page">
+        <Stack gap="lg">
+            <h1>About</h1>
+            <Stack gap="md">
+                <p>
+                    I'm a designer based in Mumbai. I work across visual identity and digital
+                    products — sometimes for early-stage startups, sometimes for established teams
+                    that need a fresh eye.
+                </p>
+                <p>Before going independent, I led design at [Place] and trained at [School].</p>
+            </Stack>
+        </Stack>
+    </Container>
+</Section>

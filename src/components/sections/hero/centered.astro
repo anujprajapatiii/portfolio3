@@ -1,0 +1,27 @@
+---
+export const meta = {
+    name: 'Centered hero',
+    category: 'hero',
+    use: 'Above-the-fold heading + supporting paragraph + primary CTA, centred. Quiet, restrained, typography-led.',
+    order: 1,
+};
+
+import Section from '../../primitives/Section.astro';
+import Container from '../../primitives/Container.astro';
+import Stack from '../../primitives/Stack.astro';
+---
+
+<Section size="xl">
+    <Container size="reading">
+        <Stack gap="lg">
+            <h1>A short, generous heading.</h1>
+            <p class="intro">
+                A supporting sentence that frames the page. Two lines at most — let the heading do
+                the heavy lifting.
+            </p>
+            <p>
+                <a href="#">Primary action →</a>
+            </p>
+        </Stack>
+    </Container>
+</Section>
