@@ -1,0 +1,125 @@
+---
+// /play — index of experiments. Lists two kinds of items together:
+//
+//   1. Markdown entries from the `experiments` content collection
+//      (src/content/experiments/<slug>.md).
+//   2. Hand-crafted Astro pages alongside this file
+//      (src/pages/play/<slug>.astro) that export a `meta` block.
+//
+// Both kinds link to /play/<slug>. Astro's static routing means a real
+// .astro file at that path wins; otherwise the dynamic [slug].astro route
+// handles it from the collection.
+
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+
+type Item = {
+    slug: string;
+    title: string;
+    description: string;
+    date: Date;
+    tags?: string[];
+    /** "md" = content collection, "astro" = hand-crafted interactive page */
+    kind: 'md' | 'astro';
+};
+
+// 1. Content-collection entries.
+const collectionItems: Item[] = (await getCollection('experiments', (e) => !e.data.draft)).map(
+    (e) => ({
+        slug: e.id,
+        title: e.data.title,
+        description: e.data.description,
+        date: e.data.date,
+        tags: e.data.tags,
+        kind: 'md',
+    })
+);
+
+// 2. Ad-hoc .astro pages in src/pages/play/ that export `meta`.
+//    `import.meta.glob` literal patterns; eager + sync because we render
+//    the index server-side at build time.
+const adhocModules = import.meta.glob<{
+    meta?: { title: string; description: string; date: string; tags?: string[] };
+}>('./*.astro', { eager: true });
+
+const adhocItems: Item[] = Object.entries(adhocModules)
+    .filter(([path]) => {
+        // Exclude the index itself and the dynamic [slug] route.
+        if (path.endsWith('/index.astro')) return false;
+        if (path.endsWith('/[slug].astro')) return false;
+        return true;
+    })
+    .flatMap(([path, mod]) => {
+        if (!mod.meta) return [];
+        const slug = path.match(/\.\/([^/]+)\.astro$/)?.[1];
+        if (!slug) return [];
+        return [
+            {
+                slug,
+                title: mod.meta.title,
+                description: mod.meta.description,
+                date: new Date(mod.meta.date),
+                tags: mod.meta.tags,
+                kind: 'astro' as const,
+            },
+        ];
+    });
+
+// Most-recent first.
+const items: Item[] = [...collectionItems, ...adhocItems].sort(
+    (a, b) => b.date.getTime() - a.date.getTime()
+);
+
+function formatDate(d: Date) {
+    return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<Layout
+    title="Play — Your Name"
+    description="A loose collection of experiments, sketches, and micro-tools."
+>
+    <Section size="lg">
+        <Container size="reading">
+            <Stack gap="lg">
+                <h1>Play</h1>
+                <p class="intro">
+                    A loose collection of experiments, sketches, and micro-tools. Shorter and
+                    rougher than the work, on purpose.
+                </p>
+            </Stack>
+        </Container>
+    </Section>
+
+    <Section size="lg">
+        <Container size="reading">
+            <ul class="play-list">
+                {
+                    items.map((item) => (
+                        <li class="play-item">
+                            <a href={`/play/${item.slug}`} class="play-item-link">
+                                <time class="play-item-date" datetime={item.date.toISOString()}>
+                                    {formatDate(item.date)}
+                                </time>
+                                <div class="play-item-body">
+                                    <h2 class="play-item-title">{item.title}</h2>
+                                    <p class="play-item-description">{item.description}</p>
+                                    {item.tags && item.tags.length > 0 && (
+                                        <div class="play-item-tags">
+                                            {item.tags.map((tag) => (
+                                                <span class="play-item-tag">{tag}</span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </Container>
+    </Section>
+</Layout>
