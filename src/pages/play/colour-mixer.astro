@@ -1,0 +1,159 @@
+---
+// Ad-hoc Play page — a hand-crafted interactive demo rather than a markdown
+// writeup. Astro's static routing means this file wins over the dynamic
+// /play/[slug].astro at the URL /play/colour-mixer. For this page to appear
+// in the /play index listing and the footer, there's a matching markdown
+// stub at src/content/experiments/colour-mixer.md that supplies the
+// metadata. The stub never renders — this file does.
+//
+// Keep the visible title/description/date here in sync with that stub.
+
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+import Cluster from '../../components/primitives/Cluster.astro';
+
+const title = 'Colour mixer';
+const description =
+    'Two HSL sliders, one swatch. Drag to mix; click the swatch to copy its hex to the clipboard.';
+const dateISO = '2026-05-12';
+const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+});
+---
+
+<Layout title={`${title} — Your Name`} description={description} ogType="article">
+    <article class="experiment">
+        <Section size="lg">
+            <Container size="reading">
+                <Stack gap="lg">
+                    <Cluster gap="md">
+                        <a href="/play" class="experiment-back">← Play</a>
+                        <time class="experiment-date" datetime={dateISO}>{formattedDate}</time>
+                    </Cluster>
+                    <Stack gap="sm">
+                        <h1 class="experiment-title">{title}</h1>
+                        <p class="experiment-description">{description}</p>
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="md">
+            <Container size="reading">
+                <div class="colour-mixer">
+                    <button
+                        type="button"
+                        class="colour-mixer-swatch"
+                        id="cm-swatch"
+                        aria-label="Click to copy hex"></button>
+                    <Stack gap="md">
+                        <label class="colour-mixer-label">
+                            <span>Hue</span>
+                            <input type="range" min="0" max="360" value="200" id="cm-hue" />
+                        </label>
+                        <label class="colour-mixer-label">
+                            <span>Lightness</span>
+                            <input type="range" min="0" max="100" value="55" id="cm-lightness" />
+                        </label>
+                        <p class="colour-mixer-hex" id="cm-hex">#…</p>
+                    </Stack>
+                </div>
+            </Container>
+        </Section>
+    </article>
+</Layout>
+
+<script>
+    const swatch = document.getElementById('cm-swatch') as HTMLButtonElement | null;
+    const hue = document.getElementById('cm-hue') as HTMLInputElement | null;
+    const light = document.getElementById('cm-lightness') as HTMLInputElement | null;
+    const hexLabel = document.getElementById('cm-hex');
+
+    if (swatch && hue && light && hexLabel) {
+        function hslToHex(h: number, s: number, l: number): string {
+            l /= 100;
+            const a = (s * Math.min(l, 1 - l)) / 100;
+            const f = (n: number) => {
+                const k = (n + h / 30) % 12;
+                const color = l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+                return Math.round(255 * color)
+                    .toString(16)
+                    .padStart(2, '0');
+            };
+            return `#${f(0)}${f(8)}${f(4)}`;
+        }
+
+        function update() {
+            const h = Number(hue!.value);
+            const l = Number(light!.value);
+            swatch!.style.background = `hsl(${h}deg 70% ${l}%)`;
+            hexLabel!.textContent = hslToHex(h, 70, l);
+        }
+
+        hue.addEventListener('input', update);
+        light.addEventListener('input', update);
+        swatch.addEventListener('click', async () => {
+            const hex = hexLabel!.textContent ?? '';
+            try {
+                await navigator.clipboard.writeText(hex);
+                const original = hexLabel!.textContent;
+                hexLabel!.textContent = `${hex} · copied`;
+                window.setTimeout(() => {
+                    hexLabel!.textContent = original;
+                }, 1200);
+            } catch {
+                /* clipboard blocked — silently no-op */
+            }
+        });
+
+        update();
+    }
+</script>
+
+<style>
+    .colour-mixer {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-5);
+        align-items: center;
+    }
+
+    @media (min-width: 480px) {
+        .colour-mixer {
+            grid-template-columns: 12rem 1fr;
+        }
+    }
+
+    .colour-mixer-swatch {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: hsl(200deg 70% 55%);
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .colour-mixer-label {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+        font-size: var(--font-sm);
+        color: var(--color-muted);
+    }
+
+    .colour-mixer-label input[type='range'] {
+        width: 100%;
+    }
+
+    .colour-mixer-hex {
+        font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+        font-variant-numeric: tabular-nums;
+        color: var(--color-text);
+        margin: 0;
+    }
+</style>

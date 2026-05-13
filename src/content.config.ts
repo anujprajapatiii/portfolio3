@@ -25,4 +25,36 @@ const projects = defineCollection({
         }),
 });
 
-export const collections = { projects };
+// Lightweight counterpart to `projects` — these are experiments, sketches,
+// micro-tools. Schema intentionally optional-heavy: an experiment may be a
+// title + one paragraph, or it may be a full writeup with a cover. Don't
+// require what isn't always there. Chronological by `date`; no `order` field
+// because experiments are read by recency, not curated ranking.
+//
+// Adding one: drop `src/content/experiments/<slug>.md` with frontmatter.
+// For an interactive page instead of a writeup, create
+// `src/pages/play/<slug>.astro` with an `export const meta = {...}` block —
+// the /play index lists both kinds together.
+const experiments = defineCollection({
+    loader: glob({
+        pattern: '**/*.md',
+        base: './src/content/experiments',
+        generateId: ({ entry }) => entry.replace(/(\/index)?\.md$/, ''),
+    }),
+    schema: ({ image }) =>
+        z.object({
+            title: z.string(),
+            description: z.string(),
+            date: z.coerce.date(),
+            // Optional — most experiments won't have a cover.
+            cover: image().optional(),
+            // External demo (CodePen, deployed app, video) — opens in a new tab.
+            demo: z.string().url().optional(),
+            // Source/repo URL.
+            repo: z.string().url().optional(),
+            tags: z.array(z.string()).optional(),
+            draft: z.boolean().default(false),
+        }),
+});
+
+export const collections = { projects, experiments };

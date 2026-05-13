@@ -1,0 +1,73 @@
+---
+// /play — index of experiments. Lists entries from the `experiments`
+// content collection (src/content/experiments/<slug>.md), most recent first.
+//
+// To add a markdown writeup: drop <slug>.md with frontmatter.
+// To add an interactive page: create src/pages/play/<slug>.astro AND a
+// matching <slug>.md stub in src/content/experiments/. Astro's static
+// routing means the .astro file wins at /play/<slug>; the markdown stub
+// is what makes the entry appear in this listing.
+
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+
+const items = (await getCollection('experiments', (e) => !e.data.draft)).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+function formatDate(d: Date) {
+    return d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+
+<Layout
+    title="Play — Your Name"
+    description="A loose collection of experiments, sketches, and micro-tools."
+>
+    <Section size="lg">
+        <Container size="reading">
+            <Stack gap="lg">
+                <h1>Play</h1>
+                <p class="intro">
+                    A loose collection of experiments, sketches, and micro-tools. Shorter and
+                    rougher than the work, on purpose.
+                </p>
+            </Stack>
+        </Container>
+    </Section>
+
+    <Section size="lg">
+        <Container size="reading">
+            <ul class="play-list">
+                {
+                    items.map((item) => (
+                        <li class="play-item">
+                            <a href={`/play/${item.id}`} class="play-item-link">
+                                <time
+                                    class="play-item-date"
+                                    datetime={item.data.date.toISOString()}
+                                >
+                                    {formatDate(item.data.date)}
+                                </time>
+                                <div class="play-item-body">
+                                    <h2 class="play-item-title">{item.data.title}</h2>
+                                    <p class="play-item-description">{item.data.description}</p>
+                                    {item.data.tags && item.data.tags.length > 0 && (
+                                        <div class="play-item-tags">
+                                            {item.data.tags.map((tag) => (
+                                                <span class="play-item-tag">{tag}</span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </Container>
+    </Section>
+</Layout>

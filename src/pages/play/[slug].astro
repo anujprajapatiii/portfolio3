@@ -1,0 +1,20 @@
+---
+import { getCollection, render } from 'astro:content';
+import PlayLayout from '../../layouts/PlayLayout.astro';
+
+export async function getStaticPaths() {
+    // Filter out drafts so they don't generate public URLs at all.
+    const experiments = await getCollection('experiments', (e) => !e.data.draft);
+    return experiments.map((experiment) => ({
+        params: { slug: experiment.id },
+        props: { experiment },
+    }));
+}
+
+const { experiment } = Astro.props;
+const { Content } = await render(experiment);
+---
+
+<PlayLayout experiment={experiment}>
+    <Content />
+</PlayLayout>

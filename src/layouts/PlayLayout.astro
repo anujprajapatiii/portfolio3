@@ -1,0 +1,114 @@
+---
+// Detail layout for an experiment from the `experiments` content collection.
+//
+// Intentionally lighter than ProjectLayout — no full-width cover hero by
+// default. An experiment's body is usually short; the page should feel like
+// a note, not a case study.
+
+import type { CollectionEntry } from 'astro:content';
+import Layout from './Layout.astro';
+import Section from '../components/primitives/Section.astro';
+import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
+import Cluster from '../components/primitives/Cluster.astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+    experiment: CollectionEntry<'experiments'>;
+}
+
+const { experiment } = Astro.props as Props;
+const { title, description, date, cover, demo, repo, tags } = experiment.data;
+
+const formattedDate = date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+});
+---
+
+<Layout title={`${title} — Your Name`} description={description} ogType="article">
+    <article class="experiment">
+        <Section size="lg">
+            <Container size="reading">
+                <Stack gap="lg">
+                    <Cluster gap="md">
+                        <a href="/play" class="experiment-back">← Play</a>
+                        <time class="experiment-date" datetime={date.toISOString()}>
+                            {formattedDate}
+                        </time>
+                    </Cluster>
+                    <Stack gap="sm">
+                        <h1 class="experiment-title">{title}</h1>
+                        <p class="experiment-description">{description}</p>
+                    </Stack>
+                    {
+                        (demo || repo) && (
+                            <Cluster gap="md">
+                                {demo && (
+                                    <a
+                                        class="experiment-link"
+                                        href={demo}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        Live demo →
+                                    </a>
+                                )}
+                                {repo && (
+                                    <a
+                                        class="experiment-link"
+                                        href={repo}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        Source →
+                                    </a>
+                                )}
+                            </Cluster>
+                        )
+                    }
+                </Stack>
+            </Container>
+        </Section>
+
+        {
+            cover && (
+                <Section size="md">
+                    <Container size="page">
+                        <Image
+                            src={cover}
+                            alt={`${title} cover`}
+                            widths={[600, 1200, 1800]}
+                            sizes="(max-width: 880px) 100vw, 832px"
+                            loading="eager"
+                            class="experiment-cover"
+                        />
+                    </Container>
+                </Section>
+            )
+        }
+
+        <Section size="lg">
+            <Container size="reading">
+                <div class="experiment-body">
+                    <slot />
+                </div>
+            </Container>
+        </Section>
+
+        {
+            tags && tags.length > 0 && (
+                <Section size="md">
+                    <Container size="reading">
+                        <div class="experiment-tags">
+                            {tags.map((tag) => (
+                                <span class="experiment-tag">{tag}</span>
+                            ))}
+                        </div>
+                    </Container>
+                </Section>
+            )
+        }
+    </article>
+</Layout>
