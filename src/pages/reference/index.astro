@@ -1,4 +1,12 @@
 ---
+// /reference — single design-system page covering tokens AND layout
+// primitives together. Tokens are the values; primitives are the
+// components that consume them. They reference each other constantly and
+// reading them on the same page reflects how they're actually used.
+//
+// If a new internal-docs topic is genuinely different in shape (e.g. the
+// section gallery at /reference/sections), it gets its own page.
+
 import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/primitives/Section.astro';
 import Container from '../../components/primitives/Container.astro';
@@ -38,7 +46,6 @@ const spaceTokens = [
     { name: '--space-8', value: '120px' },
 ];
 
-// Primitive palette — theme-agnostic. Grouped by family.
 const primitiveFamilies = [
     {
         name: 'Neutral',
@@ -111,9 +118,6 @@ const primitiveFamilies = [
     },
 ];
 
-// Semantic tokens — what the rest of the site actually uses.
-// Each maps to a primitive; the L/D columns show which primitive
-// is referenced in light vs dark theme.
 const colorTokens = [
     { name: '--color-text', light: 'neutral-600', dark: 'neutral-200', use: 'primary text' },
     { name: '--color-muted', light: 'neutral-400', dark: 'neutral-300', use: 'secondary text' },
@@ -146,7 +150,6 @@ const breakpointTokens = [
     { name: '--bp-xl', value: '1280px', use: 'laptop → desktop' },
 ];
 
-// Layout primitives — the five components that compose every page.
 const layoutPrimitives = [
     {
         name: '<PageWrapper>',
@@ -201,21 +204,22 @@ const weights = [
 ---
 
 <Layout
-    title="Design System — Anuj Prajapati"
-    description="A live reference of every design token, type size, color, and spacing value used on this site."
+    title="Reference — Your Name"
+    description="A live reference of every design token, layout primitive, and section template used on this site."
 >
     <article class="design-system">
         <Section size="lg">
             <Container size="page">
                 <Stack gap="lg">
-                    <h1>Design system</h1>
+                    <h1>Reference</h1>
                     <p>
-                        A live preview of every token used on this site. Values below are pulled
-                        directly from <code>global.css</code> — change a token there and this page updates.
+                        A live preview of every token, primitive, and rule that builds this site.
+                        Values are pulled directly from <code>global.css</code> — change a token there
+                        and this page updates.
                     </p>
                     <p>
-                        Looking for ready-to-paste section templates? See the <a
-                            href="/design-system/sections">Sections gallery</a
+                        Looking for ready-to-paste section templates? See <a
+                            href="/reference/sections">Sections</a
                         >.
                     </p>
                 </Stack>
