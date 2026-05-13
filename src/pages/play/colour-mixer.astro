@@ -1,9 +1,12 @@
 ---
 // Ad-hoc Play page — a hand-crafted interactive demo rather than a markdown
-// writeup. The `meta` export lets the /play index list it alongside entries
-// from the `experiments` content collection. Link URLs stay the same shape
-// (/play/<slug>); Astro's static routing wins over the dynamic [slug].astro
-// when a file with this exact name exists.
+// writeup. Astro's static routing means this file wins over the dynamic
+// /play/[slug].astro at the URL /play/colour-mixer. For this page to appear
+// in the /play index listing and the footer, there's a matching markdown
+// stub at src/content/experiments/colour-mixer.md that supplies the
+// metadata. The stub never renders — this file does.
+//
+// Keep the visible title/description/date here in sync with that stub.
 
 import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/primitives/Section.astro';
@@ -11,33 +14,29 @@ import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
 import Cluster from '../../components/primitives/Cluster.astro';
 
-export const meta = {
-    title: 'Colour mixer',
-    description:
-        'Two HSL sliders, one swatch. Drag to mix; click the swatch to copy its hex to the clipboard.',
-    date: '2026-05-12',
-    tags: ['color', 'interaction'],
-};
-
-const formattedDate = new Date(meta.date).toLocaleDateString('en-GB', {
+const title = 'Colour mixer';
+const description =
+    'Two HSL sliders, one swatch. Drag to mix; click the swatch to copy its hex to the clipboard.';
+const dateISO = '2026-05-12';
+const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
 });
 ---
 
-<Layout title={`${meta.title} — Your Name`} description={meta.description} ogType="article">
+<Layout title={`${title} — Your Name`} description={description} ogType="article">
     <article class="experiment">
         <Section size="lg">
             <Container size="reading">
                 <Stack gap="lg">
                     <Cluster gap="md">
                         <a href="/play" class="experiment-back">← Play</a>
-                        <time class="experiment-date" datetime={meta.date}>{formattedDate}</time>
+                        <time class="experiment-date" datetime={dateISO}>{formattedDate}</time>
                     </Cluster>
                     <Stack gap="sm">
-                        <h1 class="experiment-title">{meta.title}</h1>
-                        <p class="experiment-description">{meta.description}</p>
+                        <h1 class="experiment-title">{title}</h1>
+                        <p class="experiment-description">{description}</p>
                     </Stack>
                 </Stack>
             </Container>

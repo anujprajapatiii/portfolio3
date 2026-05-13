@@ -2,11 +2,14 @@
 // Site footer — three columns of links (Projects / Play / Site) plus a
 // small copyright line. Auto-pulls projects and experiments from their
 // content collections so new entries appear in the footer without editing
-// this file. The Play column also lists ad-hoc /play/<slug>.astro pages
-// (which export a `meta` block).
+// this file.
 //
 // To add a new link: edit the appropriate column's `links` array below.
 // To add a new column: append { title, links } to the `columns` array.
+//
+// Note: a hand-crafted /play/<slug>.astro page that should appear in the
+// footer also needs a stub entry in src/content/experiments/<slug>.md —
+// the markdown supplies listing metadata; the .astro file wins at the URL.
 
 import { getCollection } from 'astro:content';
 import PageWrapper from './primitives/PageWrapper.astro';
@@ -23,32 +26,6 @@ const experiments = (await getCollection('experiments', (e) => !e.data.draft)).s
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 
-// Hand-crafted /play/<slug>.astro pages (excluding the index and dynamic
-// [slug] route). Each exports a `meta` block.
-const adhocPlayModules = import.meta.glob<{
-    meta?: { title: string; date: string };
-}>('../pages/play/*.astro', { eager: true });
-
-const adhocPlayLinks = Object.entries(adhocPlayModules)
-    .filter(([path]) => !path.endsWith('/index.astro') && !path.endsWith('/[slug].astro'))
-    .flatMap(([path, mod]) => {
-        if (!mod.meta) return [];
-        const slug = path.match(/play\/([^/]+)\.astro$/)?.[1];
-        if (!slug) return [];
-        return [{ label: mod.meta.title, href: `/play/${slug}`, date: new Date(mod.meta.date) }];
-    });
-
-const playLinks = [
-    ...experiments.map((e) => ({
-        label: e.data.title,
-        href: `/play/${e.id}`,
-        date: e.data.date,
-    })),
-    ...adhocPlayLinks,
-]
-    .sort((a, b) => b.date.getTime() - a.date.getTime())
-    .map(({ label, href }) => ({ label, href }));
-
 const columns = [
     {
         title: 'Projects',
@@ -59,7 +36,10 @@ const columns = [
     },
     {
         title: 'Play',
-        links: playLinks,
+        links: experiments.map((e) => ({
+            label: e.data.title,
+            href: `/play/${e.id}`,
+        })),
     },
     {
         title: 'Site',

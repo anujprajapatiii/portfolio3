@@ -1,14 +1,12 @@
 ---
-// /play — index of experiments. Lists two kinds of items together:
+// /play — index of experiments. Lists entries from the `experiments`
+// content collection (src/content/experiments/<slug>.md), most recent first.
 //
-//   1. Markdown entries from the `experiments` content collection
-//      (src/content/experiments/<slug>.md).
-//   2. Hand-crafted Astro pages alongside this file
-//      (src/pages/play/<slug>.astro) that export a `meta` block.
-//
-// Both kinds link to /play/<slug>. Astro's static routing means a real
-// .astro file at that path wins; otherwise the dynamic [slug].astro route
-// handles it from the collection.
+// To add a markdown writeup: drop <slug>.md with frontmatter.
+// To add an interactive page: create src/pages/play/<slug>.astro AND a
+// matching <slug>.md stub in src/content/experiments/. Astro's static
+// routing means the .astro file wins at /play/<slug>; the markdown stub
+// is what makes the entry appear in this listing.
 
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
@@ -16,61 +14,8 @@ import Section from '../../components/primitives/Section.astro';
 import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
 
-type Item = {
-    slug: string;
-    title: string;
-    description: string;
-    date: Date;
-    tags?: string[];
-    /** "md" = content collection, "astro" = hand-crafted interactive page */
-    kind: 'md' | 'astro';
-};
-
-// 1. Content-collection entries.
-const collectionItems: Item[] = (await getCollection('experiments', (e) => !e.data.draft)).map(
-    (e) => ({
-        slug: e.id,
-        title: e.data.title,
-        description: e.data.description,
-        date: e.data.date,
-        tags: e.data.tags,
-        kind: 'md',
-    })
-);
-
-// 2. Ad-hoc .astro pages in src/pages/play/ that export `meta`.
-//    `import.meta.glob` literal patterns; eager + sync because we render
-//    the index server-side at build time.
-const adhocModules = import.meta.glob<{
-    meta?: { title: string; description: string; date: string; tags?: string[] };
-}>('./*.astro', { eager: true });
-
-const adhocItems: Item[] = Object.entries(adhocModules)
-    .filter(([path]) => {
-        // Exclude the index itself and the dynamic [slug] route.
-        if (path.endsWith('/index.astro')) return false;
-        if (path.endsWith('/[slug].astro')) return false;
-        return true;
-    })
-    .flatMap(([path, mod]) => {
-        if (!mod.meta) return [];
-        const slug = path.match(/\.\/([^/]+)\.astro$/)?.[1];
-        if (!slug) return [];
-        return [
-            {
-                slug,
-                title: mod.meta.title,
-                description: mod.meta.description,
-                date: new Date(mod.meta.date),
-                tags: mod.meta.tags,
-                kind: 'astro' as const,
-            },
-        ];
-    });
-
-// Most-recent first.
-const items: Item[] = [...collectionItems, ...adhocItems].sort(
-    (a, b) => b.date.getTime() - a.date.getTime()
+const items = (await getCollection('experiments', (e) => !e.data.draft)).sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 
 function formatDate(d: Date) {
@@ -100,16 +45,19 @@ function formatDate(d: Date) {
                 {
                     items.map((item) => (
                         <li class="play-item">
-                            <a href={`/play/${item.slug}`} class="play-item-link">
-                                <time class="play-item-date" datetime={item.date.toISOString()}>
-                                    {formatDate(item.date)}
+                            <a href={`/play/${item.id}`} class="play-item-link">
+                                <time
+                                    class="play-item-date"
+                                    datetime={item.data.date.toISOString()}
+                                >
+                                    {formatDate(item.data.date)}
                                 </time>
                                 <div class="play-item-body">
-                                    <h2 class="play-item-title">{item.title}</h2>
-                                    <p class="play-item-description">{item.description}</p>
-                                    {item.tags && item.tags.length > 0 && (
+                                    <h2 class="play-item-title">{item.data.title}</h2>
+                                    <p class="play-item-description">{item.data.description}</p>
+                                    {item.data.tags && item.data.tags.length > 0 && (
                                         <div class="play-item-tags">
-                                            {item.tags.map((tag) => (
+                                            {item.data.tags.map((tag) => (
                                                 <span class="play-item-tag">{tag}</span>
                                             ))}
                                         </div>
