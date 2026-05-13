@@ -9,4 +9,10 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
     site: 'https://portfolio3-mocha-ten.vercel.app',
     integrations: [sitemap()],
+    // /design-system was renamed to /reference. Permanent redirects so any
+    // shared URL still lands at the right page.
+    redirects: {
+        '/design-system': '/reference',
+        '/design-system/sections': '/reference/sections',
+    },
 });

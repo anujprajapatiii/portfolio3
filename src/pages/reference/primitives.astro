@@ -1,0 +1,175 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+import Cluster from '../../components/primitives/Cluster.astro';
+import Grid from '../../components/primitives/Grid.astro';
+
+export const meta = {
+    title: 'Primitives',
+    description:
+        'The six layout components every page composes from. Section, Container, Stack, Cluster, Grid, PageWrapper.',
+    order: 2,
+};
+
+const layoutPrimitives = [
+    {
+        name: '<PageWrapper>',
+        props: 'no props',
+        use: 'horizontal page padding (24px mobile, 32px tablet+). Used by header, main, footer.',
+    },
+    {
+        name: '<Section size>',
+        props: 'size: sm | md | lg | xl',
+        use: 'vertical chunk of a page. padding-block per size. Default md.',
+    },
+    {
+        name: '<Container size>',
+        props: 'size: page | reading | narrow',
+        use: 'max-width + center. Inside Section. Default page.',
+    },
+    {
+        name: '<Stack gap>',
+        props: 'gap: sm | md | lg',
+        use: 'vertical flex with gap. Default md.',
+    },
+    {
+        name: '<Cluster gap align justify as>',
+        props: 'gap, align, justify, as',
+        use: 'horizontal flex with wrap. For nav, tag rows.',
+    },
+    {
+        name: '<Grid min gap>',
+        props: 'min: 220px | 280px | 360px; gap: md | lg',
+        use: 'auto-fit responsive grid. No media query needed.',
+    },
+];
+
+const sectionSizes = [
+    { size: 'sm', value: '32px', use: 'tight related blocks' },
+    { size: 'md', value: '48px', use: 'default' },
+    { size: 'lg', value: '80px', use: 'distinct page chapters' },
+    { size: 'xl', value: '120px', use: 'hero / landing' },
+];
+---
+
+<Layout title={`${meta.title} — Reference`} description={meta.description}>
+    <article class="design-system">
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <p><a href="/reference" class="reference-back">← Reference</a></p>
+                    <h1>{meta.title}</h1>
+                    <p>{meta.description}</p>
+                    <p class="ds-meta-secondary">
+                        Every page composes from these. See <code
+                            >.claude/skills/portfolio-layout-primitives/SKILL.md</code
+                        > for the rules.
+                    </p>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <Stack gap="md">
+                        <h2>Composition rule</h2>
+                        <pre
+                            class="ds-code">PageWrapper
+└─ Section size="sm|md|lg|xl"
+   └─ Container size="page|reading|narrow"
+      └─ Stack | Grid | Cluster
+         └─ content</pre>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h2>Components</h2>
+                        <Stack gap="sm">
+                            {
+                                layoutPrimitives.map((p) => (
+                                    <div class="ds-row">
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">{p.name}</span>
+                                            <span class="ds-meta-secondary">
+                                                <code>{p.props}</code> · {p.use}
+                                            </span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h2>Section sizes</h2>
+                        <p class="ds-meta-secondary">
+                            padding-block per size. Bars show the actual top-or-bottom padding
+                            height.
+                        </p>
+                        <Stack gap="md">
+                            {
+                                sectionSizes.map((s) => (
+                                    <div class="ds-row">
+                                        <span class="ds-section-bar" style={`height: ${s.value}`} />
+                                        <Stack gap="sm">
+                                            <span class="ds-meta">
+                                                size="{s.size}" · {s.value}
+                                            </span>
+                                            <span class="ds-meta-secondary">{s.use}</span>
+                                        </Stack>
+                                    </div>
+                                ))
+                            }
+                        </Stack>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h2>Container sizes</h2>
+                        <p class="ds-meta-secondary">
+                            Visual stack of the three max-widths. The page container wraps the
+                            others for comparison.
+                        </p>
+                        <div class="ds-container-demo ds-container-demo--page">
+                            <span class="ds-meta">page · 880px</span>
+                            <div class="ds-container-demo ds-container-demo--reading">
+                                <span class="ds-meta">reading · 680px</span>
+                                <div class="ds-container-demo ds-container-demo--narrow">
+                                    <span class="ds-meta">narrow · 600px</span>
+                                </div>
+                            </div>
+                        </div>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h2>Grid demo</h2>
+                        <p class="ds-meta-secondary">
+                            Resize the window — columns auto-fit at 220px minimum.
+                        </p>
+                        <Grid min="220px" gap="md">
+                            <div class="ds-grid-cell">1</div>
+                            <div class="ds-grid-cell">2</div>
+                            <div class="ds-grid-cell">3</div>
+                            <div class="ds-grid-cell">4</div>
+                            <div class="ds-grid-cell">5</div>
+                            <div class="ds-grid-cell">6</div>
+                        </Grid>
+                    </Stack>
+
+                    <Stack gap="md">
+                        <h2>Cluster demo</h2>
+                        <p class="ds-meta-secondary">Horizontal items with wrap.</p>
+                        <Cluster gap="md">
+                            <span class="ds-tag">item one</span>
+                            <span class="ds-tag">item two</span>
+                            <span class="ds-tag">item three</span>
+                            <span class="ds-tag">item four</span>
+                            <span class="ds-tag">item five</span>
+                        </Cluster>
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+    </article>
+</Layout>

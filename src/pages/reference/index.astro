@@ -1,0 +1,80 @@
+---
+// /reference — hub page listing every reference topic. Auto-discovers
+// sibling .astro files via `import.meta.glob`. Drop a new file in
+// src/pages/reference/<topic>.astro with an `export const meta = {...}`
+// block and it appears here without editing this file.
+//
+// Reference pages are for designers/devs poking at how the site is built —
+// tokens, primitives, copy-paste section templates, future things like an
+// icon catalog. Internal-docs energy, not portfolio.
+
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+
+type Topic = {
+    slug: string;
+    title: string;
+    description: string;
+    order: number;
+};
+
+const modules = import.meta.glob<{
+    meta?: { title: string; description: string; order?: number };
+}>('./*.astro', { eager: true });
+
+const topics: Topic[] = Object.entries(modules)
+    .filter(([path]) => !path.endsWith('/index.astro'))
+    .flatMap(([path, mod]) => {
+        if (!mod.meta) return [];
+        const slug = path.match(/\.\/([^/]+)\.astro$/)?.[1];
+        if (!slug) return [];
+        return [
+            {
+                slug,
+                title: mod.meta.title,
+                description: mod.meta.description,
+                order: mod.meta.order ?? 99,
+            },
+        ];
+    })
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+---
+
+<Layout
+    title="Reference — Your Name"
+    description="A live reference of every design token, primitive, section template, and other internal docs for this site."
+>
+    <article class="reference">
+        <Section size="lg">
+            <Container size="reading">
+                <Stack gap="lg">
+                    <h1>Reference</h1>
+                    <p>
+                        Internal docs for the site itself. Values are pulled live from <code
+                            >global.css</code
+                        > where applicable — change a token there and these pages update.
+                    </p>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="reading">
+                <ul class="reference-list">
+                    {
+                        topics.map((topic) => (
+                            <li class="reference-item">
+                                <a href={`/reference/${topic.slug}`} class="reference-item-link">
+                                    <h2 class="reference-item-title">{topic.title}</h2>
+                                    <p class="reference-item-description">{topic.description}</p>
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </Container>
+        </Section>
+    </article>
+</Layout>
