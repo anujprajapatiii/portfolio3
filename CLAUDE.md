@@ -26,9 +26,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 | `src/pages/about.astro`                 | About page                                                                                                                  |
 | `src/pages/projects/[slug].astro`       | Dynamic route — generates one page per Markdown project                                                                     |
 | `src/pages/404.astro`                   | Custom 404                                                                                                                  |
-| `src/pages/reference/index.astro`       | Internal reference hub. Auto-discovers sibling reference pages via `import.meta.glob`. Not in nav; visit at `/reference`    |
-| `src/pages/reference/tokens.astro`      | Visual catalog of every design token (color, type, spacing, breakpoints, widths). `/reference/tokens`                       |
-| `src/pages/reference/primitives.astro`  | The six layout components (Section, Container, Stack, Cluster, Grid, PageWrapper). `/reference/primitives`                  |
+| `src/pages/reference/index.astro`       | Internal docs — design tokens + layout primitives on one page. Not in nav; visit at `/reference`                            |
 | `src/pages/reference/sections.astro`    | Copy-and-paste catalog of section patterns. `/reference/sections`                                                           |
 | `src/layouts/Layout.astro`              | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current`                       |
 | `src/layouts/ProjectLayout.astro`       | Wraps `Layout` with the project cover + title + description block                                                           |

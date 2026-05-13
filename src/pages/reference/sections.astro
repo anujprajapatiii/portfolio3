@@ -5,13 +5,6 @@ import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
 import Grid from '../../components/primitives/Grid.astro';
 
-export const meta = {
-    title: 'Sections',
-    description:
-        'Ready-to-paste section templates used across this portfolio. Copy a snippet, drop it into a page, change the content.',
-    order: 3,
-};
-
 // Each entry is one ready-to-paste section pattern.
 // Add an entry here when you ship a new section worth reusing.
 //
@@ -137,12 +130,14 @@ const patterns = [
 ];
 ---
 
-<Layout title={`${meta.title} — Reference`} description={meta.description}>
+<Layout
+    title="Sections — Reference"
+    description="Ready-to-paste section templates used across this portfolio. Copy a snippet, drop it into a page, change the content."
+>
     <article class="design-system">
         <Section size="lg">
             <Container size="page">
                 <Stack gap="lg">
-                    <p><a href="/reference" class="reference-back">← Reference</a></p>
                     <h1>Sections gallery</h1>
                     <p>
                         Ready-to-paste section templates. Each card shows a live preview and the
