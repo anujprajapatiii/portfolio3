@@ -4,6 +4,7 @@ description: An editorial design study — illustration system, typography, and 
 cover: ./cover.png
 date: 2026-05-10
 order: 4
+layout: full-bleed
 ---
 
 ## Overview

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import ProjectLayoutFullBleed from '../../layouts/ProjectLayoutFullBleed.astro';
 
 export async function getStaticPaths() {
     // Filter out drafts so they don't generate public URLs at all —
@@ -12,10 +13,19 @@ export async function getStaticPaths() {
     }));
 }
 
+// Per-project layout dispatch. The `layout` frontmatter field (schema +
+// allowed values in content.config.ts) picks the template. Add a new
+// layout component here and a matching enum value there to introduce one.
+const layouts = {
+    default: ProjectLayout,
+    'full-bleed': ProjectLayoutFullBleed,
+};
+
 const { project } = Astro.props;
 const { Content } = await render(project);
+const ProjectLayoutComponent = layouts[project.data.layout];
 ---
 
-<ProjectLayout project={project}>
+<ProjectLayoutComponent project={project}>
     <Content />
-</ProjectLayout>
+</ProjectLayoutComponent>

@@ -13,6 +13,7 @@ import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
 import Cluster from '../../components/primitives/Cluster.astro';
 import Grid from '../../components/primitives/Grid.astro';
+import { SITE_NAME } from '../../consts';
 
 // Token data — kept in arrays so we can `.map()` over them below.
 // To add a token, add a row here. To rename a token, change it here AND in global.css.
@@ -204,7 +205,7 @@ const weights = [
 ---
 
 <Layout
-    title="Reference — Your Name"
+    title={`Reference — ${SITE_NAME}`}
     description="A live reference of every design token, layout primitive, and section template used on this site."
 >
     <article class="design-system">

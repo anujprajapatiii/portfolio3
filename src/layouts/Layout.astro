@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import PageWrapper from '../components/primitives/PageWrapper.astro';
 import Container from '../components/primitives/Container.astro';
 import Cluster from '../components/primitives/Cluster.astro';
+import { SITE_TITLE, SITE_NAME } from '../consts';
 
 interface Props {
     title?: string;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const {
-    title = 'Your Name — Designer',
+    title = SITE_TITLE,
     description = 'Designer working across visual identity and digital products. Based in Mumbai.',
     ogImage,
     ogType = 'website',
@@ -86,7 +87,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
             <PageWrapper>
                 <Container size="page">
                     <Cluster justify="between" align="baseline">
-                        <a href="/" class="brand">Your Name</a>
+                        <a href="/" class="brand">{SITE_NAME}</a>
                         <Cluster as="nav" gap="md" align="center" aria-label="Primary">
                             {
                                 navLinks.map((link) => (

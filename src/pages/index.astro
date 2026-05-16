@@ -5,13 +5,14 @@ import Container from '../components/primitives/Container.astro';
 import Grid from '../components/primitives/Grid.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import { SITE_TITLE } from '../consts';
 
 const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(
     (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
 );
 ---
 
-<Layout title="Your Name — Designer">
+<Layout title={SITE_TITLE}>
     <Section size="lg">
         <Container size="page">
             <p class="intro">
