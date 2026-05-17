@@ -137,6 +137,12 @@ const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
         background: hsl(200deg 70% 55%);
         cursor: pointer;
         padding: 0;
+        transition: border-color var(--transition-fast) var(--ease-standard);
+    }
+
+    /* "Click to copy" affordance — the swatch is interactive. */
+    .colour-mixer-swatch:hover {
+        border-color: var(--color-text);
     }
 
     .colour-mixer-label {
@@ -149,6 +155,7 @@ const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
 
     .colour-mixer-label input[type='range'] {
         width: 100%;
+        accent-color: var(--color-text);
     }
 
     .colour-mixer-hex {

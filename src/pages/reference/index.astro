@@ -23,6 +23,7 @@ import {
     colorTokens,
     widthTokens,
     breakpointTokens,
+    motionTokens,
     layoutPrimitives,
     sectionSizes,
     weights,
@@ -50,6 +51,8 @@ import {
                     <p>
                         Looking for ready-to-paste section templates? See <a
                             href="/reference/sections">Sections</a
+                        >. For the Button/Badge components and their states, see <a
+                            href="/reference/components">Components</a
                         >.
                     </p>
                 </Stack>
@@ -175,6 +178,33 @@ import {
                     <Stack gap="md">
                         {
                             breakpointTokens.map((t) => (
+                                <div class="ds-row">
+                                    <Stack gap="sm">
+                                        <span class="ds-meta">
+                                            {t.name} · {t.value}
+                                        </span>
+                                        <span class="ds-meta-secondary">{t.use}</span>
+                                    </Stack>
+                                </div>
+                            ))
+                        }
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h2>Motion</h2>
+                    <p class="ds-meta-secondary">
+                        Durations and easing for transitions. Interactive components use
+                        <code>--transition-fast</code> with <code>--ease-out</code> for press feedback;
+                        <code>--transition</code> stays for theme/header swaps.
+                    </p>
+                    <Stack gap="md">
+                        {
+                            motionTokens.map((t) => (
                                 <div class="ds-row">
                                     <Stack gap="sm">
                                         <span class="ds-meta">

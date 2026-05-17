@@ -1,0 +1,11 @@
+---
+// Badge — a small inline label / chip. Replaces the previously
+// duplicated .play-item-tag / .experiment-tag (byte-identical rules).
+// Class-emitter only; .badge styling lives in global.css so this stays
+// clean under the layout-discipline gate (R1). Usage: <Badge>identity</Badge>.
+// aria-*, data-*, id pass through; don't pass `class` (it would clobber).
+
+const { ...rest } = Astro.props;
+---
+
+<span class="badge" {...rest}><slot /></span>

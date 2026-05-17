@@ -35,7 +35,7 @@ const allTags = [...new Set(projects.flatMap((p) => p.data.tags ?? []))].sort();
                         <Cluster gap="sm" role="group" aria-label="Filter projects by tag">
                             <button
                                 type="button"
-                                class="tag-filter-btn"
+                                class="btn btn--secondary btn--sm tag-filter-btn"
                                 data-filter="*"
                                 aria-pressed="true"
                             >
@@ -44,7 +44,7 @@ const allTags = [...new Set(projects.flatMap((p) => p.data.tags ?? []))].sort();
                             {allTags.map((tag) => (
                                 <button
                                     type="button"
-                                    class="tag-filter-btn"
+                                    class="btn btn--secondary btn--sm tag-filter-btn"
                                     data-filter={tag}
                                     aria-pressed="false"
                                 >

@@ -144,7 +144,19 @@
 
     /* Other */
     --radius-sm: 4px;
+
+    /* Motion */
     --transition: 0.15s;
+    --transition-fast: 0.1s;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+    /* Interactive state — semantic; reuse existing primitives so the
+       colour set (and check:tokens) stays unchanged. */
+    --color-btn-bg: var(--color-text);
+    --color-btn-fg: var(--color-bg);
+    --color-surface-hover: var(--neutral-200);
+    --color-pressed: var(--neutral-300);
 }
 
 /* Dark theme — only re-maps the semantic tokens. Primitives don't change. */
@@ -157,6 +169,8 @@
     --color-border: var(--neutral-500);
     --color-surface: var(--neutral-400);
     --color-code-bg: var(--neutral-700);
+    --color-surface-hover: var(--neutral-500);
+    --color-pressed: var(--neutral-400);
 }
 
 /* ==========================================================================
@@ -181,6 +195,148 @@
     outline: 2px solid var(--color-text);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   Button — the shared interactive control. Used via <Button>, and the
+   retrofitted .theme-toggle / .tag-filter-btn. All button styling lives
+   here so component/page files stay style-free (layout-discipline R1).
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font: inherit;
+    font-size: var(--font-sm);
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+        background-color var(--transition-fast) var(--ease-standard),
+        border-color var(--transition-fast) var(--ease-standard),
+        color var(--transition-fast) var(--ease-standard),
+        transform var(--transition-fast) var(--ease-out);
+}
+
+/* Sizes — md is the >=44px touch target; sm is a denser control (tag rows)
+   but still a comfortably tappable 36px (was ~21px before). */
+.btn--md {
+    min-height: 44px;
+    padding-inline: var(--space-3);
+}
+.btn--sm {
+    min-height: 36px;
+    padding-inline: var(--space-2);
+    font-size: var(--font-xs);
+}
+.btn--icon {
+    min-height: 44px;
+    min-width: 44px;
+    padding-inline: 0;
+}
+
+/* Variants */
+.btn--primary {
+    background: var(--color-btn-bg);
+    color: var(--color-btn-fg);
+}
+.btn--secondary {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+.btn--ghost,
+.btn--icon {
+    background: transparent;
+    color: var(--color-text);
+}
+
+/* States */
+.btn--primary:hover {
+    opacity: 0.85;
+}
+.btn--secondary:hover {
+    border-color: var(--color-text);
+}
+.btn--ghost:hover,
+.btn--icon:hover {
+    background: var(--color-surface-hover);
+}
+.btn:active {
+    transform: translateY(1px);
+}
+.btn--secondary:active,
+.btn--ghost:active,
+.btn--icon:active {
+    background: var(--color-pressed);
+}
+.btn:disabled,
+.btn[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* The universal :focus-visible ring is var(--color-text); on the filled
+   primary that's invisible — flip it to the background colour there. */
+.btn--primary:focus-visible {
+    outline-color: var(--color-bg);
+}
+
+/* ==========================================================================
+   Badge — small inline label / chip. Single source for what used to be
+   the duplicated .play-item-tag / .experiment-tag. Used via <Badge>.
+   ========================================================================== */
+
+.badge {
+    display: inline-block;
+    font-size: var(--font-xs);
+    color: var(--color-muted);
+    padding: 2px var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   Section building blocks — composed in pages via primitives; these
+   classes carry typography/colour only (layout stays in primitives).
+   Paste-ready patterns live in /reference/sections.
+   ========================================================================== */
+
+/* Pull-quote — an authored standout quote (distinct from a Markdown
+   blockquote). Pair with <Container size="reading">. */
+.pull-quote {
+    font-size: var(--font-xl);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text);
+}
+
+.pull-quote cite {
+    display: block;
+    margin-top: var(--space-3);
+    font-size: var(--font-sm);
+    font-style: normal;
+    color: var(--color-muted);
+}
+
+/* Callout / note — a tonal aside for a key insight or context. */
+.callout {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-hover);
+    color: var(--color-text);
+    font-size: var(--font-sm);
+}
+
+.callout p {
+    margin-bottom: 0;
 }
 
 /* ==========================================================================
@@ -420,20 +576,9 @@ header nav a[aria-current='page'] {
 
 /* === Theme toggle button === */
 
-.theme-toggle {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: var(--color-text);
-    display: inline-flex;
-    align-items: center;
-}
-
-.theme-toggle:hover {
-    color: var(--color-muted);
-}
-
+/* ThemeToggle reuses .btn.btn--icon (set in ThemeToggle.astro) for the
+   box, hit area (>=44px), hover, active and focus. Only the icon sizing
+   and the show/hide icon-swap are bespoke. */
 .theme-toggle svg {
     width: 18px;
     height: 18px;
@@ -476,6 +621,13 @@ header nav a[aria-current='page'] {
     text-decoration: none;
     color: inherit;
     display: block;
+    transition: transform var(--transition-fast) var(--ease-out);
+}
+
+/* The homepage's primary CTA — give it a quiet hover lift. Honoured-out
+   by the global prefers-reduced-motion rule. */
+.project-card:hover {
+    transform: translateY(-2px);
 }
 
 .project-card img {
@@ -483,6 +635,11 @@ header nav a[aria-current='page'] {
     height: auto;
     margin-bottom: var(--space-3);
     background: var(--color-surface);
+    transition: opacity var(--transition-fast) var(--ease-standard);
+}
+
+.project-card:hover img {
+    opacity: 0.92;
 }
 
 .project-card h2 {
@@ -504,22 +661,12 @@ header nav a[aria-current='page'] {
    Filtering is a small inline script; with JS off, all projects stay shown.
    ========================================================================== */
 
+/* Tag-filter buttons reuse .btn.btn--secondary.btn--sm (set in
+   index.astro). Only the resting muted tone and the selected
+   (aria-pressed) emphasis are bespoke; the .tag-filter-btn class is
+   kept as the JS hook for the inline filter script. */
 .tag-filter-btn {
-    font: inherit;
-    font-size: var(--font-xs);
     color: var(--color-muted);
-    padding: 2px var(--space-2);
-    background: none;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition:
-        color var(--transition),
-        border-color var(--transition);
-}
-
-.tag-filter-btn:hover {
-    color: var(--color-text);
 }
 
 .tag-filter-btn[aria-pressed='true'] {
@@ -617,6 +764,23 @@ header nav a[aria-current='page'] {
 
 .project-body a:hover {
     color: var(--color-muted);
+}
+
+/* Markdown blockquotes ( > quote ) in case-study / experiment bodies.
+   Previously unstyled (raw browser default). */
+.project-body blockquote,
+.experiment-body blockquote {
+    margin: var(--space-6) 0;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--color-border);
+    color: var(--color-muted);
+    font-size: var(--font-lg);
+    line-height: var(--leading-tight);
+}
+
+.project-body blockquote p,
+.experiment-body blockquote p {
+    margin-bottom: 0;
 }
 
 /* ==========================================================================
@@ -1009,14 +1173,6 @@ header nav a[aria-current='page'] {
     margin-top: var(--space-2);
 }
 
-.play-item-tag {
-    font-size: var(--font-xs);
-    color: var(--color-muted);
-    padding: 2px var(--space-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-}
-
 /* Detail page (PlayLayout) */
 
 .experiment-back {
@@ -1102,14 +1258,6 @@ header nav a[aria-current='page'] {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-}
-
-.experiment-tag {
-    font-size: var(--font-xs);
-    color: var(--color-muted);
-    padding: 2px var(--space-2);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
 }
 
 /* ==========================================================================

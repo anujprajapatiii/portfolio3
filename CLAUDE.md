@@ -11,7 +11,7 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 You don't need to remember anything. Pick the action below and follow its checklist top to bottom.
 
 1. **Read only this section first.** The rest of this file is reference; come back to it when a checklist points you there.
-2. **Run `npm run dev` and open the live catalogs before composing:** `/reference` (every token + primitive, rendered) and `/reference/sections` (paste-ready section patterns). Not in nav — type the URLs.
+2. **Run `npm run dev` and open the live catalogs before composing:** `/reference` (every token + primitive, rendered), `/reference/sections` (paste-ready section patterns), and `/reference/components` (Button/Badge variants + states). Not in nav — type the URLs.
 3. **Layout or colour work has a discipline you must follow.** If you are an AI: invoke the `portfolio-layout-primitives` or `portfolio-colour-token` skill. If you are a human: read `.claude/skills/portfolio-layout-primitives/SKILL.md` and `.claude/skills/portfolio-colour-token/SKILL.md` — they are the canonical rules.
 4. **The gate (run before every commit; CI enforces all of it):**
     ```bash
@@ -75,6 +75,7 @@ You don't need to remember anything. Pick the action below and follow its checkl
 | `src/pages/404.astro`                   | Custom 404                                                                                                                  |
 | `src/pages/reference/index.astro`       | Internal docs — design tokens + layout primitives on one page. Not in nav; visit at `/reference`                            |
 | `src/pages/reference/sections.astro`    | Copy-and-paste catalog of section patterns. `/reference/sections`                                                           |
+| `src/pages/reference/components.astro`  | Live catalog of Button/Badge variants + states. `/reference/components`                                                     |
 | `src/layouts/Layout.astro`              | Site frame: `<head>` (favicon, meta, OG, Twitter), header, footer, skip-link, nav with `aria-current`                       |
 | `src/layouts/ProjectLayout.astro`       | Wraps `Layout` with the project cover + title + description block                                                           |
 | `src/content.config.ts`                 | Defines the `projects` collection schema (Zod)                                                                              |
@@ -82,7 +83,9 @@ You don't need to remember anything. Pick the action below and follow its checkl
 | `src/content/projects/<slug>/cover.png` | Cover image, sits next to its `index.md`                                                                                    |
 | `src/content/projects/<slug>/*.png`     | Inline images for that case study                                                                                           |
 | `src/components/Footer.astro`           | Site footer — three columns of links, projects column auto-pulled from collection                                           |
-| `src/components/ThemeToggle.astro`      | Sun/moon button in the header that flips light/dark                                                                         |
+| `src/components/ThemeToggle.astro`      | Sun/moon button in the header that flips light/dark (uses `.btn.btn--icon`)                                                 |
+| `src/components/Button.astro`           | Shared button. `variant` primary/secondary/ghost/icon, `size`, `as` button/a, `disabled`. CSS is `.btn*` in `global.css`    |
+| `src/components/Badge.astro`            | Shared inline label/chip (`.badge`). Replaced the duplicated tag styles                                                     |
 | `src/components/primitives/`            | Layout primitives — `PageWrapper`, `Section`, `Container`, `Stack`, `Cluster`, `Grid`                                       |
 | `src/styles/global.css`                 | All styling. Design tokens at the top, semantic classes below                                                               |
 | `astro.config.mjs`                      | Site URL + sitemap integration                                                                                              |
@@ -228,6 +231,8 @@ Pattern:
 </Section>
 ```
 
+**Two columns (text + media):** don't write a grid — compose `<Grid min="360px" gap="lg">` with two children. It's side-by-side on wide screens and stacks to one column on mobile with no media query (DOM order = mobile stack order). Full paste-ready pattern at `/reference/sections` → "Two-column feature".
+
 **Discipline:** never inline `max-width`, `padding-block`, `padding-inline`, `margin`, or `margin-top` in page or component CSS. All layout comes from primitives. See the `portfolio-layout-primitives` skill for the full rules and the four-width screenshot verification workflow.
 
 ### Change the global look
@@ -262,6 +267,7 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 - **Image rule:** if it gets rendered into a page, it lives in `src/` and goes through `<Image />`. If it's a favicon or robots.txt, it lives in `public/`.
 - **One `<h1>` per page.** The header brand is `<a class="brand">`, not an `<h1>`.
 - **Class names are semantic** (`.brand`, `.project-card`, `.about`), never visual (`.red`, `.big`).
+- **Buttons and badges are shared components.** Use `<Button>` / `<Badge>` (see `/reference/components`); don't hand-roll a `<button>` or a tag `<span>`. Variants/sizes/states are centralized in `.btn*`/`.badge` in `global.css` — components carry no `<style>`.
 - **Spacing/font sizes/colors come from tokens.** No raw px values in the rules. If a needed value isn't in the token scale, extend the scale — don't hard-code.
 - **OG images** are auto-generated for project pages via `getImage()` in `ProjectLayout.astro` (1200×630 webp).
 - **Above-the-fold images** use `loading="eager"`. The first homepage card and project covers are eager; everything else lazy.
@@ -311,5 +317,5 @@ npm run format:check && npm run check && npm run check:tokens && npm run check:d
 
 **All of these run in CI** (`.github/workflows/build.yml`) on every PR into `main` and every push to `main`, so drift cannot merge — you do not have to remember to run them, but running the gate locally before pushing saves a round-trip. A clean gate means it'll deploy cleanly on Vercel.
 
-- `check:tokens` compares the literal values in `src/reference-tokens.ts` (what `/reference` renders) against `:root` in `global.css` — direct value tokens (font/space/width/leading/tracking/breakpoint) + the primitive colour set. Semantic `--color-*` tokens use `var()` indirection and are intentionally not checked.
+- `check:tokens` compares the literal values in `src/reference-tokens.ts` (what `/reference` renders) against `:root` in `global.css` — direct value tokens (font/space/width/leading/tracking/breakpoint/motion) + the primitive colour set. Semantic `--color-*` tokens use `var()` indirection and are intentionally not checked.
 - `check:discipline` enforces, with documented fixture exclusions (`src/components/primitives/**`, `src/pages/reference/**`, `src/pages/play/colour-mixer.astro`): R1 no inline layout CSS in pages/components, R2 no raw hex outside `:root`, R3 ≤1 `<h1>` per page, R4 lowercase content image filenames/refs, R5 unique project `order`.

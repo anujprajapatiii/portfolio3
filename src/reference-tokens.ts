@@ -130,6 +130,20 @@ export const colorTokens = [
         dark: 'neutral-700',
         use: 'inline code, code blocks',
     },
+    { name: '--color-btn-bg', light: 'color-text', dark: 'color-text', use: 'primary button fill' },
+    { name: '--color-btn-fg', light: 'color-bg', dark: 'color-bg', use: 'primary button label' },
+    {
+        name: '--color-surface-hover',
+        light: 'neutral-200',
+        dark: 'neutral-500',
+        use: 'card / ghost hover wash',
+    },
+    {
+        name: '--color-pressed',
+        light: 'neutral-300',
+        dark: 'neutral-400',
+        use: 'button :active tint',
+    },
 ];
 
 export const widthTokens = [
@@ -143,6 +157,13 @@ export const breakpointTokens = [
     { name: '--bp-md', value: '768px', use: 'mobile → tablet (primary split)' },
     { name: '--bp-lg', value: '1024px', use: 'tablet → laptop' },
     { name: '--bp-xl', value: '1280px', use: 'laptop → desktop' },
+];
+
+export const motionTokens = [
+    { name: '--transition', value: '0.15s', use: 'theme swap, header, default' },
+    { name: '--transition-fast', value: '0.1s', use: 'button press / hover feedback' },
+    { name: '--ease-standard', value: 'cubic-bezier(0.2, 0, 0, 1)', use: 'hover transitions' },
+    { name: '--ease-out', value: 'cubic-bezier(0, 0, 0.2, 1)', use: 'press release, card lift' },
 ];
 
 export const layoutPrimitives = [

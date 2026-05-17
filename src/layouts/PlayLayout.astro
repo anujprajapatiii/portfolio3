@@ -11,6 +11,7 @@ import Section from '../components/primitives/Section.astro';
 import Container from '../components/primitives/Container.astro';
 import Stack from '../components/primitives/Stack.astro';
 import Cluster from '../components/primitives/Cluster.astro';
+import Badge from '../components/Badge.astro';
 import { Image } from 'astro:assets';
 import { SITE_NAME } from '../consts';
 
@@ -104,7 +105,7 @@ const formattedDate = date.toLocaleDateString('en-GB', {
                     <Container size="reading">
                         <div class="experiment-tags">
                             {tags.map((tag) => (
-                                <span class="experiment-tag">{tag}</span>
+                                <Badge>{tag}</Badge>
                             ))}
                         </div>
                     </Container>

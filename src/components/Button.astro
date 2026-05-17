@@ -1,0 +1,54 @@
+---
+// Button — the shared interactive control. Every variant/size/state is
+// centralized in the .btn* rules in global.css; this file carries NO
+// styles, so it stays clean under the layout-discipline gate (R1).
+// Renders as <button> (default) or <a> (set as="a" href="...").
+//
+// Props:
+//   variant  — 'primary' | 'secondary' | 'ghost' | 'icon' (default 'secondary')
+//   size     — 'sm' | 'md' (default 'md'; md is the >=44px touch target)
+//   as       — 'button' | 'a' (default 'button')
+//   href     — destination when as="a"
+//   type     — button type when as="button" (default 'button')
+//   disabled — disables it (anchors get aria-disabled + no href)
+//   ...rest  — aria-*, data-*, id, onclick handlers, etc. pass through
+//
+// Icon-only buttons (variant="icon") MUST be given an aria-label by the
+// caller — there is no visible text. See CLAUDE.md → Use an icon.
+
+interface Props {
+    variant?: 'primary' | 'secondary' | 'ghost' | 'icon';
+    size?: 'sm' | 'md';
+    as?: 'button' | 'a';
+    href?: string;
+    type?: 'button' | 'submit' | 'reset';
+    disabled?: boolean;
+}
+
+const {
+    variant = 'secondary',
+    size = 'md',
+    as = 'button',
+    href,
+    type = 'button',
+    disabled = false,
+    ...rest
+} = Astro.props;
+
+const Tag = as === 'a' ? 'a' : 'button';
+const classes = ['btn', `btn--${variant}`, `btn--${size}`];
+
+// Anchors cannot be truly disabled — signal it to assistive tech and
+// drop the href so it isn't followable.
+const tagAttrs =
+    as === 'a'
+        ? {
+              href: disabled ? undefined : href,
+              'aria-disabled': disabled ? ('true' as const) : undefined,
+          }
+        : { type, disabled };
+---
+
+<Tag class:list={classes} {...tagAttrs} {...rest}>
+    <slot />
+</Tag>
