@@ -1,8 +1,15 @@
 ---
+// Full-bleed project layout — cover image spans the full viewport width,
+// title/description and body stay in the page container. Selected per
+// project via `layout: full-bleed` frontmatter (see content.config.ts);
+// dispatched from pages/projects/[slug].astro. Sibling of ProjectLayout
+// (the default constrained-cover template).
+
 import Layout from './Layout.astro';
 import Section from '../components/primitives/Section.astro';
 import Container from '../components/primitives/Container.astro';
 import Stack from '../components/primitives/Stack.astro';
+import FullBleed from '../components/primitives/FullBleed.astro';
 import { Image, getImage } from 'astro:assets';
 import { SITE_NAME } from '../consts';
 
@@ -25,21 +32,24 @@ const og = await getImage({
     ogType="article"
 >
     <article>
+        <Section size="md">
+            <FullBleed>
+                <Image
+                    src={cover}
+                    alt={`${title} cover`}
+                    widths={[1200, 1800, 2400]}
+                    sizes="100vw"
+                    loading="eager"
+                    class="project-cover"
+                />
+            </FullBleed>
+        </Section>
+
         <Section size="lg">
             <Container size="page">
-                <Stack gap="lg">
-                    <Image
-                        src={cover}
-                        alt={`${title} cover`}
-                        widths={[600, 1200, 1800]}
-                        sizes="(max-width: 880px) 100vw, 832px"
-                        loading="eager"
-                        class="project-cover"
-                    />
-                    <Stack gap="sm">
-                        <h1 class="project-title">{title}</h1>
-                        <p class="project-description">{description}</p>
-                    </Stack>
+                <Stack gap="sm">
+                    <h1 class="project-title">{title}</h1>
+                    <p class="project-description">{description}</p>
                 </Stack>
             </Container>
         </Section>

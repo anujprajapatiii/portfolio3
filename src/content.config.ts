@@ -16,6 +16,11 @@ const projects = defineCollection({
             cover: image(),
             date: z.coerce.date(),
             order: z.number().optional(),
+            // Which project page template to render. 'default' = cover
+            // constrained to the page container; 'full-bleed' = cover spans
+            // the full viewport. To add a template: add a value here AND a
+            // matching entry in the layouts map in pages/projects/[slug].astro.
+            layout: z.enum(['default', 'full-bleed']).default('default'),
             // Optional free-form tags (e.g. ['identity', 'editorial']) — no UI yet,
             // exists so future tag-filtering on the homepage doesn't require backfill.
             tags: z.array(z.string()).optional(),

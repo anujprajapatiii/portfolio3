@@ -17,22 +17,33 @@ import Section from './primitives/Section.astro';
 import Container from './primitives/Container.astro';
 import Stack from './primitives/Stack.astro';
 import Grid from './primitives/Grid.astro';
+import { SITE_NAME } from '../consts';
+import { byOrder, warnOnDuplicateOrder } from '../utils/sortProjects';
 
-const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(
-    (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
-);
+// Cap the footer projects column so it stays a footer, not a sitemap,
+// once the portfolio grows. Overflow is reachable via the "All work"
+// link (the homepage is the full Work listing).
+const FOOTER_PROJECT_LIMIT = 6;
+
+const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(byOrder);
+warnOnDuplicateOrder(projects);
 
 const experiments = (await getCollection('experiments', (e) => !e.data.draft)).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
 
+const projectLinks = projects.slice(0, FOOTER_PROJECT_LIMIT).map((p) => ({
+    label: p.data.title,
+    href: `/projects/${p.id}`,
+}));
+if (projects.length > FOOTER_PROJECT_LIMIT) {
+    projectLinks.push({ label: 'All work →', href: '/' });
+}
+
 const columns = [
     {
         title: 'Projects',
-        links: projects.map((p) => ({
-            label: p.data.title,
-            href: `/projects/${p.id}`,
-        })),
+        links: projectLinks,
     },
     {
         title: 'Play',
@@ -46,6 +57,7 @@ const columns = [
         links: [
             { label: 'Reference', href: '/reference' },
             { label: 'Sections', href: '/reference/sections' },
+            { label: 'Components', href: '/reference/components' },
         ],
     },
 ];
@@ -76,7 +88,7 @@ const columns = [
                         ))
                     }
                 </Grid>
-                <p class="footer-meta">© 2026 Your Name</p>
+                <p class="footer-meta">© 2026 {SITE_NAME}</p>
             </Container>
         </Section>
     </PageWrapper>

@@ -1,8 +1,11 @@
 name: build
 
-# Runs on every PR into main and every push to main, so a broken
-# build (missing image, content schema mismatch, Astro syntax error)
-# is caught in CI before Vercel deploys.
+# Runs on every PR into main and every push to main. Every correctness
+# gate runs here so drift fails loudly without anyone remembering to run
+# it locally: style (format:check), types/schema (check), design-token
+# sync (check:tokens), layout/colour/filename/order discipline
+# (check:discipline), and a full build (missing image, schema mismatch,
+# Astro syntax error) before Vercel deploys.
 
 on:
     pull_request:
@@ -24,6 +27,12 @@ jobs:
 
             - run: npm ci
 
+            - run: npm run format:check
+
             - run: npm run check
+
+            - run: npm run check:tokens
+
+            - run: npm run check:discipline
 
             - run: npm run build

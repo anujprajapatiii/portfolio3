@@ -163,10 +163,12 @@ Most content sits inside Container. For an exception (e.g. a full-width hero ima
 ### Build + manual paths to test
 
 ```bash
-npm run build
+npm run check:discipline && npm run build
 ```
 
-Pages to spot-check: `/`, `/about`, `/projects/<any>`, `/design-system`, and `/<bad-url>` for 404.
+`check:discipline` R1 fails (locally and in CI — `.github/workflows/build.yml`) if you put `max-width`/`padding`/`margin`/`display:grid|flex` in a page or component instead of a primitive. It excludes the documented fixtures: `src/components/primitives/**`, `src/pages/reference/**`, `src/pages/play/colour-mixer.astro`.
+
+Pages to spot-check: `/`, `/about`, `/projects/<any>`, `/reference`, `/reference/sections`, and `/<bad-url>` for 404.
 
 ## When NOT to use this skill
 
@@ -179,5 +181,6 @@ Pages to spot-check: `/`, `/about`, `/projects/<any>`, `/design-system`, and `/<
 
 - `src/components/primitives/PageWrapper.astro`, `Container.astro`, `Section.astro`, `Stack.astro`, `Cluster.astro`, `Grid.astro`
 - `src/styles/global.css` — Layout primitives section near the top of the file
-- `src/pages/design-system.astro` — visual demos of every primitive at `/design-system`
+- `src/pages/reference/index.astro` — live demos of every primitive at `/reference`
+- `src/pages/reference/sections.astro` — paste-ready section patterns at `/reference/sections`
 - `src/pages/index.astro`, `about.astro`, `404.astro`, `src/layouts/ProjectLayout.astro` — reference compositions

@@ -1,0 +1,11 @@
+---
+// FullBleed — breaks its content out of the PageWrapper padding and any
+// Container so it spans the full viewport width. For edge-to-edge hero
+// imagery. Use sparingly — most content should stay within <Container>.
+// The breakout math assumes a horizontally-centered containing block,
+// which holds under the standard PageWrapper + centered Container shell.
+---
+
+<div class="full-bleed">
+    <slot />
+</div>

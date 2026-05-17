@@ -1,0 +1,148 @@
+---
+// /reference/components — live catalog of the reusable interactive +
+// content components (Button, Badge) and their states. Sibling of
+// /reference (tokens + primitives) and /reference/sections (paste-ready
+// section patterns). Under reference/** so it's exempt from the
+// layout-discipline gate, but it's authored to the same standard.
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/primitives/Section.astro';
+import Container from '../../components/primitives/Container.astro';
+import Stack from '../../components/primitives/Stack.astro';
+import Cluster from '../../components/primitives/Cluster.astro';
+import Button from '../../components/Button.astro';
+import Badge from '../../components/Badge.astro';
+import { ArrowRight } from '@lucide/astro';
+
+const buttonCode = `---
+import Button from '../components/Button.astro';
+---
+
+<Button variant="primary">Primary</Button>
+<Button variant="secondary" size="sm">Small secondary</Button>
+<Button variant="ghost">Ghost</Button>
+<Button variant="icon" aria-label="Next"><ArrowRight aria-hidden="true" /></Button>
+<Button variant="primary" as="a" href="/contact">Link that looks like a button</Button>
+<Button variant="primary" disabled>Disabled</Button>`;
+
+const badgeCode = `---
+import Badge from '../components/Badge.astro';
+---
+
+<Badge>identity</Badge>
+<Badge>editorial</Badge>`;
+---
+
+<Layout
+    title="Components — Reference"
+    description="Live catalog of the portfolio's reusable Button and Badge components, their variants and states."
+>
+    <article class="design-system">
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <h1>Components</h1>
+                    <p>
+                        Reusable interactive + content components. Layout still comes from
+                        primitives — see <a href="/reference/sections">Sections</a> for paste-ready section
+                        patterns and <a href="/reference">Reference</a> for tokens.
+                    </p>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <Stack gap="sm">
+                        <h2 id="button">Button</h2>
+                        <p class="ds-meta-secondary">
+                            <code>variant</code>: primary | secondary | ghost | icon ·
+                            <code>size</code>: sm | md · <code>as</code>: button | a ·
+                            <code>disabled</code>. Hover for <code>--transition-fast</code>, press
+                            for the <code>--ease-out</code> nudge, Tab for the focus ring. Icon-only buttons
+                            must be given an <code>aria-label</code>.
+                        </p>
+                    </Stack>
+
+                    <div class="ds-pattern">
+                        <span class="ds-pattern-label">Preview</span>
+                        <div class="ds-pattern-preview">
+                            <Stack gap="md">
+                                <Cluster gap="md">
+                                    <Button variant="primary">Primary</Button>
+                                    <Button variant="secondary">Secondary</Button>
+                                    <Button variant="ghost">Ghost</Button>
+                                    <Button variant="icon" aria-label="Next">
+                                        <ArrowRight aria-hidden="true" />
+                                    </Button>
+                                </Cluster>
+                                <Cluster gap="md">
+                                    <Button variant="primary" size="sm">Primary sm</Button>
+                                    <Button variant="secondary" size="sm">Secondary sm</Button>
+                                    <Button variant="primary" as="a" href="#">Link button</Button>
+                                    <Button variant="primary" disabled>Disabled</Button>
+                                </Cluster>
+                            </Stack>
+                        </div>
+
+                        <span class="ds-pattern-label">Snippet</span>
+                        <pre
+                            class="ds-code">
+                            <code>{buttonCode}</code>
+                        </pre>
+                    </div>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <Stack gap="sm">
+                        <h2 id="badge">Badge</h2>
+                        <p class="ds-meta-secondary">
+                            Small inline label / chip. Single source for what used to be the
+                            duplicated <code>.play-item-tag</code> / <code>.experiment-tag</code>.
+                        </p>
+                    </Stack>
+
+                    <div class="ds-pattern">
+                        <span class="ds-pattern-label">Preview</span>
+                        <div class="ds-pattern-preview">
+                            <Cluster gap="sm">
+                                <Badge>identity</Badge>
+                                <Badge>editorial</Badge>
+                                <Badge>web</Badge>
+                            </Cluster>
+                        </div>
+
+                        <span class="ds-pattern-label">Snippet</span>
+                        <pre
+                            class="ds-code">
+                            <code>{badgeCode}</code>
+                        </pre>
+                    </div>
+                </Stack>
+            </Container>
+        </Section>
+
+        <Section size="lg">
+            <Container size="page">
+                <Stack gap="lg">
+                    <Stack gap="sm">
+                        <h2 id="motion">Motion</h2>
+                        <p class="ds-meta-secondary">
+                            Durations + easing are tokens — see <a href="/reference"
+                                >Reference → Motion</a
+                            >. Interactive components transition with
+                            <code>--transition-fast</code> + <code>--ease-standard</code> and use
+                            <code>--ease-out</code> for the press release. Hover and click any button
+                            above to feel it; everything respects
+                            <code>prefers-reduced-motion</code>.
+                        </p>
+                    </Stack>
+                </Stack>
+            </Container>
+        </Section>
+    </article>
+</Layout>

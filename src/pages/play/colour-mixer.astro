@@ -13,6 +13,7 @@ import Section from '../../components/primitives/Section.astro';
 import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
 import Cluster from '../../components/primitives/Cluster.astro';
+import { SITE_NAME } from '../../consts';
 
 const title = 'Colour mixer';
 const description =
@@ -25,7 +26,7 @@ const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
 });
 ---
 
-<Layout title={`${title} — Your Name`} description={description} ogType="article">
+<Layout title={`${title} — ${SITE_NAME}`} description={description} ogType="article">
     <article class="experiment">
         <Section size="lg">
             <Container size="reading">
@@ -136,6 +137,12 @@ const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
         background: hsl(200deg 70% 55%);
         cursor: pointer;
         padding: 0;
+        transition: border-color var(--transition-fast) var(--ease-standard);
+    }
+
+    /* "Click to copy" affordance — the swatch is interactive. */
+    .colour-mixer-swatch:hover {
+        border-color: var(--color-text);
     }
 
     .colour-mixer-label {
@@ -148,6 +155,7 @@ const formattedDate = new Date(dateISO).toLocaleDateString('en-GB', {
 
     .colour-mixer-label input[type='range'] {
         width: 100%;
+        accent-color: var(--color-text);
     }
 
     .colour-mixer-hex {

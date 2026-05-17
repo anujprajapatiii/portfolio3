@@ -3,7 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/primitives/Section.astro';
 import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
+import Cluster from '../../components/primitives/Cluster.astro';
 import Grid from '../../components/primitives/Grid.astro';
+import Button from '../../components/Button.astro';
 
 // Each entry is one ready-to-paste section pattern.
 // Add an entry here when you ship a new section worth reusing.
@@ -126,6 +128,74 @@ const patterns = [
         </Stack>
     </Container>
 </Section>`,
+    },
+    {
+        slug: 'cta-band',
+        name: 'CTA band',
+        use: 'A focused call to action — heading, one line, primary + secondary buttons. Drop near the end of a page or case study.',
+        code: `<Section size="lg">
+    <Container size="narrow">
+        <Stack gap="md">
+            <h2>Have a project in mind?</h2>
+            <p>I'm available for freelance work.</p>
+            <Cluster gap="md">
+                <Button variant="primary" as="a" href="mailto:hi@example.com">Get in touch</Button>
+                <Button variant="secondary" as="a" href="/about">More about me</Button>
+            </Cluster>
+        </Stack>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'two-column-feature',
+        name: 'Two-column feature',
+        use: 'Text beside media. <Grid min="360px"> is side-by-side on wide screens and stacks to one column on mobile — no media query. DOM order = mobile stack order (text first here).',
+        code: `<Section size="lg">
+    <Container size="page">
+        <Grid min="360px" gap="lg">
+            <Stack gap="md">
+                <h2>What I did</h2>
+                <p>The narrative for this half — problem, approach, outcome.</p>
+            </Stack>
+            <Image src={img} alt="…" />
+        </Grid>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'pull-quote',
+        name: 'Pull-quote',
+        use: 'An authored standout quote (distinct from a Markdown blockquote). Reading-width, large display type with an optional cite.',
+        code: `<Section size="lg">
+    <Container size="reading">
+        <blockquote class="pull-quote">
+            <p>The work should feel inevitable — like it could not have been any other way.</p>
+            <cite>— A. Prajapati</cite>
+        </blockquote>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'callout',
+        name: 'Callout / note',
+        use: 'A tonal aside for a key insight, principle, or piece of context inside a longer page.',
+        code: `<Section size="md">
+    <Container size="reading">
+        <div class="callout">
+            <p>Design principle: every screen should answer "what now?" in under a second.</p>
+        </div>
+    </Container>
+</Section>`,
+    },
+    {
+        slug: 'blockquote-body',
+        name: 'Blockquote (in a body)',
+        use: 'A Markdown `> quote` inside a case-study or experiment body now renders with a left rule and muted larger type. No markup needed — just write the quote in Markdown.',
+        code: `In your project .md / experiment body:
+
+> A quoted line from a client brief, a review, or your own notes.
+
+(plain Markdown — styled by .project-body / .experiment-body blockquote)`,
     },
 ];
 ---
@@ -316,6 +386,86 @@ const patterns = [
                                                         <a href="#">Go home</a>.
                                                     </p>
                                                 </Stack>
+                                            </Container>
+                                        </Section>
+                                    )}
+
+                                    {p.slug === 'cta-band' && (
+                                        <Section size="lg">
+                                            <Container size="narrow">
+                                                <Stack gap="md">
+                                                    <h2>Have a project in mind?</h2>
+                                                    <p>I'm available for freelance work.</p>
+                                                    <Cluster gap="md">
+                                                        <Button variant="primary" as="a" href="#">
+                                                            Get in touch
+                                                        </Button>
+                                                        <Button variant="secondary" as="a" href="#">
+                                                            More about me
+                                                        </Button>
+                                                    </Cluster>
+                                                </Stack>
+                                            </Container>
+                                        </Section>
+                                    )}
+
+                                    {p.slug === 'two-column-feature' && (
+                                        <Section size="lg">
+                                            <Container size="page">
+                                                <Grid min="360px" gap="lg">
+                                                    <Stack gap="md">
+                                                        <h2>What I did</h2>
+                                                        <p>
+                                                            The narrative for this half — problem,
+                                                            approach, outcome.
+                                                        </p>
+                                                    </Stack>
+                                                    <div class="ds-fake-image" />
+                                                </Grid>
+                                            </Container>
+                                        </Section>
+                                    )}
+
+                                    {p.slug === 'pull-quote' && (
+                                        <Section size="lg">
+                                            <Container size="reading">
+                                                <blockquote class="pull-quote">
+                                                    <p>
+                                                        The work should feel inevitable — like it
+                                                        could not have been any other way.
+                                                    </p>
+                                                    <cite>— A. Prajapati</cite>
+                                                </blockquote>
+                                            </Container>
+                                        </Section>
+                                    )}
+
+                                    {p.slug === 'callout' && (
+                                        <Section size="md">
+                                            <Container size="reading">
+                                                <div class="callout">
+                                                    <p>
+                                                        Design principle: every screen should answer
+                                                        "what now?" in under a second.
+                                                    </p>
+                                                </div>
+                                            </Container>
+                                        </Section>
+                                    )}
+
+                                    {p.slug === 'blockquote-body' && (
+                                        <Section size="lg">
+                                            <Container size="reading">
+                                                <div class="project-body">
+                                                    <p>An intro paragraph for context.</p>
+                                                    <blockquote>
+                                                        <p>
+                                                            A quoted line from a client brief, a
+                                                            review, or your own notes.
+                                                        </p>
+                                                    </blockquote>
+                                                    <p>Body continues after the quote.</p>
+                                                </div>
                                             </Container>
                                         </Section>
                                     )}

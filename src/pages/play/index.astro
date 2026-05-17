@@ -13,6 +13,8 @@ import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/primitives/Section.astro';
 import Container from '../../components/primitives/Container.astro';
 import Stack from '../../components/primitives/Stack.astro';
+import Badge from '../../components/Badge.astro';
+import { SITE_NAME } from '../../consts';
 
 const items = (await getCollection('experiments', (e) => !e.data.draft)).sort(
     (a, b) => b.data.date.getTime() - a.data.date.getTime()
@@ -24,7 +26,7 @@ function formatDate(d: Date) {
 ---
 
 <Layout
-    title="Play — Your Name"
+    title={`Play — ${SITE_NAME}`}
     description="A loose collection of experiments, sketches, and micro-tools."
 >
     <Section size="lg">
@@ -58,7 +60,7 @@ function formatDate(d: Date) {
                                     {item.data.tags && item.data.tags.length > 0 && (
                                         <div class="play-item-tags">
                                             {item.data.tags.map((tag) => (
-                                                <span class="play-item-tag">{tag}</span>
+                                                <Badge>{tag}</Badge>
                                             ))}
                                         </div>
                                     )}

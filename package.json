@@ -10,6 +10,10 @@
         "build": "astro build",
         "preview": "astro preview",
         "check": "astro check",
+        "check:tokens": "node scripts/check-tokens.mjs",
+        "check:discipline": "node scripts/check-discipline.mjs",
+        "new:project": "node scripts/new-project.mjs",
+        "new:page": "node scripts/new-page.mjs",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "astro": "astro"
