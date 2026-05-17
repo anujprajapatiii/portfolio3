@@ -1,0 +1,13 @@
+#!/bin/sh
+# Optional fast local pre-flight. Opt in once with:
+#   git config core.hooksPath scripts/hooks
+#
+# Runs only the fast gates (style, token drift, discipline). The slow
+# ones (astro check, full build) are left to CI so commits stay quick.
+# CI (.github/workflows/build.yml) is the real enforcement — this just
+# saves you a round-trip.
+
+set -e
+npm run format:check
+npm run check:tokens
+npm run check:discipline

@@ -6,6 +6,53 @@ This file exists so a future AI thread (or a future me) can get up to speed in 3
 
 ---
 
+## You're back after a break — do exactly this
+
+You don't need to remember anything. Pick the action below and follow its checklist top to bottom.
+
+1. **Read only this section first.** The rest of this file is reference; come back to it when a checklist points you there.
+2. **Run `npm run dev` and open the live catalogs before composing:** `/reference` (every token + primitive, rendered) and `/reference/sections` (paste-ready section patterns). Not in nav — type the URLs.
+3. **Layout or colour work has a discipline you must follow.** If you are an AI: invoke the `portfolio-layout-primitives` or `portfolio-colour-token` skill. If you are a human: read `.claude/skills/portfolio-layout-primitives/SKILL.md` and `.claude/skills/portfolio-colour-token/SKILL.md` — they are the canonical rules.
+4. **The gate (run before every commit; CI enforces all of it):**
+    ```bash
+    npm run format:check && npm run check && npm run check:tokens && npm run check:discipline && npm run build
+    ```
+    If any step fails it prints the file, the rule, and the fix. CI (`.github/workflows/build.yml`) runs the same set on every PR, so drift cannot merge.
+5. **Optional local fast pre-flight:** `git config core.hooksPath scripts/hooks` once — then `format:check`/`check:tokens`/`check:discipline` run automatically on every commit.
+
+### Add a project — definition of done
+
+1. `npm run new:project <slug>` (lowercase-hyphen slug). It scaffolds the folder + `index.md` with **every** frontmatter field filled, a unique `order`, and `layout: default # default | full-bleed` so the option is visible. _Manual fallback:_ create `src/content/projects/<slug>/index.md` per the "Add a new project" recipe below — include `layout` and a unique `order` explicitly.
+2. Drop the cover image into the folder as `cover.png` (lowercase).
+3. Write the case study. Inline images: prefer Markdown `![alt](./img.png)` (Astro optimizes it); raw `<figure><img>` is NOT optimized.
+4. Run the gate (step 4 above). `check:discipline` will fail on a duplicate `order` or an uppercase image filename.
+5. Spot-check `/` and `/projects/<slug>` in the browser, light and dark.
+
+### Add a page — definition of done
+
+1. `npm run new:page <name>`. It writes `src/pages/<name>.astro` with the correct `Layout > Section > Container > Stack` skeleton and exactly one `<h1>`. _Manual fallback:_ the "Add a new page" recipe below; copy a pattern from `/reference/sections`.
+2. Compose only with primitives (`Section/Container/Stack/Grid/Cluster`). Never inline `max-width`, `padding`, `margin`, or `display:grid|flex` — `check:discipline` R1 fails on it.
+3. If it's user-facing, add a nav link in `src/layouts/Layout.astro` (`navLinks` array).
+4. **Run the four-width screenshot loop (375 / 768 / 1024 / 1440), light and dark** — this is mandatory and is detailed in the `portfolio-layout-primitives` skill. A page is not done until it passes at all four widths.
+5. Run the gate.
+
+### Change colours — definition of done
+
+1. The two-tier rule: a **primitive** is a literal hex and lives only in `:root` in `src/styles/global.css`; a **semantic** token (`--color-*`) is `var(--primitive)` and never a raw hex. Raw hex outside `:root` fails `check:discipline` R2.
+2. AI: invoke `portfolio-colour-token`. Human: read its SKILL.md.
+3. Edit `:root` (and the `[data-theme="dark"]` block if the change is semantic) in `global.css`.
+4. **Mirror the change in `src/reference-tokens.ts`** — that is what `/reference` renders and what `check:tokens` compares against. They must agree or CI fails.
+5. Run the gate. Eyeball `/reference` in light and dark.
+
+### Change layout — definition of done
+
+1. AI: invoke `portfolio-layout-primitives`. Human: read its SKILL.md.
+2. Change layout only by editing/using primitives — never inline layout CSS in a page or component (R1).
+3. Run the four-width screenshot loop, light and dark.
+4. Run the gate.
+
+---
+
 ## Tech stack
 
 - **Astro 6.1+** — static site generator. Pages live in `src/pages/` and the file path becomes the URL.
@@ -218,7 +265,7 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 - **Spacing/font sizes/colors come from tokens.** No raw px values in the rules. If a needed value isn't in the token scale, extend the scale — don't hard-code.
 - **OG images** are auto-generated for project pages via `getImage()` in `ProjectLayout.astro` (1200×630 webp).
 - **Above-the-fold images** use `loading="eager"`. The first homepage card and project covers are eager; everything else lazy.
-- **Code style is owned by Prettier.** Run `npm run format` before committing. Config lives in `.prettierrc.json`; CI runs `format:check` so PRs with style drift fail. Don't argue with the formatter — change the config if needed.
+- **Code style is owned by Prettier.** Run `npm run format` before committing. Config lives in `.prettierrc.json`; CI runs `format:check` (alongside `check`, `check:tokens`, `check:discipline`, `build` — see Verification) so PRs with style drift fail. Don't argue with the formatter — change the config if needed.
 
 ---
 
@@ -248,12 +295,21 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 After making changes:
 
 ```bash
-npm run dev          # iterate locally at localhost:4321
-npm run check        # type-check the project (catches schema/prop mismatches)
-npm run check:tokens # /reference values vs global.css — fails on token drift
-npm run build        # full production build, surfaces any image or content error
+npm run dev              # iterate locally at localhost:4321
+npm run format:check     # Prettier style — fails on drift
+npm run check            # type-check (catches schema/prop mismatches)
+npm run check:tokens     # /reference values vs global.css — fails on token drift
+npm run check:discipline # layout/colour/<h1>/filename/order discipline — fails on drift
+npm run build            # full production build, surfaces any image or content error
 ```
 
-A clean build means it'll deploy cleanly on Vercel.
+Or run the whole gate at once (this is exactly what CI runs):
 
-`check:tokens` is standalone (not part of `build`, so it can't break a deploy). It compares the literal values in `src/reference-tokens.ts` — what the `/reference` page renders — against `:root` in `global.css`, covering the direct value tokens (font/space/width/leading/tracking/breakpoint) and the primitive colour set. Semantic `--color-*` tokens use `var()` indirection and are intentionally not checked. Add it to CI next to `format:check` if you want it enforced on PRs.
+```bash
+npm run format:check && npm run check && npm run check:tokens && npm run check:discipline && npm run build
+```
+
+**All of these run in CI** (`.github/workflows/build.yml`) on every PR into `main` and every push to `main`, so drift cannot merge — you do not have to remember to run them, but running the gate locally before pushing saves a round-trip. A clean gate means it'll deploy cleanly on Vercel.
+
+- `check:tokens` compares the literal values in `src/reference-tokens.ts` (what `/reference` renders) against `:root` in `global.css` — direct value tokens (font/space/width/leading/tracking/breakpoint) + the primitive colour set. Semantic `--color-*` tokens use `var()` indirection and are intentionally not checked.
+- `check:discipline` enforces, with documented fixture exclusions (`src/components/primitives/**`, `src/pages/reference/**`, `src/pages/play/colour-mixer.astro`): R1 no inline layout CSS in pages/components, R2 no raw hex outside `:root`, R3 ≤1 `<h1>` per page, R4 lowercase content image filenames/refs, R5 unique project `order`.
