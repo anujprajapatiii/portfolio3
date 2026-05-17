@@ -497,6 +497,37 @@ header nav a[aria-current='page'] {
 }
 
 /* ==========================================================================
+   Homepage tag filter
+   --------------------------------------------------------------------------
+   The row + gap come from <Cluster> in index.astro. This block only styles
+   the individual buttons (mirrors .play-item-tag, plus a pressed state).
+   Filtering is a small inline script; with JS off, all projects stay shown.
+   ========================================================================== */
+
+.tag-filter-btn {
+    font: inherit;
+    font-size: var(--font-xs);
+    color: var(--color-muted);
+    padding: 2px var(--space-2);
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+        color var(--transition),
+        border-color var(--transition);
+}
+
+.tag-filter-btn:hover {
+    color: var(--color-text);
+}
+
+.tag-filter-btn[aria-pressed='true'] {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+/* ==========================================================================
    Project detail page
    ========================================================================== */
 

@@ -115,6 +115,8 @@ Drop the image into the project's folder next to `index.md`. Reference it with s
 
 The leading `./` is required — it tells Astro to optimize the image. Filenames can be short (e.g. `architecture.png`, `team-colors.png`) since they're already scoped to the project's folder.
 
+**Optimization only applies to the Markdown `![alt](./img.png)` form.** Astro converts it to WebP, adds intrinsic `width`/`height`, and lazy-loads it (verify in any built `dist/projects/<slug>/index.html` — optimized images have `/_astro/…hash.webp` sources). It does **not** generate a multi-resolution `srcset`/`sizes` like the `<Image>` component; that's fine for body images, but for an art-directed hero use a layout with `<Image>` instead.
+
 For a caption, drop in a raw HTML `<figure>` (Markdown supports inline HTML, separate it with blank lines above and below):
 
 ```md
@@ -123,6 +125,10 @@ For a caption, drop in a raw HTML `<figure>` (Markdown supports inline HTML, sep
   <figcaption>Caption text.</figcaption>
 </figure>
 ```
+
+**Caveat — the raw-HTML `<img>` form is NOT optimized.** Astro only processes the Markdown `![]()` syntax; a raw `<img src="./x.png">` is passed through verbatim, so the file must be a real emitted asset and it ships unoptimized. Prefer `![]()` whenever you don't need a `<figcaption>`. If you do need a caption, accept that the image is unoptimized (so size the source sensibly) or build a captioned-image component that runs it through `<Image>`.
+
+**Source-file size guideline.** Optimization is output-only — a 6 MB source PNG still bloats git history and slows every build. Keep committed source images to a sane size: roughly ≤ 2560px on the longest edge and ideally < 1 MB. Downscale/compress before committing; Astro handles the rest for the `![]()` form.
 
 Styling for both forms lives under `.project-body img` and `.project-body figure` in `global.css`.
 
@@ -226,6 +232,7 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 
 - Don't use uppercase or mixed-case in filenames. Always lowercase, hyphen-separated (`hawaii.png`, not `Hawaii.png` or `Hawaii_island.png`). macOS is case-insensitive so a wrong-case rename works locally but breaks on Vercel's Linux build with "file not found." Same rule for image references in markdown.
 - Don't put rendered images in `public/`. They won't be optimized.
+- Don't reach for the raw-HTML `<img src="./x.png">` form in a case study when the Markdown `![alt](./x.png)` form works — only the Markdown form is optimized. Reserve raw `<figure><img>` for when a `<figcaption>` is genuinely needed, and keep that source image small since it ships unoptimized.
 - Don't use `src/content/config.ts` syntax (that's the old config). The schema lives in `src/content.config.ts` and uses the `glob()` loader from `astro/loaders`.
 - Don't add raw px values inside CSS rules. Extend the token scale instead.
 - Don't add a media-query breakpoint unless something genuinely breaks at that width. The defined scale is `--bp-sm` 480px, `--bp-md` 768px (the primary mobile/desktop split), `--bp-lg` 1024px, `--bp-xl` 1280px — pick from this scale, don't invent new numbers.
@@ -241,9 +248,12 @@ import { ArrowRight, ExternalLink } from '@lucide/astro';
 After making changes:
 
 ```bash
-npm run dev      # iterate locally at localhost:4321
-npm run check    # type-check the project (catches schema/prop mismatches)
-npm run build    # full production build, surfaces any image or content error
+npm run dev          # iterate locally at localhost:4321
+npm run check        # type-check the project (catches schema/prop mismatches)
+npm run check:tokens # /reference values vs global.css — fails on token drift
+npm run build        # full production build, surfaces any image or content error
 ```
 
 A clean build means it'll deploy cleanly on Vercel.
+
+`check:tokens` is standalone (not part of `build`, so it can't break a deploy). It compares the literal values in `src/reference-tokens.ts` — what the `/reference` page renders — against `:root` in `global.css`, covering the direct value tokens (font/space/width/leading/tracking/breakpoint) and the primitive colour set. Semantic `--color-*` tokens use `var()` indirection and are intentionally not checked. Add it to CI next to `format:check` if you want it enforced on PRs.

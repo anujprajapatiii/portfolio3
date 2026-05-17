@@ -18,7 +18,12 @@ const og = await getImage({
 });
 ---
 
-<Layout title={`${title} — ${SITE_NAME}`} description={description} ogImage={og.src} ogType="article">
+<Layout
+    title={`${title} — ${SITE_NAME}`}
+    description={description}
+    ogImage={og.src}
+    ogType="article"
+>
     <article>
         <Section size="lg">
             <Container size="page">

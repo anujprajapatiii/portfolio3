@@ -2,14 +2,20 @@
 import Layout from '../layouts/Layout.astro';
 import Section from '../components/primitives/Section.astro';
 import Container from '../components/primitives/Container.astro';
+import Stack from '../components/primitives/Stack.astro';
+import Cluster from '../components/primitives/Cluster.astro';
 import Grid from '../components/primitives/Grid.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import { SITE_TITLE } from '../consts';
+import { byOrder, warnOnDuplicateOrder } from '../utils/sortProjects';
 
-const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(
-    (a, b) => (a.data.order ?? 99) - (b.data.order ?? 99)
-);
+const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(byOrder);
+warnOnDuplicateOrder(projects);
+
+// Distinct tags across visible projects, alphabetical. The filter only
+// appears when there are at least two — one tag is not worth the UI.
+const allTags = [...new Set(projects.flatMap((p) => p.data.tags ?? []))].sort();
 ---
 
 <Layout title={SITE_TITLE}>
@@ -23,23 +29,71 @@ const projects = (await getCollection('projects', (p) => !p.data.draft)).sort(
 
     <Section size="lg">
         <Container size="page">
-            <Grid min="280px" gap="lg">
+            <Stack gap="lg">
                 {
-                    projects.map((project, i) => (
-                        <a href={`/projects/${project.id}`} class="project-card">
-                            <Image
-                                src={project.data.cover}
-                                alt={`${project.data.title} cover`}
-                                widths={[400, 800, 1200]}
-                                sizes="(max-width: 640px) 100vw, 400px"
-                                loading={i === 0 ? 'eager' : 'lazy'}
-                            />
-                            <h2>{project.data.title}</h2>
-                            <p>{project.data.description}</p>
-                        </a>
-                    ))
+                    allTags.length >= 2 && (
+                        <Cluster gap="sm" role="group" aria-label="Filter projects by tag">
+                            <button
+                                type="button"
+                                class="tag-filter-btn"
+                                data-filter="*"
+                                aria-pressed="true"
+                            >
+                                All
+                            </button>
+                            {allTags.map((tag) => (
+                                <button
+                                    type="button"
+                                    class="tag-filter-btn"
+                                    data-filter={tag}
+                                    aria-pressed="false"
+                                >
+                                    {tag}
+                                </button>
+                            ))}
+                        </Cluster>
+                    )
                 }
-            </Grid>
+                <Grid min="280px" gap="lg">
+                    {
+                        projects.map((project, i) => (
+                            <a
+                                href={`/projects/${project.id}`}
+                                class="project-card"
+                                data-tags={(project.data.tags ?? []).join(' ')}
+                            >
+                                <Image
+                                    src={project.data.cover}
+                                    alt={`${project.data.title} cover`}
+                                    widths={[400, 800, 1200]}
+                                    sizes="(max-width: 640px) 100vw, 400px"
+                                    loading={i === 0 ? 'eager' : 'lazy'}
+                                />
+                                <h2>{project.data.title}</h2>
+                                <p>{project.data.description}</p>
+                            </a>
+                        ))
+                    }
+                </Grid>
+            </Stack>
         </Container>
     </Section>
+
+    <script is:inline>
+        (function () {
+            const buttons = document.querySelectorAll('.tag-filter-btn');
+            if (!buttons.length) return;
+            const cards = document.querySelectorAll('.project-card');
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.dataset.filter;
+                    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+                    cards.forEach((card) => {
+                        const tags = (card.dataset.tags || '').split(' ').filter(Boolean);
+                        card.hidden = filter !== '*' && !tags.includes(filter);
+                    });
+                });
+            });
+        })();
+    </script>
 </Layout>
